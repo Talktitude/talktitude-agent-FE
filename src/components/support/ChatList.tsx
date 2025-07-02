@@ -4,18 +4,25 @@ import React, { useState } from 'react';
 import type { ChatListItemType } from '@/types/support';
 import ContactItem from './ChatItem';
 
-const MOCJK_CHAT_LIST: ChatListItemType[] = [
+const MOCK_CHAT_LIST: ChatListItemType[] = [
   { chat_id: 1, name: '아이디', phone: '010-1234-5678', time: '3분 전' },
   { chat_id: 2, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
   { chat_id: 3, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
   { chat_id: 4, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
   { chat_id: 5, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
   { chat_id: 6, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
+  { chat_id: 7, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
+  { chat_id: 8, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
+  { chat_id: 9, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
+  { chat_id: 10, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
+  { chat_id: 11, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
+  { chat_id: 12, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
+  { chat_id: 13, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
 ];
 
 export default function ChatList() {
   const [selectedChat, setSelectedChat] = useState(-1);
-  const [chatListItems] = useState(MOCJK_CHAT_LIST);
+  const [chatListItems] = useState(MOCK_CHAT_LIST);
 
   const [filterOption, setFilterOption] = useState<
     'all' | 'ongoing' | 'completed'
@@ -36,8 +43,8 @@ export default function ChatList() {
   };
 
   return (
-    <div className="bg-white border-r border-lineGrey flex-1 flex-col">
-      <div className="px-4 py-2 flex justify-end gap-2 text-sm font-medium">
+    <div className="bg-white flex-1 flex-col">
+      <div className="px-4 py-2 flex justify-end gap-4 text-sm font-medium">
         {filterButtons.map((filter) => (
           <button
             key={filter.value}
