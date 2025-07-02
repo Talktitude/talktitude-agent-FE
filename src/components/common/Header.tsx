@@ -10,7 +10,7 @@ export default function Header() {
   const router = useRouter();
 
   const navItems = [
-    { label: '상담 서비스', path: '/' },
+    { label: '상담 서비스', path: '/support' },
     { label: '상담 리포트', path: '/reports' },
   ];
 
