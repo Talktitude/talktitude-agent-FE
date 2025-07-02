@@ -15,7 +15,7 @@ export default function ChatItem({
 }: ChatItemProps) {
   return (
     <div
-      className={`px-4 py-3.5 cursor-pointer ${
+      className={`px-5 py-3.5 cursor-pointer ${
         isSelected ? 'bg-gray-200' : 'hover:bg-gray-100'
       }`}
       onClick={onClick}
