@@ -8,11 +8,12 @@ const config: Config = {
       colors: {
         mainColor: '#5573E2',
         textBlack: '#3B3B3B',
-        textLightGrey: '#9A9A9A',
-        lineGrey: '#D9D9D9',
+        textGray: '#5D5D5D',
+        textLightGray: '#9A9A9A',
+        lineGray: '#D9D9D9',
         white: '#FFFFFF',
         bgLightBlue: '#EEF2F9',
-        bgLightGrey: '#E1E1E1CC',
+        bgLightGray: '#E1E1E1CC',
       },
       fontSize: {
         sm: '0.875rem', // 14px
