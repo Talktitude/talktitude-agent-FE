@@ -51,7 +51,7 @@ export default function ChatList() {
             className={`${
               filterOption === filter.value
                 ? 'text-mainColor font-bold'
-                : 'text-textLightGrey'
+                : 'text-textLightGray'
             }`}
             onClick={() => handleFilterChange(filter.value)}
           >
