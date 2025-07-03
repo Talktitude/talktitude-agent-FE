@@ -5,19 +5,79 @@ import type { ChatListItemType } from '@/types/support';
 import ContactItem from './ChatItem';
 
 const MOCK_CHAT_LIST: ChatListItemType[] = [
-  { chat_id: 1, name: '아이디', phone: '010-1234-5678', time: '3분 전' },
-  { chat_id: 2, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 3, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 4, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 5, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 6, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 7, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 8, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 9, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 10, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 11, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 12, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
-  { chat_id: 13, name: '비회원', phone: '010-1234-5678', time: '12월 31일' },
+  { chat_id: 1, clientName: '아이디', phone: '010-1234-5678', time: '3분 전' },
+  {
+    chat_id: 2,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 3,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 4,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 5,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 6,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 7,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 8,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 9,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 10,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 11,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 12,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
+  {
+    chat_id: 13,
+    clientName: '비회원',
+    phone: '010-1234-5678',
+    time: '12월 31일',
+  },
 ];
 
 export default function ChatList() {
