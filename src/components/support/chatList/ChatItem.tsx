@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ChatListItemType } from '../../types/support';
+import type { ChatListItemType } from '../../../types/support';
 import { IoPersonCircle } from 'react-icons/io5';
 
 interface ChatItemProps {
@@ -29,7 +29,7 @@ export default function ChatItem({
             <span className="text-textBlack text-base font-semibold">
               {chatListItem.name}
             </span>
-            <span className="text-textLightGrey text-sm font-medium">
+            <span className="text-textLightGray text-sm font-medium">
               {chatListItem.time}
             </span>
           </div>
