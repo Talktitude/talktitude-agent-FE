@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ChatListItemType } from '../../types/support';
+import type { ChatListItemType } from '../../../types/support';
 import { IoPersonCircle } from 'react-icons/io5';
 
 interface ChatItemProps {
