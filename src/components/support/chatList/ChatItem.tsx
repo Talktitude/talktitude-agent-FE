@@ -27,7 +27,7 @@ export default function ChatItem({
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <span className="text-textBlack text-base font-semibold">
-              {chatListItem.name}
+              {chatListItem.clientName}
             </span>
             <span className="text-textLightGray text-sm font-medium">
               {chatListItem.time}

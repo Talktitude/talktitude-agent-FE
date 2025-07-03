@@ -1,14 +1,20 @@
 export interface ChatListItemType {
   chat_id: number;
-  name: string;
+  clientName: string;
   phone: string;
   time: string;
 }
 
 export interface MessageType {
-  id: number;
+  messageId: number;
   senderType: 'client' | 'user';
   original: string;
   polite?: string;
   timestamp: string;
+}
+
+export interface ChatHeaderInfo {
+  clientName: string;
+  clientId: string;
+  phone: string;
 }
