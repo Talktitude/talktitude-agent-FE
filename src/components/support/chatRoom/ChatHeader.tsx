@@ -1,12 +1,5 @@
-import type { ChatHeaderInfo } from '@/types/support';
+import type { ChatHeaderInfoType } from '@/types/support';
 import Badge from '@/components/common/Badge';
-import { useState } from 'react';
-
-const MOCK_CHAT_INFO: ChatHeaderInfo = {
-  clientName: '홍길동',
-  clientId: 'hong123',
-  phone: '010-1234-5678',
-};
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
@@ -17,9 +10,11 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-export default function ChatHeader() {
-  const [chatInfo] = useState(MOCK_CHAT_INFO);
+interface ChatHeaderProps {
+  chatInfo: ChatHeaderInfoType;
+}
 
+export default function ChatHeader({ chatInfo }: ChatHeaderProps) {
   return (
     <div className="sticky top-0 bg-bgLightBlue border-b border-lineGray p-5 m-0">
       <div className="flex flex-col items-start gap-2.5">

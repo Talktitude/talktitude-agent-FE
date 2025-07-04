@@ -1,4 +1,5 @@
 import { FiSearch } from 'react-icons/fi';
+import { PLACEHOLDERS } from '@/lib/constants/placeholders';
 
 export default function SearchInput() {
   const handleSearch = () => {
@@ -9,7 +10,7 @@ export default function SearchInput() {
     <div className="relative w-full px-5 py-3.5">
       <input
         type="text"
-        placeholder="고객 검색"
+        placeholder={PLACEHOLDERS.CLIENT_SEARCH}
         className="w-full h-12 px-5 py-3 text-textBlack text-base font-medium outline-none shadow-inputShadow rounded-[1.25rem] border-[1px] border-lineGray focus:border-[1px] focus:border-mainColor resize-none flex-1"
       />
       <button

@@ -13,7 +13,7 @@ export interface MessageType {
   timestamp: string;
 }
 
-export interface ChatHeaderInfo {
+export interface ChatHeaderInfoType {
   clientName: string;
   clientId: string;
   phone: string;
