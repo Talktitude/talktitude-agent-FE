@@ -31,3 +31,11 @@ export interface ClientInfoType {
     amount: number;
   }[];
 }
+
+export interface OrderHistoryItemType {
+  orderDate: string;
+  orderStatus: string;
+  storeName: string;
+  storeImage: string;
+  orderNumber: string;
+}
