@@ -18,3 +18,16 @@ export interface ChatHeaderInfoType {
   clientId: string;
   phone: string;
 }
+
+export interface ClientInfoType {
+  clientName: string;
+  clientId: string;
+  phone: string;
+  address: string;
+  point: number;
+  totalCouponCount: number;
+  couponInfo: {
+    currency: number;
+    amount: number;
+  }[];
+}
