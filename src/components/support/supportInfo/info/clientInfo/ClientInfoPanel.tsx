@@ -51,7 +51,10 @@ export default function ClientInfoPanel({ clientInfo }: ClientInfoPanelProps) {
               {info.value}
             </div>
             {isCoupon && info.isToggle && (
-              <button onClick={info.isToggle ? info.onToggle : undefined}>
+              <button
+                onClick={info.isToggle ? info.onToggle : undefined}
+                className="hover:bg-gray-100 rounded-full p-1 transition"
+              >
                 <TiArrowSortedDown
                   className={`w-5 h-5 transition-transform duration-200 ${
                     info.isOpen ? 'rotate-180' : ''
