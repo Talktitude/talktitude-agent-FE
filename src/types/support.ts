@@ -39,3 +39,10 @@ export interface OrderHistoryItemType {
   storeImage: string;
   orderNumber: string;
 }
+
+export interface ChatHistoryItemType {
+  id: number;
+  createdAt: string;
+  category: string;
+  summaryText: string;
+}
