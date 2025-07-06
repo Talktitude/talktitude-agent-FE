@@ -1,8 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import { ClientInfoType, OrderHistoryItemType } from '@/types/support';
+import {
+  ChatHistoryItemType,
+  ClientInfoType,
+  OrderHistoryItemType,
+} from '@/types/support';
 import ClientInfoPanel from './clientInfo/ClientInfoPanel';
 import OrderHistoryPanel from './orderHistory/OrderHistoryPanel';
+import ChatHistoryPanel from './chatHistoty/ChatHistoryPanel';
 
 const MOCK_CLIENT_INFO: ClientInfoType = {
   clientName: '홍길동',
@@ -45,6 +50,22 @@ const MOCK_ORDER_HISTORY: OrderHistoryItemType[] = [
   },
 ];
 
+const MOCK_CHAT_HISTORY: ChatHistoryItemType[] = [
+  {
+    id: 1,
+    createdAt: '2025년 5월 1일 오후 12:43',
+    category: '배달 문의',
+    summaryText: '요청이 받아들여지지 못함. 주문을 취소해서 상담을 마무리함',
+  },
+  {
+    id: 2,
+    createdAt: '2025년 5월 1일 오후 12:43',
+    category: '환불 문의',
+    summaryText:
+      '회원님이 주문 취소를 요청했으나 주문이 이미 접수되어서 요청이 받아들여지지 못함. 주문을 취소해서 상담을 마무리함',
+  },
+];
+
 const tabs = [
   { id: 'info', label: '고객 정보' },
   { id: 'orders', label: '주문 내역' },
@@ -56,6 +77,7 @@ const InfoPanel = () => {
   const [activeTab, setActiveTab] = useState('info');
   const [clientInfo] = useState(MOCK_CLIENT_INFO);
   const [orderHistory] = useState(MOCK_ORDER_HISTORY);
+  const [chatHistory] = useState(MOCK_CHAT_HISTORY);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -70,7 +92,9 @@ const InfoPanel = () => {
           </div>
         );
       case 'history':
-        return (
+        return chatHistory.length > 0 ? (
+          <ChatHistoryPanel chatHistories={chatHistory} />
+        ) : (
           <div className="h-full p-4 flex items-center justify-center text-textGray font-medium">
             상담 이력 내용
           </div>
@@ -96,7 +120,7 @@ const InfoPanel = () => {
             className={`w-[25%] inline-flex flex-1 items-center justify-center py-3 text-lg transition-colors ${
               activeTab === tab.id
                 ? 'text-mainColor bg-white font-bold '
-                : 'text-textBlak bg-[#ebebeb] font-medium hover:text-textBlack'
+                : 'text-textBlak bg-[#ebebeb] font-medium hover:bg-[#dcdcdc] hover:text-mainColor'
             }`}
           >
             {tab.label}
