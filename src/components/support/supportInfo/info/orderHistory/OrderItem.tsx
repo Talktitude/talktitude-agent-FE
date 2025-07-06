@@ -23,7 +23,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
   return (
     <button
       type="button"
-      className="w-full px-5 py-4 flex flex-col gap-5 items-start border-b border-lineGray last:border-b-0"
+      className="w-full px-5 py-4 flex flex-col gap-5 items-start border-b border-zinc-100 hover:bg-gray-100"
       onClick={() => console.log(`${order.orderNumber} 클릭`)}
     >
       <header className="flex gap-2 items-center">
