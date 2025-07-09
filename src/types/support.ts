@@ -46,3 +46,8 @@ export interface ChatHistoryItemType {
   category: string;
   summaryText: string;
 }
+
+export interface RecommendationItemType {
+  id: number;
+  recommendation: string;
+}
