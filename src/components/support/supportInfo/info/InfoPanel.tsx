@@ -100,7 +100,7 @@ const InfoPanel = () => {
           <ChatHistoryPanel chatHistories={chatHistory} />
         ) : (
           <div className="h-full p-4 flex items-center justify-center text-textGray font-medium">
-            상담 이력 내용
+            상담 이력이 없습니다.
           </div>
         );
       case 'memo':
