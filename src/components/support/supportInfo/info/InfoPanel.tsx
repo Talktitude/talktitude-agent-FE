@@ -8,6 +8,7 @@ import {
 import ClientInfoPanel from './clientInfo/ClientInfoPanel';
 import OrderHistoryPanel from './orderHistory/OrderHistoryPanel';
 import ChatHistoryPanel from './chatHistoty/ChatHistoryPanel';
+import ChatMemoPanel from './chatMemo/ChatMemoPanel';
 
 const MOCK_CLIENT_INFO: ClientInfoType = {
   clientName: '홍길동',
@@ -66,6 +67,8 @@ const MOCK_CHAT_HISTORY: ChatHistoryItemType[] = [
   },
 ];
 
+const MOCK_CHAT_MEMO = '상담 메모하는 공간~~~';
+
 const tabs = [
   { id: 'info', label: '고객 정보' },
   { id: 'orders', label: '주문 내역' },
@@ -78,6 +81,7 @@ const InfoPanel = () => {
   const [clientInfo] = useState(MOCK_CLIENT_INFO);
   const [orderHistory] = useState(MOCK_ORDER_HISTORY);
   const [chatHistory] = useState(MOCK_CHAT_HISTORY);
+  const [chatMemo] = useState(MOCK_CHAT_MEMO);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -100,10 +104,10 @@ const InfoPanel = () => {
           </div>
         );
       case 'memo':
-        return (
-          <div className="h-full p-4 flex items-center justify-center text-textGray font-medium">
-            상담 메모 내용
-          </div>
+        return chatMemo ? (
+          <ChatMemoPanel hasMemo={true} initialMemo={chatMemo} />
+        ) : (
+          <ChatMemoPanel hasMemo={false} />
         );
       default:
         return null;
