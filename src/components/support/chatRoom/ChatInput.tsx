@@ -5,11 +5,28 @@ import { LuImagePlus } from 'react-icons/lu';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-export default function ChatInput({ onSendMessage }: ChatInputProps) {
+export default function ChatInput({
+  onSendMessage,
+  value: externalValue,
+  onChange: externalOnChange,
+}: ChatInputProps) {
   const [message, setMessage] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // 외부에서 제어하는 경우(추천 답변 선택 시) 내부에서 제어하는 경우(기본 입력 시) 구분하여 값 설정
+  const inputValue = externalValue !== undefined ? externalValue : message;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    if (externalOnChange) {
+      externalOnChange(newValue);
+    } else {
+      setMessage(newValue);
+    }
+  };
 
   const handleImageUpload = () => {
     fileInputRef.current?.click();
@@ -25,10 +42,12 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
   };
 
   const handleSendMessage = () => {
-    if (!message.trim()) return;
+    if (!inputValue.trim()) return;
 
-    onSendMessage(message);
-    setMessage('');
+    onSendMessage(inputValue);
+    if (!externalOnChange) {
+      setMessage('');
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -55,17 +74,17 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
       </button>
       <input
         placeholder={PLACEHOLDERS.CHAT_INPUT}
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        value={inputValue}
+        onChange={handleInputChange}
         onKeyPress={handleKeyPress}
         className="w-full h-12 px-5 py-3 text-textBlack text-base font-medium outline-none shadow-inputShadow rounded-[1.25rem] border-[1px] border-lineGray focus:border-[1px] focus:border-mainColor resize-none flex-1"
       />
       <button
         className={`ml-3 flex h-10 w-10 items-center justify-center rounded-full ${
-          message.trim() ? 'bg-mainColor' : 'bg-lineGray cursor-not-allowed'
+          inputValue.trim() ? 'bg-mainColor' : 'bg-lineGray cursor-not-allowed'
         }`}
         onClick={handleSendMessage}
-        disabled={!message.trim()}
+        disabled={!inputValue.trim()}
       >
         <IoMdArrowRoundUp size={30} color="white" />
       </button>

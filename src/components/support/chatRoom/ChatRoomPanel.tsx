@@ -4,6 +4,11 @@ import ChatInput from './ChatInput';
 import { MessageType, ChatHeaderInfoType } from '@/types/support';
 import { useState } from 'react';
 
+interface ChatRoomPanelProps {
+  inputMessage?: string;
+  setInputMessage?: (message: string) => void;
+}
+
 const MOCK_CHAT_INFO: ChatHeaderInfoType = {
   clientName: '홍길동',
   clientId: 'hong123',
@@ -96,9 +101,18 @@ const MOCK_MESSAGE: MessageType[] = [
   },
 ];
 
-const ChatRoomPanel = () => {
+const ChatRoomPanel = ({
+  inputMessage: externalInputMessage,
+  setInputMessage: externalSetInputMessage,
+}: ChatRoomPanelProps) => {
   const [messages, setMessages] = useState(MOCK_MESSAGE);
   const [chatInfo] = useState(MOCK_CHAT_INFO);
+  const [inputMessage, setInputMessage] = useState('');
+
+  // 외부에서 제어하는 경우(추천 답변 선택 시) 내부에서 제어하는 경우(기본 입력 시) 구분하여 값 설정
+  const currentInputMessage =
+    externalInputMessage !== undefined ? externalInputMessage : inputMessage;
+  const currentSetInputMessage = externalSetInputMessage || setInputMessage;
 
   const handleSendMessage = (message: string) => {
     const newMessage = {
@@ -108,13 +122,22 @@ const ChatRoomPanel = () => {
       timestamp: new Date().toISOString(),
     } as MessageType;
     setMessages([...messages, newMessage]);
+    currentSetInputMessage(''); // 메시지 전송 후 입력창 초기화
+  };
+
+  const handleInputChange = (value: string) => {
+    currentSetInputMessage(value);
   };
 
   return (
     <div className="flex flex-col w-[35%] border-r border-lineGray bg-bgLightBlue">
       <ChatHeader chatInfo={chatInfo} />
       <ChatRoom messages={messages} />
-      <ChatInput onSendMessage={handleSendMessage} />
+      <ChatInput
+        onSendMessage={handleSendMessage}
+        value={currentInputMessage}
+        onChange={handleInputChange}
+      />
     </div>
   );
 };
