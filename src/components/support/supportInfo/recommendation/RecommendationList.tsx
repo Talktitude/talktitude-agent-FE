@@ -2,21 +2,23 @@ import React from 'react';
 import RecommendationItem from './RecommendationItem';
 import { RecommendationItemType } from '@/types/support';
 
+interface RecommendationListProps {
+  recommendationList: RecommendationItemType[];
+  setInputMessage?: (message: string) => void;
+}
+
 const RecommendationList = ({
   recommendationList,
-}: {
-  recommendationList: RecommendationItemType[];
-}) => {
+  setInputMessage,
+}: RecommendationListProps) => {
   return (
-    <div className="px-5 py-4 flex flex-col gap-4">
-      <div className="justify-start text-mainColor text-lg font-bold">
-        추천 답변 리스트
-      </div>
+    <div className="px-5 py-4 flex flex-col">
       <div className="flex flex-col gap-3.5">
         {recommendationList.map((item) => (
           <RecommendationItem
             key={item.id}
             recommendation={item.recommendation}
+            setInputMessage={setInputMessage}
           />
         ))}
       </div>
