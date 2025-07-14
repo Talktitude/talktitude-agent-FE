@@ -27,7 +27,7 @@ const MOCK_CLIENT_INFO: ClientInfoType = {
 const MOCK_ORDER_HISTORY: OrderHistoryItemType[] = [
   {
     orderDate: '2025년 5월 1일 오후 12:43',
-    orderStatus: '배달중',
+    deliveryStatus: '배달중',
     storeName: '교촌치킨',
     storeImage:
       'https://i.pinimg.com/736x/b0/a8/61/b0a8616afe69d927283130b6d67a2f75.jpg',
@@ -35,7 +35,7 @@ const MOCK_ORDER_HISTORY: OrderHistoryItemType[] = [
   },
   {
     orderDate: '2025년 5월 1일 오후 12:43',
-    orderStatus: '배달중',
+    deliveryStatus: '배달중',
     storeName: '교촌치킨',
     storeImage:
       'https://i.pinimg.com/736x/b0/a8/61/b0a8616afe69d927283130b6d67a2f75.jpg',
@@ -43,7 +43,7 @@ const MOCK_ORDER_HISTORY: OrderHistoryItemType[] = [
   },
   {
     orderDate: '2025년 5월 1일 오후 12:43',
-    orderStatus: '배달중',
+    deliveryStatus: '배달중',
     storeName: '교촌치킨',
     storeImage:
       'https://i.pinimg.com/736x/b0/a8/61/b0a8616afe69d927283130b6d67a2f75.jpg',

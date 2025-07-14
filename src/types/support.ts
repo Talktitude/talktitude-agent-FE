@@ -34,10 +34,40 @@ export interface ClientInfoType {
 
 export interface OrderHistoryItemType {
   orderDate: string;
-  orderStatus: string;
+  deliveryStatus: string;
   storeName: string;
   storeImage: string;
   orderNumber: string;
+}
+
+export interface OrderDetailItemType {
+  orderNumber: string;
+  orderDate: string;
+  deliveryStatus: string;
+  orderMenuSummary: {
+    orderMenuInfos: {
+      menuName: string;
+      menuQuantity: number;
+      menuPrice: number;
+      totalMenuPrice: number;
+    }[];
+    totalPrice: number;
+  };
+  paymentInfo: {
+    paidAmount: number;
+    method: string;
+    totalAmount: number;
+    menuPrice: number;
+    deliveryFee: number;
+    discountAmount: number;
+    couponAmount: number;
+  };
+  deliveryInfo: {
+    phone: string;
+    address: string;
+    deliveryNote: string;
+    restaurantNote: string;
+  };
 }
 
 export interface ChatHistoryItemType {

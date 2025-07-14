@@ -130,7 +130,7 @@ const ChatRoomPanel = ({
   };
 
   return (
-    <div className="flex flex-col w-[35%] border-r border-lineGray bg-bgLightBlue">
+    <div className="flex flex-col w-[40%] border-r border-lineGray bg-bgLightBlue">
       <ChatHeader chatInfo={chatInfo} />
       <ChatRoom messages={messages} />
       <ChatInput
