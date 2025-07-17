@@ -2,25 +2,16 @@
 
 import React from 'react';
 import Header from '@/components/common/Header';
-import { Calendar } from '@/components/ui/calendar';
+import ReportCalendar from '@/components/report/ReportCalendar';
+import ReportListPanel from '@/components/report/ReportListPanel';
 
 export default function ReportPage() {
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
-
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center w-[50%] h-[calc(100dvh-60px)] bg-bgLightBlue">
-        <Calendar
-          onDayClick={(date) => {
-            const formatted = date.toISOString().slice(0, 10);
-            console.log(formatted);
-          }}
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="rounded-lg border"
-        />
+      <div className="flex w-full h-[calc(100vh-60px)]">
+        <ReportCalendar />
+        <ReportListPanel />
       </div>
     </>
   );

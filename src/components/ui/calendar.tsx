@@ -30,7 +30,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        'bg-bgLightBlue text-textBlack group/calendar p-5 [--cell-size:2rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent border-none',
+        'bg-bgLightBlue text-textBlack group/calendar p-2 sm:p-3 [--cell-size:1.8rem] sm:[--cell-size:2rem] md:[--cell-size:2.5rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent border-none w-full max-w-full overflow-hidden',
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className,
@@ -49,44 +49,44 @@ function Calendar({
       toMonth={new Date()} // 이번 달까지만 이동 가능
       disabled={{ after: new Date() }}
       classNames={{
-        root: cn('w-fit', defaultClassNames.root),
+        root: cn('w-full p-2 sm:p-3 md:p-4', defaultClassNames.root),
         months: cn(
           'relative flex flex-col gap-4 md:flex-row',
           defaultClassNames.months,
         ),
         month: cn(
-          'flex w-full flex-col gap-4 text-textBlack text-lg font-medium',
+          'flex w-full flex-col gap-2 sm:gap-3 md:gap-4 text-textBlack text-sm sm:text-base md:text-[20px] font-medium',
           defaultClassNames.month,
         ), // 일 숫자 스타일 (1~30, 31)
         nav: cn(
-          'absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1',
+          'absolute inset-x-0 top-1 flex w-full items-center justify-end gap-1',
           defaultClassNames.nav,
         ), // 이전 달, 다음 달 변경 버튼 스타일
         button_previous: cn(
           buttonVariants({ variant: buttonVariant }),
-          'w-8 h-8 select-none p-0 aria-disabled:opacity-50 text-mainColor bg-white border',
+          'w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 select-none p-0 aria-disabled:opacity-50 text-mainColor bg-white border',
           defaultClassNames.button_previous,
         ), // 이전 달 변경 버튼 스타일
         button_next: cn(
           buttonVariants({ variant: buttonVariant }),
-          'w-8 h-8 select-none p-0 aria-disabled:opacity-50 text-mainColor bg-white border aria-disabled:pointer-events-none',
+          'w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 select-none p-0 aria-disabled:opacity-50 text-mainColor bg-white border aria-disabled:pointer-events-none',
           defaultClassNames.button_next,
         ), // 다음 달 변경 버튼 스타일
         month_caption: cn(
-          'flex h-full w-full items-center justify-start pl-3 text-mainColor mb-5',
+          'flex h-full w-full items-center justify-start pl-2 sm:pl-3 text-mainColor mb-3 sm:mb-4 md:mb-5',
           defaultClassNames.month_caption,
         ), // 월 제목 스타일 (2025년 7월)
         caption_label: cn(
-          'select-none font-bold text-3xl',
+          'select-none font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl',
           captionLayout === 'label'
-            ? 'text-3xl font-bold'
-            : '[&>svg]:text-muted-foreground flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-sm [&>svg]:size-3.5',
+            ? 'text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold'
+            : '[&>svg]:text-muted-foreground flex h-6 sm:h-7 md:h-8 items-center gap-1 rounded-md pl-2 pr-1 text-sm [&>svg]:size-3.5',
           defaultClassNames.caption_label,
         ),
         table: 'w-full border-collapse',
         weekdays: cn('flex', defaultClassNames.weekdays),
         weekday: cn(
-          'flex-1 select-none rounded-3xl text-[#5D5D5D] text-lg font-medium',
+          'flex-1 select-none rounded-3xl text-[#5D5D5D] text-normal sm:text-[18px] md:text-base lg:text-[20px] font-medium',
           defaultClassNames.weekday,
         ), // 요일 영어 스타일 (mon, tue, wed, thu, fri, sat, sun 등)
         week: cn('mt-2 flex w-full', defaultClassNames.week),
@@ -99,11 +99,11 @@ function Calendar({
           defaultClassNames.week_number,
         ),
         day: cn(
-          'group/day relative aspect-square h-full w-full select-none p-3.5 text-center',
+          'group/day relative aspect-square h-full w-full select-none p-2 sm:p-2.5 md:p-3 lg:p-3.5 text-center',
           defaultClassNames.day,
         ),
         today: cn(
-          'text-mainColor font-bold rounded-3xl data-[selected=true]:rounded-3xl',
+          'text-mainColor font-bold rounded-full data-[selected=true]:rounded-full',
           defaultClassNames.today,
         ),
         outside: cn(
@@ -128,21 +128,27 @@ function Calendar({
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === 'left') {
             return (
-              <ChevronLeftIcon className={cn('size-6', className)} {...props} />
+              <ChevronLeftIcon
+                className={cn('size-4 sm:size-5 md:size-6', className)}
+                {...props}
+              />
             );
           }
 
           if (orientation === 'right') {
             return (
               <ChevronRightIcon
-                className={cn('size-6', className)}
+                className={cn('size-4 sm:size-5 md:size-6', className)}
                 {...props}
               />
             );
           }
 
           return (
-            <ChevronDownIcon className={cn('size-4', className)} {...props} />
+            <ChevronDownIcon
+              className={cn('size-3 sm:size-4', className)}
+              {...props}
+            />
           );
         },
         DayButton: CalendarDayButton,
@@ -186,7 +192,7 @@ function CalendarDayButton({
       // data-range-end={modifiers.range_end}
       // data-range-middle={modifiers.range_middle}
       className={cn(
-        'data-[selected-single=true]:bg-mainColor data-[selected-single=true]:text-white data-[selected-single=true]:rounded-3xl group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full text-base min-w-[--cell-size] flex-col gap-1 font-medium leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:text-white [&>span]:text-sm font-medium [&>span]:opacity-70',
+        'data-[selected-single=true]:bg-mainColor data-[selected-single=true]:text-white data-[selected-single=true]:rounded-full group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-0.5 sm:gap-1 leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:bg-mainColor group-data-[focused=true]/day:text-white group-data-[focused=true]/day:rounded-full [&>span]:text-xs sm:text-[16px] lg:text-[20px] [&>span]:opacity-70',
         defaultClassNames.day,
         className,
       )}

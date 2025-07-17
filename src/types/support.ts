@@ -3,6 +3,7 @@ export interface ChatListItemType {
   clientName: string;
   phone: string;
   time: string;
+  profileImage: string;
 }
 
 export interface MessageType {

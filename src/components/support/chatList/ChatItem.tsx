@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ChatListItemType } from '../../../types/support';
-import { IoPersonCircle } from 'react-icons/io5';
+import Image from 'next/image';
 
 interface ChatItemProps {
   chatListItem: ChatListItemType;
@@ -22,7 +22,13 @@ export default function ChatItem({
     >
       <div className="flex items-center gap-3">
         <div className="w-14 h-14 rounded-full flex items-center justify-center">
-          <IoPersonCircle className="w-full h-full" color="#C0C0C0" />
+          <Image
+            src={chatListItem.profileImage}
+            alt="profile"
+            width={48}
+            height={48}
+            className="rounded-full"
+          />
         </div>
         <div className="flex-1">
           <div className="flex items-center justify-between">
