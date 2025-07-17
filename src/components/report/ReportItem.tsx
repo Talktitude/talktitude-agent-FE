@@ -9,14 +9,14 @@ interface ReportItemProps {
 
 const ReportItem = ({ reportItem, onClick }: ReportItemProps) => {
   return (
-    <button className="px-10 py-3 hover:bg-gray-100" onClick={onClick}>
+    <button className="px-10 py-2.5 hover:bg-gray-100" onClick={onClick}>
       <div className="flex items-center gap-3">
         <div className="aspect-square w-14 h-14 rounded-full">
           <Image
             src={reportItem.profileImage}
             alt="profile"
-            width={55}
-            height={55}
+            width={50}
+            height={50}
             className="rounded-full"
           />
         </div>

@@ -15,7 +15,7 @@ const ReportListPanel = () => {
     // console.log(searchValue);
   };
   return (
-    <div className="flex flex-col overflow-y-auto h-full w-[50%] bg-white p-4">
+    <div className="flex flex-col overflow-y-auto h-full w-[50%] bg-white p-3">
       <SearchInput
         onSearchClick={() => {
           handleSearchReport();
