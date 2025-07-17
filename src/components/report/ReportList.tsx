@@ -131,7 +131,7 @@ const ReportList = () => {
           }
         />
       ))}
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-3">
         <Pagination>
           <PaginationContent>
             <PaginationItem>

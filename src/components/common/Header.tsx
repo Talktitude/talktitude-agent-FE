@@ -8,10 +8,13 @@ import WhiteLogo from '/public/logo/white-logo.svg';
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
+  const date = new Date().toLocaleDateString('sv-SE', {
+    timeZone: 'Asia/Seoul',
+  });
 
   const navItems = [
     { label: '상담 서비스', path: '/support' },
-    { label: '상담 리포트', path: '/reports' },
+    { label: '상담 리포트', path: `/reports?date=${date}` },
   ];
 
   return (
@@ -29,7 +32,7 @@ export default function Header() {
             key={item.path}
             onClick={() => router.push(item.path)}
             className={`text-l font-bold transition-colors ${
-              pathname === item.path
+              pathname === item.path.split('?')[0]
                 ? 'text-white'
                 : 'text-[#C0C0C0] hover:text-white'
             }`}
