@@ -10,7 +10,7 @@ export default function ReportPage() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center w-full md:w-[50%] h-[calc(100dvh-60px)] bg-bgLightBlue p-0 md:p-0 lg:p-6">
+      <div className="flex items-center justify-center w-full md:w-[50%] h-[calc(100dvh-60px)] bg-bgLightBlue p-0 md:p-0 lg:p-8">
         <Calendar
           onDayClick={(date) => {
             const formatted = date

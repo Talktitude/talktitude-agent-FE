@@ -86,7 +86,7 @@ function Calendar({
         table: 'w-full border-collapse',
         weekdays: cn('flex', defaultClassNames.weekdays),
         weekday: cn(
-          'flex-1 select-none rounded-3xl text-[#5D5D5D] text-xs sm:text-[18px] md:text-base lg:text-[20px] font-medium',
+          'flex-1 select-none rounded-3xl text-[#5D5D5D] text-normal sm:text-[18px] md:text-base lg:text-[20px] font-medium',
           defaultClassNames.weekday,
         ), // 요일 영어 스타일 (mon, tue, wed, thu, fri, sat, sun 등)
         week: cn('mt-2 flex w-full', defaultClassNames.week),
@@ -99,11 +99,11 @@ function Calendar({
           defaultClassNames.week_number,
         ),
         day: cn(
-          'group/day relative aspect-square h-full w-full select-none p-1.5 sm:p-2 md:p-3 lg:p-3.5 text-center',
+          'group/day relative aspect-square h-full w-full select-none p-2 sm:p-2.5 md:p-3 lg:p-3.5 text-center',
           defaultClassNames.day,
         ),
         today: cn(
-          'text-mainColor font-bold rounded-3xl data-[selected=true]:rounded-3xl',
+          'text-mainColor font-bold rounded-full data-[selected=true]:rounded-full',
           defaultClassNames.today,
         ),
         outside: cn(
@@ -192,7 +192,7 @@ function CalendarDayButton({
       // data-range-end={modifiers.range_end}
       // data-range-middle={modifiers.range_middle}
       className={cn(
-        'data-[selected-single=true]:bg-mainColor data-[selected-single=true]:text-white data-[selected-single=true]:rounded-full group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-0.5 sm:gap-1 leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:bg-mainColor group-data-[focused=true]/day:text-white group-data-[focused=true]/day:rounded-full [&>span]:text-xs sm:text-[20px] [&>span]:opacity-70',
+        'data-[selected-single=true]:bg-mainColor data-[selected-single=true]:text-white data-[selected-single=true]:rounded-full group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-0.5 sm:gap-1 leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:bg-mainColor group-data-[focused=true]/day:text-white group-data-[focused=true]/day:rounded-full [&>span]:text-xs sm:text-[16px] lg:text-[20px] [&>span]:opacity-70',
         defaultClassNames.day,
         className,
       )}
