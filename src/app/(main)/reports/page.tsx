@@ -13,7 +13,15 @@ export default function ReportPage() {
       <div className="flex flex-col items-center justify-center w-[50%] h-[calc(100dvh-60px)] bg-bgLightBlue">
         <Calendar
           onDayClick={(date) => {
-            const formatted = date.toISOString().slice(0, 10);
+            const formatted = date
+              .toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              })
+              .replace(/\. /g, '-')
+              .replace('.', '')
+              .slice(0, 10);
             console.log(formatted);
           }}
           mode="single"
