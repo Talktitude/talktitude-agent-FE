@@ -30,7 +30,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        'bg-bgLightBlue text-textBlack group/calendar p-5 [--cell-size:2rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent border-none',
+        'bg-bgLightBlue text-textBlack group/calendar p-3 [--cell-size:3rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent border-none',
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className,
@@ -55,7 +55,7 @@ function Calendar({
           defaultClassNames.months,
         ),
         month: cn(
-          'flex w-full flex-col gap-4 text-textBlack text-lg font-medium',
+          'flex w-full flex-col gap-4 text-textBlack text-[20px] font-medium',
           defaultClassNames.month,
         ), // 일 숫자 스타일 (1~30, 31)
         nav: cn(
@@ -86,7 +86,7 @@ function Calendar({
         table: 'w-full border-collapse',
         weekdays: cn('flex', defaultClassNames.weekdays),
         weekday: cn(
-          'flex-1 select-none rounded-3xl text-[#5D5D5D] text-lg font-medium',
+          'flex-1 select-none rounded-3xl text-[#5D5D5D] text-[20px] font-medium',
           defaultClassNames.weekday,
         ), // 요일 영어 스타일 (mon, tue, wed, thu, fri, sat, sun 등)
         week: cn('mt-2 flex w-full', defaultClassNames.week),
@@ -186,7 +186,7 @@ function CalendarDayButton({
       // data-range-end={modifiers.range_end}
       // data-range-middle={modifiers.range_middle}
       className={cn(
-        'data-[selected-single=true]:bg-mainColor data-[selected-single=true]:text-white data-[selected-single=true]:rounded-3xl group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full text-base min-w-[--cell-size] flex-col gap-1 font-medium leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:text-white [&>span]:text-sm font-medium [&>span]:opacity-70',
+        'data-[selected-single=true]:bg-mainColor data-[selected-single=true]:text-white data-[selected-single=true]:rounded-3xl group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-1 leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:bg-mainColor group-data-[focused=true]/day:text-white group-data-[focused=true]/day:rounded-3xl [&>span]:text-sm [&>span]:opacity-70',
         defaultClassNames.day,
         className,
       )}
