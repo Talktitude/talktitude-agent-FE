@@ -32,7 +32,7 @@ export default function Header() {
             key={item.path}
             onClick={() => router.push(item.path)}
             className={`text-l font-bold transition-colors ${
-              pathname === item.path.split('?')[0]
+              pathname.startsWith(item.path.split('?')[0])
                 ? 'text-white'
                 : 'text-[#C0C0C0] hover:text-white'
             }`}
