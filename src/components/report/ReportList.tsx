@@ -127,7 +127,7 @@ const ReportList = () => {
           reportItem={reportItem}
           key={reportItem.reportId}
           onClick={() =>
-            router.push(`reports/${reportItem.reportId}?date=${date}`)
+            router.push(`/reports/${reportItem.reportId}?date=${date}`)
           }
         />
       ))}
