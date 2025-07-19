@@ -99,7 +99,7 @@ const DetailContent = ({ orderDetail, activeTab }: DetailContentProps) => {
       <div className="flex flex-col border-b py-3">
         <span className={blackSemiBoldInfoStyle}>전화번호</span>
         <p className="text-textGray text-sm mt-1 ">
-          {orderDetail.deliveryInfo.phone}
+          {orderDetail.deliveryInfo.clientPhone}
         </p>
       </div>
       <div className="flex flex-col border-b py-3">

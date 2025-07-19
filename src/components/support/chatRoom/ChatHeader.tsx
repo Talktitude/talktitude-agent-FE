@@ -22,7 +22,7 @@ export default function ChatHeader({ chatInfo }: ChatHeaderProps) {
           <InfoRow label="이름" value={chatInfo.clientName} />
           <InfoRow label="아이디" value={chatInfo.clientId} />
         </div>
-        <InfoRow label="전화번호" value={chatInfo.phone} />
+        <InfoRow label="전화번호" value={chatInfo.clientPhone} />
       </div>
     </div>
   );

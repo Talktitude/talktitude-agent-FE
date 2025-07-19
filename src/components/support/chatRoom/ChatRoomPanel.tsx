@@ -12,7 +12,7 @@ interface ChatRoomPanelProps {
 const MOCK_CHAT_INFO: ChatHeaderInfoType = {
   clientName: '홍길동',
   clientId: 'hong123',
-  phone: '010-1234-5678',
+  clientPhone: '010-1234-5678',
 };
 
 const MOCK_MESSAGE: MessageType[] = [
