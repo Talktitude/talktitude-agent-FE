@@ -13,7 +13,7 @@ const ReportItem = ({ reportItem, onClick }: ReportItemProps) => {
       <div className="flex items-center gap-3">
         <div className="aspect-square w-14 h-14 rounded-full">
           <Image
-            src={reportItem.profileImage}
+            src={reportItem.profileImageUrl}
             alt="profile"
             width={50}
             height={50}
@@ -30,7 +30,7 @@ const ReportItem = ({ reportItem, onClick }: ReportItemProps) => {
             </div>
           </div>
           <div className="w-fit text-textGray text-base font-medium">
-            {reportItem.phone}
+            {reportItem.clientPhone}
           </div>
           <div className="w-fit rounded-[20px] bg-mainColor text-white text-xs font-bold px-2 py-1 mt-1">
             {reportItem.category}
