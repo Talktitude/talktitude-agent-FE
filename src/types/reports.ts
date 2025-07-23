@@ -19,4 +19,14 @@ export interface ReportDetailType {
   category: string;
   summaryText: string;
   profileImageUrl: string;
+  memoCreateAt: string;
+  chatMemo: string;
+}
+
+export interface MemoCommentType {
+  memoId: number;
+  memoUpdateAt: string;
+  userName: string;
+  chatMemo: string;
+  profileImageUrl: string;
 }
