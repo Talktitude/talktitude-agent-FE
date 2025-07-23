@@ -32,7 +32,7 @@ const ReportItem = ({ reportItem, onClick }: ReportItemProps) => {
           <div className="w-fit text-textGray text-base font-medium">
             {reportItem.clientPhone}
           </div>
-          <div className="w-fit rounded-[20px] bg-mainColor text-white text-xs font-bold px-2 py-1 mt-1">
+          <div className="bg-bgLightBlue text-mainColor text-sm px-2 py-1 rounded-full font-semibold w-fit">
             {reportItem.category}
           </div>
         </div>
