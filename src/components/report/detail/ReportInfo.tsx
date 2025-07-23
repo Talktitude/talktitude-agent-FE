@@ -24,8 +24,8 @@ const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
   return (
     <div className="w-full flex-1">
       <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full">
+        <div className="flex items-center gap-2">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center">
             <Image
               src={reportDetail.profileImageUrl}
               width={48}
@@ -46,7 +46,7 @@ const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
         </button>
       </div>
 
-      <div className="space-y-4 px-2">
+      <div className="space-y-3  px-2">
         <InfoItem
           icon={<Clock />}
           label="상담 시각"
