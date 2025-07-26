@@ -1,9 +1,9 @@
 export interface ChatListItemType {
   chat_id: number;
   clientName: string;
-  phone: string;
+  clientPhone: string;
   time: string;
-  profileImage: string;
+  profileImageUrl: string;
 }
 
 export interface MessageType {
@@ -17,13 +17,13 @@ export interface MessageType {
 export interface ChatHeaderInfoType {
   clientName: string;
   clientId: string;
-  phone: string;
+  clientPhone: string;
 }
 
 export interface ClientInfoType {
   clientName: string;
   clientId: string;
-  phone: string;
+  clientPhone: string;
   address: string;
   point: number;
   totalCouponCount: number;
@@ -64,7 +64,7 @@ export interface OrderDetailItemType {
     couponAmount: number;
   };
   deliveryInfo: {
-    phone: string;
+    clientPhone: string;
     address: string;
     deliveryNote: string;
     restaurantNote: string;

@@ -11,7 +11,7 @@ export default function ClientInfoPanel({ clientInfo }: ClientInfoPanelProps) {
   const {
     clientName,
     clientId,
-    phone,
+    clientPhone,
     address,
     point,
     totalCouponCount,
@@ -22,7 +22,7 @@ export default function ClientInfoPanel({ clientInfo }: ClientInfoPanelProps) {
   const infoList = [
     { label: '이름', value: clientName },
     { label: '아이디', value: clientId },
-    { label: '전화번호', value: phone },
+    { label: '전화번호', value: clientPhone },
     { label: '주소', value: address },
     { label: '포인트', value: `${point}원` },
     {

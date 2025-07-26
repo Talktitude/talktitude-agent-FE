@@ -23,7 +23,7 @@ export default function ChatItem({
       <div className="flex items-center gap-3">
         <div className="w-14 h-14 rounded-full flex items-center justify-center">
           <Image
-            src={chatListItem.profileImage}
+            src={chatListItem.profileImageUrl}
             alt="profile"
             width={48}
             height={48}
@@ -40,7 +40,7 @@ export default function ChatItem({
             </span>
           </div>
           <div className="text-[#5D5D5D] text-base font-normal">
-            {chatListItem.phone}
+            {chatListItem.clientPhone}
           </div>
         </div>
       </div>

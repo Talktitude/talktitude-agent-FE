@@ -13,7 +13,7 @@ import ChatMemoPanel from './chatMemo/ChatMemoPanel';
 const MOCK_CLIENT_INFO: ClientInfoType = {
   clientName: '홍길동',
   clientId: 'hong123',
-  phone: '010-1234-5678',
+  clientPhone: '010-1234-5678',
   address: '서울시 강남구 역삼동',
   point: 10000,
   totalCouponCount: 6,

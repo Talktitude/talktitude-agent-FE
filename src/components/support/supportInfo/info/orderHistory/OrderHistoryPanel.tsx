@@ -41,7 +41,7 @@ const orderMenu = {
     // couponAmount: 0, // 쿠폰
   },
   deliveryInfo: {
-    phone: '010-1234-5678',
+    clientPhone: '010-1234-5678',
     address: '서울시 강남구 테헤란로 123',
     deliveryNote: '문 앞에 놓아주세요',
     restaurantNote: '수저x',
