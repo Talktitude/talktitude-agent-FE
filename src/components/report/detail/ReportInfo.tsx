@@ -11,9 +11,11 @@ type InfoItemProps = {
 };
 
 const InfoItem = ({ icon, label, value }: InfoItemProps) => (
-  <div className="flex items-center space-x-3">
-    <div className="w-5 h-5 text-textGray">{icon}</div>
-    <span className="text-base text-textGray">{label}</span>
+  <div className="flex items-center flex-row space-x-3">
+    <div className="flex items-center flex-row space-x-1">
+      <span className="text-textGray">{icon}</span>
+      <span className="text-base text-textGray">{label}</span>
+    </div>
     <span className="text-base font-semibold text-textBlack">{value}</span>
   </div>
 );
@@ -48,17 +50,17 @@ const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
 
       <div className="space-y-3  px-2">
         <InfoItem
-          icon={<Clock />}
+          icon={<Clock className="w-5 h-5" />}
           label="상담 시각"
           value={reportDetail.createdAt}
         />
         <InfoItem
-          icon={<UserCheck />}
+          icon={<UserCheck className="w-5 h-5" />}
           label="상담원"
           value={reportDetail.userName}
         />
         <InfoItem
-          icon={<FileText />}
+          icon={<FileText className="w-5 h-5" />}
           label="상담 유형"
           value={
             <span className="bg-bgLightBlue text-mainColor text-sm px-2 py-1 rounded-full font-semibold w-fit">
@@ -67,7 +69,7 @@ const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
           }
         />
         <InfoItem
-          icon={<Phone />}
+          icon={<Phone className="w-5 h-5" />}
           label="전화번호"
           value={reportDetail.clientPhone}
         />
