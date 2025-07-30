@@ -1,5 +1,5 @@
 import React from 'react';
-import { RememberBoxPropsType } from '@/types/login';
+import { RememberBoxPropsType } from '@/types/auth';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 

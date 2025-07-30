@@ -1,4 +1,4 @@
-import { BottomButtonPropsType } from '@/types/login';
+import { BottomButtonPropsType } from '@/types/auth';
 
 export const BottomButton = ({
   disabled,

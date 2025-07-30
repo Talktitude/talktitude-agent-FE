@@ -1,3 +1,4 @@
+// 로그인 폼 타입
 export interface LoginFormPropsType {
   loginId: string;
   password: string;
@@ -11,11 +12,25 @@ export interface LoginFormPropsType {
   loginErrorMessage: string; // 로그인 에러 메시지
 }
 
+// 로그인 유지 체크박스 타입
+export interface RememberBoxPropsType {
+  keepLoggedIn: boolean; // 로그인 유지 체크박스 상태
+  handleKeepLoggedInClick: () => void; // 로그인 유지 토큰 설정 로직 함수 연결
+}
+
+// 회원가입 폼 타입
+export interface SignupFormPropsType {
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+// 로그인, 회원가입 공통 인터페이스 (input 필드, 버튼)
 export interface InputFieldPropsType {
   placeholder: string; // 입력 필드 플레이스홀더
   type: string; // 입력 필드 타입
   value: string; // 입력 필드 값
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 입력 필드 값 변경 함수
+  isSignup?: boolean; // 회원가입 페이지 여부
+  inputLabel?: string; // 입력 필드 라벨
 }
 
 export interface BottomButtonPropsType {
@@ -24,9 +39,4 @@ export interface BottomButtonPropsType {
   className?: string; // 버튼 클래스 이름
   onClick?: () => void; // 버튼 클릭 함수
   children: React.ReactNode; // 버튼 자식 요소
-}
-
-export interface RememberBoxPropsType {
-  keepLoggedIn: boolean; // 로그인 유지 체크박스 상태
-  handleKeepLoggedInClick: () => void; // 로그인 유지 토큰 설정 로직 함수 연결
 }
