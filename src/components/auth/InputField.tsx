@@ -10,9 +10,9 @@ function InputField({
   inputLabel,
 }: InputFieldPropsType) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex-1 flex flex-col gap-1.5">
       {isSignup && (
-        <label className="text-xl font-bold text-textBlack">{inputLabel}</label>
+        <label className="text-lg font-bold text-textBlack">{inputLabel}</label>
       )}
       <input
         type={type}
