@@ -1,12 +1,12 @@
 import { BottomButtonPropsType } from '@/types/auth';
 
-export const BottomButton = ({
+export default function BottomButton({
   disabled,
   type,
   className,
   onClick,
   children,
-}: BottomButtonPropsType) => {
+}: BottomButtonPropsType) {
   const loginStyle = disabled
     ? 'bg-lineGray text-white'
     : 'bg-mainColor text-white hover:bg-mainColor/80';
@@ -23,4 +23,4 @@ export const BottomButton = ({
       {children}
     </button>
   );
-};
+}
