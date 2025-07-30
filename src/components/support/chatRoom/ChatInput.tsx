@@ -81,7 +81,7 @@ export default function ChatInput({
       />
       <button
         className={`ml-3 flex h-10 w-10 items-center justify-center rounded-full ${
-          inputValue.trim() ? 'bg-mainColor' : 'bg-lineGray cursor-not-allowed'
+          inputValue.trim() ? 'bg-mainColor' : 'bg-lineGray aria-disabled'
         }`}
         onClick={handleSendMessage}
         disabled={!inputValue.trim()}
