@@ -1,6 +1,6 @@
 import React from 'react';
 import { LoginFormPropsType } from '@/types/auth';
-import InputField from './InputField';
+import InputField from '../InputField';
 import { BottomButton } from '../BottomButton';
 import RememberBox from './RememberBox';
 import { PLACEHOLDERS } from '@/lib/constants/placeholders';
