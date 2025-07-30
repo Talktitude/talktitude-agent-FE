@@ -27,24 +27,26 @@ export default function Header() {
         style={{ width: '140px', height: '29px' }}
         priority={true}
       />
-      <div className="flex items-center gap-9">
-        {navItems.map((item) => (
-          <button
-            key={item.path}
-            onClick={() => router.push(item.path)}
-            className={`text-l font-bold transition-colors ${
-              pathname.startsWith(item.path.split('?')[0])
-                ? 'text-white'
-                : 'text-[#C0C0C0] hover:text-white'
-            }`}
-          >
-            {item.label}
+      {pathname !== '/signup' && (
+        <div className="flex items-center gap-9">
+          {navItems.map((item) => (
+            <button
+              key={item.path}
+              onClick={() => router.push(item.path)}
+              className={`text-l font-bold transition-colors ${
+                pathname.startsWith(item.path.split('?')[0])
+                  ? 'text-white'
+                  : 'text-[#C0C0C0] hover:text-white'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+          <button className="rounded-full w-9 h-9 flex items-center justify-center p-0 m-0 hover:bg-white/30 transition-colors">
+            <IoPersonCircle className="w-full h-full" color="#C0C0C0" />
           </button>
-        ))}
-        <button className="rounded-full w-9 h-9 flex items-center justify-center p-0 m-0 hover:bg-white/30 transition-colors">
-          <IoPersonCircle className="w-full h-full" color="#C0C0C0" />
-        </button>
-      </div>
+        </div>
+      )}
     </header>
   );
 }
