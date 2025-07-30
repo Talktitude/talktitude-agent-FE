@@ -7,9 +7,12 @@ import FooterLinks from '@/components/auth/login/FooterLinks';
 import { LOGIN_ERROR_MESSAGES } from '@/lib/constants/errorMessages';
 
 export default function LoginPage() {
-  const [loginId, setLoginId] = useState('');
-  const [password, setPassword] = useState('');
-  const disabled = loginId.trim() === '' || password.trim() === '';
+  const [loginFormData, setLoginFormData] = useState({
+    loginId: '',
+    password: '',
+  });
+  const disabled =
+    loginFormData.loginId.trim() === '' || loginFormData.password.trim() === '';
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const [isEmptyLogin, setIsEmptyLogin] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState('');
@@ -21,22 +24,25 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (loginId.trim() === '' || password.trim() === '') {
+    if (
+      loginFormData.loginId.trim() === '' ||
+      loginFormData.password.trim() === ''
+    ) {
       setIsEmptyLogin(true);
       setLoginErrorMessage(LOGIN_ERROR_MESSAGES.EMPTY_LOGIN);
       return;
     }
-    console.log('로그인 시도:', { loginId, password });
+    console.log('로그인 시도:', { loginFormData });
     // 로그인 API 호출 로직 구현
   };
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginId(e.target.value);
+    setLoginFormData({ ...loginFormData, loginId: e.target.value });
     // 로그인 아이디 유효성 검사 로직 구현
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+    setLoginFormData({ ...loginFormData, password: e.target.value });
     // 비밀번호 유효성 검사 로직 구현
   };
 
@@ -45,8 +51,7 @@ export default function LoginPage() {
       <Logo />
       <div>
         <LoginForm
-          loginId={loginId}
-          password={password}
+          loginFormData={loginFormData}
           onIdChange={handleIdChange}
           onPasswordChange={handlePasswordChange}
           onSubmit={handleLogin}
