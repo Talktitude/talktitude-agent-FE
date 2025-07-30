@@ -14,7 +14,6 @@ export default function LoginPage() {
   const disabled =
     loginFormData.loginId.trim() === '' || loginFormData.password.trim() === '';
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
-  const [isEmptyLogin, setIsEmptyLogin] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState('');
 
   const handleKeepLoggedInClick = () => {
@@ -28,7 +27,6 @@ export default function LoginPage() {
       loginFormData.loginId.trim() === '' ||
       loginFormData.password.trim() === ''
     ) {
-      setIsEmptyLogin(true);
       setLoginErrorMessage(LOGIN_ERROR_MESSAGES.EMPTY_LOGIN);
       return;
     }
@@ -58,7 +56,6 @@ export default function LoginPage() {
           keepLoggedIn={keepLoggedIn}
           handleKeepLoggedInClick={handleKeepLoggedInClick}
           disabled={disabled}
-          isEmptyLogin={isEmptyLogin}
           loginErrorMessage={loginErrorMessage}
         />
         <FooterLinks />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoginFormPropsType } from '@/types/auth';
 import InputField from '../InputField';
-import { BottomButton } from '../BottomButton';
+import BottomButton from '../BottomButton';
 import RememberBox from './RememberBox';
 import { PLACEHOLDERS } from '@/lib/constants/placeholders';
 
@@ -13,7 +13,6 @@ const LoginForm = ({
   keepLoggedIn,
   handleKeepLoggedInClick,
   disabled,
-  isEmptyLogin,
   loginErrorMessage,
 }: LoginFormPropsType) => {
   return (
@@ -36,7 +35,7 @@ const LoginForm = ({
           keepLoggedIn={keepLoggedIn}
           handleKeepLoggedInClick={handleKeepLoggedInClick}
         />
-        {isEmptyLogin && (
+        {disabled && (
           <p className="text-textRed text-sm font-semibold">
             {loginErrorMessage}
           </p>
