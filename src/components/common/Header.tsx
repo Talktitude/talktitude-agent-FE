@@ -24,7 +24,8 @@ export default function Header() {
         alt="Talktitude white Logo"
         width={140}
         height={29}
-        priority
+        style={{ width: '140px', height: '29px' }}
+        priority={true}
       />
       <div className="flex items-center gap-9">
         {navItems.map((item) => (
