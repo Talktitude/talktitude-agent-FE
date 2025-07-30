@@ -4,8 +4,9 @@ export interface LoginFormPropsType {
     loginId: string;
     password: string;
   };
-  onIdChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 로그인 아이디 유효성 검사 함수 연결
-  onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 비밀번호 유효성 검사 함수 연결
+  onLoginChange: (
+    key: string,
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void; // 로그인 아이디 또는 비밀번호 변경 함수 연결
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void; // 로그인 폼 제출 함수 연결
   keepLoggedIn: boolean; // 로그인 유지 체크박스 상태
   handleKeepLoggedInClick: () => void; // 로그인 유지 토큰 설정 로직 함수 연결
@@ -45,6 +46,7 @@ export interface InputFieldPropsType {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 입력 필드 값 변경 함수
   isSignup?: boolean; // 회원가입 페이지 여부
   inputLabel?: string; // 입력 필드 라벨
+  ErrorMessage?: string; // 입력 필드 에러 메시지
 }
 
 export interface BottomButtonPropsType {
