@@ -7,8 +7,7 @@ import { PLACEHOLDERS } from '@/lib/constants/placeholders';
 
 const LoginForm = ({
   loginFormData,
-  onIdChange,
-  onPasswordChange,
+  onLoginChange,
   onSubmit,
   keepLoggedIn,
   handleKeepLoggedInClick,
@@ -22,13 +21,13 @@ const LoginForm = ({
           placeholder={PLACEHOLDERS.ID_INPUT}
           type="text"
           value={loginFormData.loginId}
-          onChange={onIdChange}
+          onChange={onLoginChange('loginId')}
         />
         <InputField
           placeholder={PLACEHOLDERS.PW_INPUT}
           type="password"
           value={loginFormData.password}
-          onChange={onPasswordChange}
+          onChange={onLoginChange('password')}
         />
 
         <RememberBox
