@@ -6,8 +6,11 @@ function InputField({
   type,
   value,
   onChange,
+  onBlur,
   isSignup,
   inputLabel,
+  errorMessage,
+  handleCheckId,
 }: InputFieldPropsType) {
   return (
     <div className="flex-1 flex flex-col gap-1.5">
@@ -16,13 +19,32 @@ function InputField({
           {inputLabel}
         </label>
       )}
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        className="w-full h-12 px-5 py-3.5 text-textBlack text-sm font-medium outline-none shadow-inputShadow rounded-[20px] border-[1px] border-lineGray focus:border-[1px] focus:border-mainColor"
-      />
+      <div className="flex flex-row gap-1.5 w-full">
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          className={`flex-1 h-12 px-5 py-3.5 text-textBlack text-sm font-medium outline-none shadow-inputShadow rounded-[20px] border-[1px] ${
+            errorMessage
+              ? 'border-textRed focus:border-textRed'
+              : 'border-lineGray focus:border-mainColor'
+          }`}
+        />
+        {handleCheckId && (
+          <button
+            className="h-12 bg-mainColor text-base font-semibold text-white rounded-[20px] px-5 py-2 justify-center items-center"
+            onClick={() => handleCheckId(value)}
+            type="button"
+          >
+            중복 확인
+          </button>
+        )}
+      </div>
+      {errorMessage && (
+        <p className="text-textRed text-xs font-medium ml-1">{errorMessage}</p>
+      )}
     </div>
   );
 }
