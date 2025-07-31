@@ -30,10 +30,12 @@ export interface SignupFormPropsType {
     phone: string;
     email: string;
   };
+  errors?: Record<string, string>;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onSignupChange: (
     key: string,
   ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleBlur: (key: string) => () => void;
   handleCheckId: (loginId: string) => void;
   disabled: boolean;
 }
@@ -44,9 +46,11 @@ export interface InputFieldPropsType {
   type: string; // 입력 필드 타입
   value: string; // 입력 필드 값
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 입력 필드 값 변경 함수
+  onBlur?: () => void; // 입력 필드 포커스 아웃 함수
   isSignup?: boolean; // 회원가입 페이지 여부
   inputLabel?: string; // 입력 필드 라벨
-  ErrorMessage?: string; // 입력 필드 에러 메시지
+  errorMessage?: string; // 입력 필드 에러 메시지
+  handleCheckId?: (loginId: string) => void; // 아이디 중복 확인 함수
 }
 
 export interface BottomButtonPropsType {
