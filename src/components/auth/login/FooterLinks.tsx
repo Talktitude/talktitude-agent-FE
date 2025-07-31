@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { BottomButton } from '../BottomButton';
+import BottomButton from '../BottomButton';
 
 const FooterLinks = () => {
   const router = useRouter();
