@@ -18,14 +18,16 @@ export default function Header() {
 
   return (
     <header className="bg-mainColor text-white px-16 py-2.5 flex items-center justify-between">
-      <Image
-        src={WhiteLogo}
-        alt="Talktitude white Logo"
-        width={140}
-        height={29}
-        style={{ width: '140px', height: '29px' }}
-        priority={true}
-      />
+      <button onClick={() => router.push('/support')}>
+        <Image
+          src={WhiteLogo}
+          alt="Talktitude white Logo"
+          width={140}
+          height={29}
+          style={{ width: '140px', height: '29px' }}
+          priority={true}
+        />
+      </button>
       {pathname !== '/signup' && (
         <div className="flex items-center gap-9">
           {navItems.map((item) => (
