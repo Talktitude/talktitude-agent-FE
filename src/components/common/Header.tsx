@@ -1,7 +1,6 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { IoPersonCircle } from 'react-icons/io5';
 import Image from 'next/image';
 import WhiteLogo from '/public/logo/white-logo.svg';
 
@@ -42,8 +41,14 @@ export default function Header() {
               {item.label}
             </button>
           ))}
-          <button className="rounded-full w-9 h-9 flex items-center justify-center p-0 m-0 hover:bg-white/30 transition-colors">
-            <IoPersonCircle className="w-full h-full" color="#C0C0C0" />
+          <button className="rounded-full w-9 h-9 flex items-center justify-center p-0 m-0 hover:bg-white/70 transition-colors">
+            <Image
+              src="https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg"
+              alt="profile"
+              width={28}
+              height={28}
+              className="rounded-full object-cover"
+            />
           </button>
         </div>
       )}
