@@ -24,7 +24,7 @@ const ReportDetailPanel = () => {
   };
   const [reportDetail] = useState<ReportDetailType>(MOCK_REPORT_DETAIL);
   return (
-    <div className="w-[calc(50%-60px)] bg-white rounded-[20px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] mx-6 my-4 p-8 space-y-4">
+    <div className="w-[calc(50%-60px)] bg-white rounded-[20px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] mx-6 my-4 p-8 flex flex-col gap-3 justify-between">
       <ReportInfo reportDetail={reportDetail} />
       <SummaryBox summaryText={reportDetail.summaryText} />
       <MemoBox
