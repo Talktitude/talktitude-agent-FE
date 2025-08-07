@@ -18,9 +18,9 @@ export default function LoginPage() {
   } = useLoginForm();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-16">
+    <div className="h-screen flex flex-col justify-center items-center gap-16">
       <Logo />
-      <div>
+      <div className="w-full max-w-[420px]">
         <LoginForm
           loginFormData={loginFormData}
           onLoginChange={handleLoginChange}

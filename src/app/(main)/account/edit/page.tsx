@@ -21,6 +21,11 @@ export default function AccountEditPage() {
       setUserData({ ...userData, [key]: e.target.value });
     };
 
+  const onEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(userData);
+  };
+
   const handleChangePhoto = () => {
     // 파일 선택 dialog 열기
     const input = document.createElement('input');
@@ -49,7 +54,11 @@ export default function AccountEditPage() {
           profileImageUrl={userData.profileImageUrl}
           onChangePhoto={handleChangePhoto}
         />
-        <EditForm userData={userData} onEditChange={onEditChange} />
+        <EditForm
+          userData={userData}
+          onEditChange={onEditChange}
+          onEditSubmit={onEditSubmit}
+        />
         <div className="max-w-[420px] mx-auto mt-6">
           <button className="text-xs font-medium rounded-full underline text-textLightGray">
             탈퇴하기

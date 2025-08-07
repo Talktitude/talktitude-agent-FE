@@ -3,7 +3,11 @@ import InputField from '../auth/InputField';
 import { EditFormPropsType } from '@/types/account';
 import { useRouter } from 'next/navigation';
 
-const EditForm = ({ userData, onEditChange }: EditFormPropsType) => {
+const EditForm = ({
+  userData,
+  onEditChange,
+  onEditSubmit,
+}: EditFormPropsType) => {
   const router = useRouter();
 
   // 현재 비밀번호 input 비어있는지 확인
@@ -11,7 +15,7 @@ const EditForm = ({ userData, onEditChange }: EditFormPropsType) => {
 
   return (
     <div className="w-full max-w-[420px] mx-auto py-4">
-      <form className="flex flex-col gap-4 h-full">
+      <form className="flex flex-col gap-4 h-full" onSubmit={onEditSubmit}>
         <InputField
           type="text"
           value={userData.name}

@@ -16,7 +16,7 @@ export default function BottomButton({
     <button
       onClick={onClick}
       aria-disabled={disabled}
-      className={`w-full h-14 px-40 py-3.5 rounded-[20px] text-base font-bold ${
+      className={`w-full h-14 px-auto py-3.5 rounded-[20px] text-base font-bold flex items-center justify-center ${
         type === 'submit' ? loginStyle : signupStyle
       } ${className}`}
     >

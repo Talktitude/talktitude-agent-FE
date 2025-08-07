@@ -8,9 +8,28 @@ export interface EditFormPropsType {
   onEditChange: (
     key: string,
   ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onEditSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export interface ProfileImagePropsType {
   profileImageUrl: string;
   onChangePhoto: () => void;
+}
+
+export interface ChangePasswordFormPropsType {
+  passwordData: {
+    currentPassword: string;
+    newPassword: string;
+    newPasswordConfirm: string;
+  };
+  errors: {
+    currentPassword: string;
+    newPassword: string;
+    newPasswordConfirm: string;
+  };
+  onPasswordChange: (
+    key: 'currentPassword' | 'newPassword' | 'newPasswordConfirm',
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePasswordSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  disabled: boolean;
 }
