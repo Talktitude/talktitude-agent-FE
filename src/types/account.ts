@@ -22,8 +22,13 @@ export interface ChangePasswordFormPropsType {
     newPassword: string;
     newPasswordConfirm: string;
   };
+  errors: {
+    currentPassword: string;
+    newPassword: string;
+    newPasswordConfirm: string;
+  };
   onPasswordChange: (
-    key: string,
+    key: 'currentPassword' | 'newPassword' | 'newPasswordConfirm',
   ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePasswordSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
