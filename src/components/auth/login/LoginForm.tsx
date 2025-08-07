@@ -15,7 +15,7 @@ const LoginForm = ({
   loginErrorMessage,
 }: LoginFormPropsType) => {
   return (
-    <div className="w-full max-w-[420px]">
+    <div className="w-full">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <InputField
           placeholder={LOGIN_PLACEHOLDERS.ID_INPUT}
