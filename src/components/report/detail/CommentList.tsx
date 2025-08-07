@@ -65,9 +65,9 @@ const CommentList = () => {
       ))}
     </div>
   ) : (
-    <div className="flex flex-col w-full items-center justify-center gap-2 text-textGray">
+    <div className="flex flex-col w-full h-full items-center justify-center gap-2 text-textGray">
       <MessageSquareMore className="w-6 text-textLightGray" />
-      <p className="text-xs">상담 메모가 없습니다.</p>
+      <p className="text-sm">상담 메모가 없습니다.</p>
     </div>
   );
 };

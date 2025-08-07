@@ -9,7 +9,7 @@ export default function ReportDetailPage() {
   return (
     <>
       <Header />
-      <div className="flex w-full h-[calc(100vh-60px)] bg-bgLightBlue">
+      <div className="flex w-full h-[calc(100vh-56px)] bg-bgLightBlue overflow-hidden">
         <ReportCalendar />
         <ReportDetailPanel />
       </div>
