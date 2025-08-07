@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { PASSWORD_CHANGE_ERROR_MESSAGES } from '@/lib/constants/errorMessages';
 
 // 비밀번호 유효성 검사 함수
@@ -141,11 +141,19 @@ export const usePasswordForm = () => {
     );
   };
 
+  const disabled = useMemo(() => {
+    return (
+      Object.values(passwordData).some((v) => v.trim() === '') ||
+      Object.values(errors).some((error) => error !== '')
+    );
+  }, [passwordData, errors]);
+
   return {
     passwordData,
     errors,
     onPasswordChange,
     handleSubmit,
     isFormValid,
+    disabled,
   };
 };

@@ -31,4 +31,5 @@ export interface ChangePasswordFormPropsType {
     key: 'currentPassword' | 'newPassword' | 'newPasswordConfirm',
   ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePasswordSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  disabled: boolean;
 }

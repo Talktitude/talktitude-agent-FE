@@ -6,7 +6,7 @@ import ChangePasswordForm from '@/components/account/password/ChangePasswordForm
 import { usePasswordForm } from '@/hooks/account/usePasswordForm';
 
 export default function PasswordChangePage() {
-  const { passwordData, errors, onPasswordChange, handleSubmit } =
+  const { passwordData, errors, onPasswordChange, handleSubmit, disabled } =
     usePasswordForm();
 
   return (
@@ -18,6 +18,7 @@ export default function PasswordChangePage() {
         errors={errors}
         onPasswordChange={onPasswordChange}
         onChangePasswordSubmit={handleSubmit}
+        disabled={disabled}
       />
     </div>
   );

@@ -7,14 +7,8 @@ const ChangePasswordForm = ({
   errors,
   onPasswordChange,
   onChangePasswordSubmit,
+  disabled,
 }: ChangePasswordFormPropsType) => {
-  const isPasswordEmpty =
-    !passwordData.currentPassword ||
-    !passwordData.newPassword ||
-    !passwordData.newPasswordConfirm;
-
-  const hasErrors = Object.values(errors).some((error) => error !== '');
-
   return (
     <div className="w-full max-w-[420px] mx-auto py-6 h-[calc(100vh-120px)]">
       <form
@@ -57,7 +51,7 @@ const ChangePasswordForm = ({
           </div>
         </div>
         <div className="mt-8">
-          <BottomButton type="submit" disabled={isPasswordEmpty || hasErrors}>
+          <BottomButton type="submit" disabled={disabled}>
             비밀번호 변경하기
           </BottomButton>
         </div>
