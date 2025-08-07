@@ -30,7 +30,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        'bg-bgLightBlue text-textBlack group/calendar p-2 sm:p-3 [--cell-size:1.8rem] sm:[--cell-size:2rem] md:[--cell-size:2.5rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent border-none w-full max-w-full overflow-hidden',
+        'bg-transparent text-textBlack group/calendar p-2 sm:p-3 [--cell-size:1.5rem] sm:[--cell-size:1.7rem] md:[--cell-size:2rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent border-none w-full max-w-full overflow-hidden',
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className,
@@ -73,7 +73,7 @@ function Calendar({
           defaultClassNames.button_next,
         ), // 다음 달 변경 버튼 스타일
         month_caption: cn(
-          'flex h-full w-full items-center justify-start pl-2 sm:pl-3 text-mainColor mb-3 sm:mb-4 md:mb-5',
+          'flex h-full w-full items-center justify-start pl-2 sm:pl-3 text-mainColor mb-2 sm:mb-3 md:mb-4',
           defaultClassNames.month_caption,
         ), // 월 제목 스타일 (2025년 7월)
         caption_label: cn(
@@ -89,7 +89,7 @@ function Calendar({
           'flex-1 select-none rounded-3xl text-[#5D5D5D] text-normal sm:text-[18px] md:text-base lg:text-[20px] font-medium',
           defaultClassNames.weekday,
         ), // 요일 영어 스타일 (mon, tue, wed, thu, fri, sat, sun 등)
-        week: cn('mt-2 flex w-full', defaultClassNames.week),
+        week: cn('mt-1 flex w-full', defaultClassNames.week),
         week_number_header: cn(
           'w-[--cell-size] select-none',
           defaultClassNames.week_number_header,
@@ -99,7 +99,7 @@ function Calendar({
           defaultClassNames.week_number,
         ),
         day: cn(
-          'group/day relative aspect-square h-full w-full select-none p-2 sm:p-2.5 md:p-3 lg:p-3.5 text-center',
+          'group/day relative aspect-square h-full w-full select-none p-1 sm:p-1.5 md:p-2 lg:p-2.5 text-center',
           defaultClassNames.day,
         ),
         today: cn(

@@ -25,7 +25,7 @@ export interface SignupFormPropsType {
   signupFormData: {
     loginId: string;
     password: string;
-    password1: string;
+    passwordConfirm: string;
     name: string;
     phone: string;
     email: string;
@@ -40,9 +40,9 @@ export interface SignupFormPropsType {
   disabled: boolean;
 }
 
-// 로그인, 회원가입 공통 인터페이스 (input 필드, 버튼)
+// 로그인, 회원가입, 내 정보 수정 공통 인터페이스 (input 필드, 버튼)
 export interface InputFieldPropsType {
-  placeholder: string; // 입력 필드 플레이스홀더
+  placeholder?: string; // 입력 필드 플레이스홀더
   type: string; // 입력 필드 타입
   value: string; // 입력 필드 값
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 입력 필드 값 변경 함수

@@ -40,12 +40,12 @@ const SignupForm = ({
         <InputField
           placeholder={SIGNUP_PLACEHOLDERS.PW_CONFIRM_INPUT}
           type="password"
-          value={signupFormData.password1}
-          onChange={onSignupChange('password1')}
-          onBlur={handleBlur('password1')}
+          value={signupFormData.passwordConfirm}
+          onChange={onSignupChange('passwordConfirm')}
+          onBlur={handleBlur('passwordConfirm')}
           isSignup
           inputLabel="비밀번호 확인"
-          errorMessage={errors?.password1}
+          errorMessage={errors?.passwordConfirm}
         />
         <InputField
           placeholder={SIGNUP_PLACEHOLDERS.NAME_INPUT}

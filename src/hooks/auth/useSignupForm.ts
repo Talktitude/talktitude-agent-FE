@@ -7,7 +7,7 @@ export const useSignupForm = () => {
   const [signupFormData, setSignupFormData] = useState({
     loginId: '',
     password: '',
-    password1: '',
+    passwordConfirm: '',
     name: '',
     phone: '',
     email: '',
@@ -93,7 +93,7 @@ export const useSignupForm = () => {
       case 'password':
         error = validatePassword(value);
         break;
-      case 'password1':
+      case 'passwordConfirm':
         error = validatePasswordConfirm(value, signupFormData.password);
         break;
       case 'name':
@@ -115,8 +115,8 @@ export const useSignupForm = () => {
 
     newErrors.loginId = validateLoginId(signupFormData.loginId);
     newErrors.password = validatePassword(signupFormData.password);
-    newErrors.password1 = validatePasswordConfirm(
-      signupFormData.password1,
+    newErrors.passwordConfirm = validatePasswordConfirm(
+      signupFormData.passwordConfirm,
       signupFormData.password,
     );
     newErrors.name = validateName(signupFormData.name);
@@ -151,8 +151,12 @@ export const useSignupForm = () => {
       }
 
       // 비밀번호가 변경되면 비밀번호 확인도 재검증
-      if (key === 'password' && touched.password1 && signupFormData.password1) {
-        validateField('password1', signupFormData.password1);
+      if (
+        key === 'password' &&
+        touched.passwordConfirm &&
+        signupFormData.passwordConfirm
+      ) {
+        validateField('passwordConfirm', signupFormData.passwordConfirm);
       }
     };
 
@@ -168,14 +172,22 @@ export const useSignupForm = () => {
     setTouched({
       loginId: true,
       password: true,
-      password1: true,
+      passwordConfirm: true,
       name: true,
       phone: true,
       email: true,
     });
 
     if (validateForm()) {
-      console.log(signupFormData); // 실제 회원가입 로직 호출
+      const signupData = {
+        loginId: signupFormData.loginId,
+        password: signupFormData.password,
+        name: signupFormData.name,
+        phone: signupFormData.phone,
+        email: signupFormData.email,
+      };
+      console.log(signupData);
+      // 실제 회원가입 로직 호출
     }
   };
 
