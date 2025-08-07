@@ -13,3 +13,12 @@ export const SIGNUP_ERROR_MESSAGES = {
   INVALID_PHONE: '전화번호는 숫자만 입력해주세요.',
   INVALID_EMAIL: '올바른 이메일 주소 형식이 아닙니다.',
 };
+
+export const PASSWORD_CHANGE_ERROR_MESSAGES = {
+  EMPTY_CURRENT_PASSWORD: '현재 비밀번호를 입력해주세요.',
+  EMPTY_NEW_PASSWORD: '새 비밀번호를 입력해주세요.',
+  EMPTY_NEW_PASSWORD_CONFIRM: '새 비밀번호 확인을 입력해주세요.',
+  WEAK_PASSWORD: '비밀번호는 8~20자의 영문, 숫자, 특수문자를 포함해야 합니다.',
+  PASSWORD_MISMATCH: '새 비밀번호가 일치하지 않습니다.',
+  SAME_AS_CURRENT: '새 비밀번호는 현재 비밀번호와 다르게 설정해주세요.',
+};
