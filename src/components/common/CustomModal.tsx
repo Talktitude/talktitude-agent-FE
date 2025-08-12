@@ -23,6 +23,7 @@ const CustomModal = ({
       case 'top-right':
         return '!left-auto !top-12 !right-16 !translate-x-0 !translate-y-0 m-0 max-w-md w-full max-h-[calc(100vh-2rem)] overflow-y-auto w-[380px]';
       case 'center':
+        return 'w-[400px]';
       default:
         return '';
     }

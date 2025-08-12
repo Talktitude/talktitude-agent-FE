@@ -47,3 +47,8 @@ export interface MyInfoModalPropsType {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+export interface ConfirmDeleteAccountModalPropsType {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
