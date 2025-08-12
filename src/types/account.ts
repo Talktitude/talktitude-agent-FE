@@ -34,11 +34,6 @@ export interface ChangePasswordFormPropsType {
   disabled: boolean;
 }
 
-export interface MyInfoModalPropsType {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
 export interface CustomModalPropsType {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -46,4 +41,9 @@ export interface CustomModalPropsType {
   mode?: 'center' | 'top-right';
   isFooter?: boolean;
   onLogout?: () => void;
+}
+
+export interface MyInfoModalPropsType {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
