@@ -3,6 +3,8 @@
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import WhiteLogo from '/public/logo/white-logo.svg';
+import { useState } from 'react';
+import MyInfoModal from '@/components/account/Info/MyInfoModal';
 
 export default function Header() {
   const pathname = usePathname();
@@ -10,6 +12,7 @@ export default function Header() {
   const date = new Date().toLocaleDateString('sv-SE', {
     timeZone: 'Asia/Seoul',
   });
+  const [userInfoModalOpen, setUserInfoModalOpen] = useState(false);
 
   const navItems = [
     { label: '상담 서비스', path: '/support' },
@@ -43,7 +46,12 @@ export default function Header() {
               {item.label}
             </button>
           ))}
-          <button className="rounded-full w-9 h-9 flex items-center justify-center p-0 m-0 hover:bg-white/70 transition-colors">
+          <button
+            className={`rounded-full w-9 h-9 flex items-center justify-center p-0 m-0 hover:bg-white/40 transition-colors ${
+              userInfoModalOpen ? 'bg-white/40' : ''
+            }`}
+            onClick={() => setUserInfoModalOpen(true)}
+          >
             <Image
               src="https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg"
               alt="profile"
@@ -52,6 +60,14 @@ export default function Header() {
               className="rounded-full object-cover"
             />
           </button>
+          {userInfoModalOpen && (
+            <div className="absolute">
+              <MyInfoModal
+                open={userInfoModalOpen}
+                onOpenChange={setUserInfoModalOpen}
+              />
+            </div>
+          )}
         </div>
       )}
     </header>
