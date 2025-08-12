@@ -5,6 +5,7 @@ import Header from '@/components/common/Header';
 import SectionHeader from '@/components/support/SectionHeader';
 import EditForm from '@/components/account/EditForm';
 import ProfileImage from '@/components/account/ProfileImage';
+import ConfirmDeleteAccountModal from '@/components/account/ConfirmDeleteAccountModal';
 
 export default function AccountEditPage() {
   const [userData, setUserData] = useState({
@@ -44,6 +45,12 @@ export default function AccountEditPage() {
     };
     input.click();
   };
+  const [isConfirmDeleteAccountModalOpen, setIsConfirmDeleteAccountModalOpen] =
+    useState(false);
+
+  const handleDeleteAccount = () => {
+    setIsConfirmDeleteAccountModalOpen(true);
+  };
 
   return (
     <div>
@@ -60,11 +67,20 @@ export default function AccountEditPage() {
           onEditSubmit={onEditSubmit}
         />
         <div className="max-w-[420px] mx-auto mt-6">
-          <button className="text-xs font-medium rounded-full underline text-textLightGray">
+          <button
+            className="text-xs font-medium rounded-full underline text-textLightGray"
+            onClick={handleDeleteAccount}
+          >
             탈퇴하기
           </button>
         </div>
       </div>
+      {isConfirmDeleteAccountModalOpen && (
+        <ConfirmDeleteAccountModal
+          open={isConfirmDeleteAccountModalOpen}
+          onOpenChange={setIsConfirmDeleteAccountModalOpen}
+        />
+      )}
     </div>
   );
 }
