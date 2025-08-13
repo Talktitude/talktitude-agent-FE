@@ -1,9 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { LOGIN_ERROR_MESSAGES } from '@/lib/constants/errorMessages';
+import { postLogin } from '@/api/accountApi';
 
 export const useLoginForm = () => {
+  const router = useRouter();
   const [loginFormData, setLoginFormData] = useState({
     loginId: '',
     password: '',
@@ -18,7 +21,7 @@ export const useLoginForm = () => {
     // 로그인 유지 토큰 설정 로직 구현
   };
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
       loginFormData.loginId.trim() === '' ||
@@ -27,8 +30,12 @@ export const useLoginForm = () => {
       setLoginErrorMessage(LOGIN_ERROR_MESSAGES.EMPTY_LOGIN);
       return;
     }
-    console.log('로그인 시도:', { loginFormData });
-    // 로그인 API 호출 로직 구현
+    try {
+      await postLogin(loginFormData);
+      router.push('/support');
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const handleLoginChange =
