@@ -1,5 +1,6 @@
 export interface ChatListItemType {
   chat_id: number;
+  sessionId: number;
   clientName: string;
   clientPhone: string;
   time: string;
