@@ -7,6 +7,7 @@ import BottomButton from '../BottomButton';
 const SignupForm = ({
   signupFormData,
   errors,
+  successMessages,
   onSubmit,
   onSignupChange,
   handleBlur,
@@ -25,6 +26,7 @@ const SignupForm = ({
           isSignup
           inputLabel="아이디"
           errorMessage={errors?.loginId}
+          successMessage={successMessages?.loginId}
           handleCheckId={() => handleCheckId(signupFormData.loginId)}
         />
         <InputField

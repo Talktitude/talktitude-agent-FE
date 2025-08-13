@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { SIGNUP_ERROR_MESSAGES } from '@/lib/constants/errorMessages';
+import { postSignup, getCheckId } from '@/api/accountApi';
 
 export const useSignupForm = () => {
+  const router = useRouter();
   const [signupFormData, setSignupFormData] = useState({
     loginId: '',
     password: '',
@@ -14,6 +17,9 @@ export const useSignupForm = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [successMessages, setSuccessMessages] = useState<
+    Record<string, string>
+  >({});
   const [isIdChecked, setIsIdChecked] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
@@ -108,6 +114,10 @@ export const useSignupForm = () => {
     }
 
     setErrors((prev) => ({ ...prev, [key]: error }));
+    // 에러가 있으면 successMessage 초기화
+    if (error) {
+      setSuccessMessages((prev) => ({ ...prev, [key]: '' }));
+    }
   };
 
   const validateForm = () => {
@@ -140,9 +150,10 @@ export const useSignupForm = () => {
       const value = e.target.value;
       setSignupFormData((prev) => ({ ...prev, [key]: value }));
 
-      // 아이디가 변경되면 중복 확인 상태 초기화
+      // 아이디가 변경되면 중복 확인 상태와 성공 메시지 초기화
       if (key === 'loginId') {
         setIsIdChecked(false);
+        setSuccessMessages((prev) => ({ ...prev, loginId: '' }));
       }
 
       // 필드가 터치되었고 값이 있으면 실시간 검증
@@ -165,7 +176,7 @@ export const useSignupForm = () => {
     validateField(key, signupFormData[key as keyof typeof signupFormData]);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // 모든 필드를 터치된 상태로 설정
@@ -186,12 +197,23 @@ export const useSignupForm = () => {
         phone: signupFormData.phone,
         email: signupFormData.email,
       };
-      console.log(signupData);
-      // 실제 회원가입 로직 호출
+
+      try {
+        await postSignup(signupData);
+        // 회원가입 성공 시 로그인 페이지로 이동
+        router.push('/login');
+      } catch (error) {
+        // 서버 에러 메시지를 alert로 표시
+        if (error instanceof Error) {
+          alert(error.message);
+        } else {
+          alert('회원가입 중 오류가 발생했습니다.');
+        }
+      }
     }
   };
 
-  const handleCheckId = (loginId: string) => {
+  const handleCheckId = async (loginId: string) => {
     if (!loginId.trim()) {
       setErrors((prev) => ({
         ...prev,
@@ -200,22 +222,35 @@ export const useSignupForm = () => {
       return;
     }
 
-    // 실제 중복 확인 API 호출 로직
-    console.log('중복 확인:', loginId);
+    try {
+      const response = await getCheckId(loginId);
 
-    // 임시로 성공 처리 (실제로는 API 응답에 따라 처리)
-    // API 응답이 성공이면:
-    setIsIdChecked(true);
-    setErrors((prev) => ({ ...prev, loginId: '' }));
-
-    // API 응답이 실패(중복)면:
-    // setIsIdChecked(false);
-    // setErrors((prev) => ({ ...prev, loginId: SIGNUP_ERROR_MESSAGES.DUPLICATE_ID }));
+      if (response === '사용 가능한 ID입니다.') {
+        setIsIdChecked(true);
+        setErrors((prev) => ({ ...prev, loginId: '' }));
+        setSuccessMessages((prev) => ({ ...prev, loginId: response }));
+      } else {
+        setIsIdChecked(false);
+        setSuccessMessages((prev) => ({ ...prev, loginId: '' }));
+        setErrors((prev) => ({
+          ...prev,
+          loginId: response || SIGNUP_ERROR_MESSAGES.DUPLICATE_ID,
+        }));
+      }
+    } catch {
+      setIsIdChecked(false);
+      setSuccessMessages((prev) => ({ ...prev, loginId: '' }));
+      setErrors((prev) => ({
+        ...prev,
+        loginId: SIGNUP_ERROR_MESSAGES.DUPLICATE_ID,
+      }));
+    }
   };
 
   return {
     signupFormData,
     errors,
+    successMessages,
     disabled,
     handleSignupChange,
     handleBlur,
