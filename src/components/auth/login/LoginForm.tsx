@@ -34,7 +34,7 @@ const LoginForm = ({
           keepLoggedIn={keepLoggedIn}
           handleKeepLoggedInClick={handleKeepLoggedInClick}
         />
-        {disabled && (
+        {loginErrorMessage && (
           <p className="text-textRed text-[13px] font-semibold">
             {loginErrorMessage}
           </p>

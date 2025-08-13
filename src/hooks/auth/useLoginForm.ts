@@ -40,7 +40,15 @@ export const useLoginForm = () => {
 
   const handleLoginChange =
     (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setLoginFormData({ ...loginFormData, [key]: e.target.value });
+      const newFormData = { ...loginFormData, [key]: e.target.value };
+      setLoginFormData(newFormData);
+      // 아이디 비밀번호 모두 입력되면 에러 메시지 초기화
+      if (
+        newFormData.loginId.trim() !== '' &&
+        newFormData.password.trim() !== ''
+      ) {
+        setLoginErrorMessage('');
+      }
     };
   return {
     loginFormData,
