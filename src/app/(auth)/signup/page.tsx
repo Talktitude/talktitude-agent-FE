@@ -10,6 +10,7 @@ export default function SignupPage() {
     signupFormData,
     errors,
     disabled,
+    successMessages,
     handleSignupChange,
     handleBlur,
     handleSubmit,
@@ -25,6 +26,7 @@ export default function SignupPage() {
         <SignupForm
           signupFormData={signupFormData}
           errors={errors}
+          successMessages={successMessages}
           onSubmit={handleSubmit}
           onSignupChange={handleSignupChange}
           handleBlur={handleBlur}

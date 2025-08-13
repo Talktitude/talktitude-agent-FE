@@ -10,6 +10,7 @@ function InputField({
   isSignup,
   inputLabel,
   errorMessage,
+  successMessage,
   handleCheckId,
 }: InputFieldPropsType) {
   return (
@@ -42,9 +43,13 @@ function InputField({
           </button>
         )}
       </div>
-      {errorMessage && (
+      {errorMessage ? (
         <p className="text-textRed text-xs font-medium ml-1">{errorMessage}</p>
-      )}
+      ) : successMessage ? (
+        <p className="text-mainColor text-xs font-medium ml-1">
+          {successMessage}
+        </p>
+      ) : null}
     </div>
   );
 }
