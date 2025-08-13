@@ -31,6 +31,7 @@ export interface SignupFormPropsType {
     email: string;
   };
   errors?: Record<string, string>;
+  successMessages?: Record<string, string>;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onSignupChange: (
     key: string,
@@ -50,6 +51,7 @@ export interface InputFieldPropsType {
   isSignup?: boolean; // 회원가입 페이지 여부
   inputLabel?: string; // 입력 필드 라벨
   errorMessage?: string; // 입력 필드 에러 메시지
+  successMessage?: string; // 입력 필드 성공 메시지
   handleCheckId?: (loginId: string) => void; // 아이디 중복 확인 함수
 }
 
