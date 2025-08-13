@@ -21,3 +21,16 @@ export const postSignup = async (data: SignupData) => {
     throw error; // 호출한 곳에서 에러 처리할 수 있게
   }
 };
+
+export const getCheckId = async (loginId: string) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/members/check-duplicate?loginId=${loginId}`,
+    );
+    console.log(response.data.message);
+    return response.data.message;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
