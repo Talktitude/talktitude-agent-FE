@@ -15,6 +15,7 @@ export interface MessageType {
 }
 
 export interface ChatHeaderInfoType {
+  sessionId: number;
   clientName: string;
   clientId: string;
   clientPhone: string;
