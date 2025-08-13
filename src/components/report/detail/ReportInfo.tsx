@@ -12,7 +12,7 @@ type InfoItemProps = {
 
 const InfoItem = ({ icon, label, value }: InfoItemProps) => (
   <div className="flex items-center flex-row space-x-2">
-    <div className="flex items-center flex-row space-x-1">
+    <div className="flex items-center flex-row space-x-1 w-[90px]">
       <span className="text-textGray">{icon}</span>
       <span className="text-sm text-textGray">{label}</span>
     </div>
