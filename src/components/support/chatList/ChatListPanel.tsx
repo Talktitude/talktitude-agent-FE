@@ -4,8 +4,13 @@ import React, { useState } from 'react';
 import SectionHeader from '@/components/support/SectionHeader';
 import SearchInput from '@/components/common/SearchInput';
 import ChatList from '@/components/support/chatList/ChatList';
+import type { ChatListItemType } from '@/types/support';
 
-const ChatListPanel = () => {
+interface ChatListPanelProps {
+  onChatSelect?: (chatItem: ChatListItemType) => void;
+}
+
+const ChatListPanel = ({ onChatSelect }: ChatListPanelProps) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearchChat = () => {
@@ -25,7 +30,7 @@ const ChatListPanel = () => {
         }}
         onChange={handleChangeChat}
       />
-      <ChatList />
+      <ChatList onChatSelect={onChatSelect} />
     </div>
   );
 };
