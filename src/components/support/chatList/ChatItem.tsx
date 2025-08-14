@@ -33,10 +33,10 @@ export default function ChatItem({
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <span className="text-textBlack text-base font-semibold">
-              {chatListItem.clientName}
+              {chatListItem.clientLoginId}
             </span>
             <span className="text-textLightGray text-sm font-medium">
-              {chatListItem.time}
+              {chatListItem.lastMessageTime}
             </span>
           </div>
           <div className="text-[#5D5D5D] text-base font-normal">
