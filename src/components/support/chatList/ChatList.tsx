@@ -1,160 +1,29 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import type { ChatListItemType } from '@/types/support';
 import ContactItem from './ChatItem';
 
-const MOCK_CHAT_LIST: ChatListItemType[] = [
-  {
-    chat_id: 1,
-    sessionId: 1,
-    clientName: '아이디',
-    clientPhone: '010-1234-5678',
-    time: '3분 전',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 2,
-    sessionId: 2,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 3,
-    sessionId: 3,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 4,
-    sessionId: 4,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 5,
-    sessionId: 5,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 6,
-    sessionId: 6,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 7,
-    sessionId: 7,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 8,
-    sessionId: 8,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 9,
-    sessionId: 9,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 10,
-    sessionId: 10,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 11,
-    sessionId: 11,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 12,
-    sessionId: 12,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    chat_id: 13,
-    sessionId: 13,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    time: '12월 31일',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-];
-
 interface ChatListProps {
-  onChatSelect?: (chatItem: ChatListItemType) => void;
+  chatListItems: ChatListItemType[];
+  selectedChat: number;
+  filterOption: 'ALL' | 'IN_PROGRESS' | 'FINISHED';
+  onFilterChange: (filter: 'ALL' | 'IN_PROGRESS' | 'FINISHED') => void;
+  onChatSelect: (chatId: number) => void;
 }
 
-export default function ChatList({ onChatSelect }: ChatListProps) {
-  const [selectedChat, setSelectedChat] = useState(-1);
-  const [chatListItems] = useState(MOCK_CHAT_LIST);
-
-  const [filterOption, setFilterOption] = useState<
-    'all' | 'ongoing' | 'completed'
-  >('all');
-
-  const handleFilterChange = (filter: 'all' | 'ongoing' | 'completed') => {
-    setFilterOption(filter);
-  };
-
+export default function ChatList({
+  chatListItems,
+  selectedChat,
+  filterOption,
+  onFilterChange,
+  onChatSelect,
+}: ChatListProps) {
   const filterButtons = [
-    { value: 'all', label: '전체' },
-    { value: 'ongoing', label: '진행중' },
-    { value: 'completed', label: '종료' },
+    { value: 'ALL', label: '전체' },
+    { value: 'IN_PROGRESS', label: '진행중' },
+    { value: 'FINISHED', label: '종료' },
   ] as const;
-
-  const onChattSelect = (chatId: number) => {
-    setSelectedChat(chatId);
-    const selectedChatItem = chatListItems.find(
-      (chat) => chat.chat_id === chatId,
-    );
-    if (selectedChatItem && onChatSelect) {
-      onChatSelect(selectedChatItem);
-    }
-  };
 
   return (
     <div className="bg-white flex-1 flex-col">
@@ -167,7 +36,7 @@ export default function ChatList({ onChatSelect }: ChatListProps) {
                 ? 'text-mainColor font-bold'
                 : 'text-textLightGray'
             }`}
-            onClick={() => handleFilterChange(filter.value)}
+            onClick={() => onFilterChange(filter.value)}
           >
             {filter.label}
           </button>
@@ -179,8 +48,8 @@ export default function ChatList({ onChatSelect }: ChatListProps) {
           <ContactItem
             key={index}
             chatListItem={chat}
-            isSelected={chat.chat_id === selectedChat}
-            onClick={() => onChattSelect(chat.chat_id)}
+            isSelected={chat.sessionId === selectedChat}
+            onClick={() => onChatSelect(chat.sessionId)}
           />
         ))}
       </div>
