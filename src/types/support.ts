@@ -1,9 +1,8 @@
 export interface ChatListItemType {
-  chat_id: number;
   sessionId: number;
-  clientName: string;
+  clientLoginId: string;
   clientPhone: string;
-  time: string;
+  lastMessageTime: string;
   profileImageUrl: string;
 }
 
