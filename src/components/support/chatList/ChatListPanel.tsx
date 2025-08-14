@@ -5,7 +5,7 @@ import SectionHeader from '@/components/support/SectionHeader';
 import SearchInput from '@/components/common/SearchInput';
 import ChatList from '@/components/support/chatList/ChatList';
 import type { ChatListItemType } from '@/types/support';
-import { getChatList } from '@/api/support/chatListPanelApi';
+import { getChatList, getChatSearch } from '@/api/support/chatListPanelApi';
 import { PiChats } from 'react-icons/pi';
 
 interface ChatListPanelProps {
@@ -21,7 +21,11 @@ const ChatListPanel = ({ onChatSelect }: ChatListPanelProps) => {
   >('ALL');
 
   const handleSearchChat = () => {
-    console.log(searchValue);
+    const fetchChatSearch = async () => {
+      const response = await getChatSearch(searchValue, filterOption);
+      setChatListItems(response.data);
+    };
+    fetchChatSearch();
     setSearchValue('');
   };
 
