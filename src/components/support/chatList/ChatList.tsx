@@ -3,6 +3,7 @@
 import React from 'react';
 import type { ChatListItemType, FilterOption } from '@/types/support';
 import ContactItem from './ChatItem';
+import { PiChats } from 'react-icons/pi';
 
 interface ChatListProps {
   chatListItems: ChatListItemType[];
@@ -10,25 +11,52 @@ interface ChatListProps {
   filterOption: FilterOption;
   onFilterChange: (filter: FilterOption) => void;
   onChatSelect: (chatId: number) => void;
+  isSearchMode?: boolean;
 }
 
 export default function ChatList({
   chatListItems,
   selectedChat,
+  filterOption,
   onChatSelect,
+  isSearchMode = false,
 }: ChatListProps) {
+  const filterText = filterOption === 'IN_PROGRESS' ? '진행 중인' : '종료된';
   return (
-    <div className="bg-white flex-1 flex-col">
-      <div className="flex-1 overflow-y-auto">
-        {chatListItems.map((chat, index) => (
-          <ContactItem
-            key={index}
-            chatListItem={chat}
-            isSelected={chat.sessionId === selectedChat}
-            onClick={() => onChatSelect(chat.sessionId)}
-          />
-        ))}
-      </div>
+    <div className="bg-white">
+      {isSearchMode && (
+        <div className="px-4 py-2 text-sm text-textGray border-b border-lineGray">
+          검색 결과 ({chatListItems.length}건)
+        </div>
+      )}
+      {chatListItems.length === 0 ? (
+        <div className="h-[calc(100dvh-300px)] flex flex-col items-center justify-center gap-2 text-textLightGray">
+          {isSearchMode ? (
+            <>
+              <PiChats size={45} color="#D9D9D9" />
+              <p className="text-sm">검색 결과가 없습니다.</p>
+              <p className="text-xs">다른 검색어를 시도해보세요.</p>
+            </>
+          ) : (
+            <>
+              <PiChats size={45} color="#D9D9D9" />
+              <p className="text-sm">{filterText} 상담 목록이 없습니다.</p>
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="flex-1 overflow-y-auto">
+          {chatListItems.length > 0 &&
+            chatListItems.map((chat, index) => (
+              <ContactItem
+                key={index}
+                chatListItem={chat}
+                isSelected={chat.sessionId === selectedChat}
+                onClick={() => onChatSelect(chat.sessionId)}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 }
