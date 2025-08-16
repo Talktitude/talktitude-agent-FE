@@ -1,13 +1,7 @@
 import React from 'react';
-import type { ChatListItemType } from '../../../types/support';
+import type { ChatItemProps } from '../../../types/support';
 import Image from 'next/image';
 import { useTimeFormat } from '../../../hooks/useTimeFormat';
-
-interface ChatItemProps {
-  chatListItem: ChatListItemType;
-  isSelected: boolean;
-  onClick: () => void;
-}
 
 export default function ChatItem({
   chatListItem,

@@ -1,7 +1,7 @@
 import React from 'react';
-import type { FilterPropsType } from '@/types/support';
+import type { FilterProps } from '@/types/support';
 
-const Filter = ({ filterOption, onFilterChange }: FilterPropsType) => {
+const Filter = ({ filterOption, onFilterChange }: FilterProps) => {
   const filterButtons = [
     { value: 'ALL', label: '전체' },
     { value: 'IN_PROGRESS', label: '진행중' },

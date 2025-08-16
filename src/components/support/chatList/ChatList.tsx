@@ -1,18 +1,9 @@
 'use client';
 
 import React from 'react';
-import type { ChatListItemType, FilterOption } from '@/types/support';
 import ContactItem from './ChatItem';
 import { PiChats } from 'react-icons/pi';
-
-interface ChatListProps {
-  chatListItems: ChatListItemType[];
-  selectedChat: number;
-  filterOption: FilterOption;
-  onFilterChange: (filter: FilterOption) => void;
-  onChatSelect: (chatId: number) => void;
-  isSearchMode?: boolean;
-}
+import type { ChatListProp } from '@/types/support';
 
 export default function ChatList({
   chatListItems,
@@ -20,7 +11,7 @@ export default function ChatList({
   filterOption,
   onChatSelect,
   isSearchMode = false,
-}: ChatListProps) {
+}: ChatListProp) {
   const filterText = filterOption === 'IN_PROGRESS' ? '진행 중인' : '종료된';
   return (
     <div className="bg-white">
