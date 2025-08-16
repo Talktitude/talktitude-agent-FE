@@ -16,6 +16,9 @@ interface ChatListPanelProps {
 const ChatListPanel = ({ onChatSelect }: ChatListPanelProps) => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedChat, setSelectedChat] = useState(-1);
+  const [allChatListItems, setAllChatListItems] = useState<ChatListItemType[]>(
+    [],
+  );
   const [chatListItems, setChatListItems] = useState<ChatListItemType[]>([]);
   const [filterOption, setFilterOption] = useState<FilterOption>('ALL');
 
@@ -47,6 +50,16 @@ const ChatListPanel = ({ onChatSelect }: ChatListPanelProps) => {
     }
   };
 
+  // 전체 데이터: 최초 1회 렌더링
+  useEffect(() => {
+    const fetchAllChatList = async () => {
+      const response = await getChatList('ALL');
+      setAllChatListItems(response.data);
+    };
+    fetchAllChatList();
+  }, []);
+
+  // 필터링된 데이터: filterOption 바뀔 때마다 렌더링
   useEffect(() => {
     const fetchChatList = async () => {
       const response = await getChatList(filterOption);
@@ -58,7 +71,7 @@ const ChatListPanel = ({ onChatSelect }: ChatListPanelProps) => {
   return (
     <div className="flex flex-col w-[30%] gap-1 border-r border-lineGray overflow-y-auto">
       <SectionHeader title="상담 목록" />
-      {chatListItems.length === 0 ? (
+      {allChatListItems.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full gap-2.5">
           <PiChats size={45} color="#949494" />
           <p className="text-textLightGray text-base font-medium text-center">
