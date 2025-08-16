@@ -1,8 +1,14 @@
 export const PLACEHOLDERS = {
   CHAT_INPUT: '메시지를 입력하세요',
-  CLIENT_SEARCH: '고객을 검색하세요',
+  CLIENT_SEARCH: '고객 아이디를 검색하세요',
   CHAT_MEMO: '상담 중 메모를 입력하세요',
   MEMO_INPUT: '상담 내용이나 특이사항을 입력하세요',
+};
+
+export const CHAT_LIST_PLACEHOLDERS = {
+  NO_SEARCH_RESULT: '일치하는 고객 아이디가 없습니다.',
+  NO_CHAT_RESULT: '상담 목록이 없습니다.',
+  NO_CHAT_RESULT_SEARCH: '아이디를 다시 확인해주세요.',
 };
 
 export const LOGIN_PLACEHOLDERS = {

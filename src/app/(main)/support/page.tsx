@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '@/components/common/Header';
 import ChatListPanel from '@/components/support/chatList/ChatListPanel';
 import ChatRoomPanel from '@/components/support/chatRoom/ChatRoomPanel';
@@ -10,6 +11,7 @@ import Image from 'next/image';
 import GrayLogo from '/public/logo/gray-logo.svg';
 
 export default function SupportPage() {
+  const router = useRouter();
   const [inputMessage, setInputMessage] = useState('');
   const [selectedChat, setSelectedChat] = useState<ChatListItemType | null>(
     null,
@@ -17,11 +19,12 @@ export default function SupportPage() {
 
   const handleChatSelect = (chatItem: ChatListItemType) => {
     setSelectedChat(chatItem);
+    router.replace(`/support?sessionId=${chatItem.sessionId}`);
   };
   return (
     <>
       <Header />
-      <div className="flex w-full h-[calc(100vh-60px)]">
+      <div className="flex w-full h-[calc(100vh-56px)]">
         <ChatListPanel onChatSelect={handleChatSelect} />
         {selectedChat ? (
           <>

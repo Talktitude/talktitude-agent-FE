@@ -1,18 +1,15 @@
 import React from 'react';
-import type { ChatListItemType } from '../../../types/support';
+import type { ChatItemProps } from '../../../types/support';
 import Image from 'next/image';
-
-interface ChatItemProps {
-  chatListItem: ChatListItemType;
-  isSelected: boolean;
-  onClick: () => void;
-}
+import { useTimeFormat } from '../../../hooks/useTimeFormat';
 
 export default function ChatItem({
   chatListItem,
   isSelected,
   onClick,
 }: ChatItemProps) {
+  const formattedTime = useTimeFormat(chatListItem.lastMessageTime);
+
   return (
     <div
       className={`px-5 py-3.5 cursor-pointer ${
@@ -23,7 +20,10 @@ export default function ChatItem({
       <div className="flex items-center gap-3">
         <div className="w-14 h-14 rounded-full flex items-center justify-center">
           <Image
-            src={chatListItem.profileImageUrl}
+            src={
+              chatListItem.profileImageUrl ||
+              'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
+            }
             alt="profile"
             width={48}
             height={48}
@@ -36,7 +36,7 @@ export default function ChatItem({
               {chatListItem.clientLoginId}
             </span>
             <span className="text-textLightGray text-sm font-medium">
-              {chatListItem.lastMessageTime}
+              {formattedTime}
             </span>
           </div>
           <div className="text-[#5D5D5D] text-base font-normal">

@@ -1,9 +1,35 @@
+export type FilterOption = 'ALL' | 'IN_PROGRESS' | 'FINISHED';
+
+// Filter.tsx
+export interface FilterProps {
+  filterOption: FilterOption;
+  onFilterChange: (filter: FilterOption) => void;
+}
+
+// ChatList.tsx - props
+export interface ChatListProp {
+  chatListItems: ChatListItemType[];
+  selectedChat: number;
+  filterOption: FilterOption;
+  onFilterChange: (filter: FilterOption) => void;
+  onChatSelect: (chatId: number) => void;
+  isSearchMode?: boolean;
+}
+
+// ChatItem.tsx - props 아님, 타입 정의
 export interface ChatListItemType {
   sessionId: number;
   clientLoginId: string;
   clientPhone: string;
   lastMessageTime: string;
   profileImageUrl: string;
+}
+
+// ChatItem.tsx - props
+export interface ChatItemProps {
+  chatListItem: ChatListItemType;
+  isSelected: boolean;
+  onClick: () => void;
 }
 
 export interface MessageType {
