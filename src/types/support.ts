@@ -1,3 +1,10 @@
+export type FilterOption = 'ALL' | 'IN_PROGRESS' | 'FINISHED';
+
+export interface FilterPropsType {
+  filterOption: FilterOption;
+  onFilterChange: (filter: FilterOption) => void;
+}
+
 export interface ChatListItemType {
   sessionId: number;
   clientLoginId: string;
