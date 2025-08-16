@@ -4,6 +4,7 @@ import React from 'react';
 import ContactItem from './ChatItem';
 import { PiChats } from 'react-icons/pi';
 import type { ChatListProp } from '@/types/support';
+import { CHAT_LIST_PLACEHOLDERS } from '@/lib/constants/placeholders';
 
 export default function ChatList({
   chatListItems,
@@ -25,13 +26,19 @@ export default function ChatList({
           {isSearchMode ? (
             <>
               <PiChats size={45} color="#D9D9D9" />
-              <p className="text-sm">검색 결과가 없습니다.</p>
-              <p className="text-xs">다른 검색어를 시도해보세요.</p>
+              <p className="text-sm">
+                {CHAT_LIST_PLACEHOLDERS.NO_SEARCH_RESULT}
+              </p>
+              <p className="text-xs">
+                {CHAT_LIST_PLACEHOLDERS.NO_CHAT_RESULT_SEARCH}
+              </p>
             </>
           ) : (
             <>
               <PiChats size={45} color="#D9D9D9" />
-              <p className="text-sm">{filterText} 상담 목록이 없습니다.</p>
+              <p className="text-sm">
+                {`${filterText} ${CHAT_LIST_PLACEHOLDERS.NO_CHAT_RESULT}`}
+              </p>
             </>
           )}
         </div>
