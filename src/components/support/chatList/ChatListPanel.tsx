@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import SectionHeader from '@/components/support/SectionHeader';
 import SearchInput from '@/components/common/SearchInput';
+import Filter from '@/components/support/chatList/Filter';
 import ChatList from '@/components/support/chatList/ChatList';
-import type { ChatListItemType } from '@/types/support';
+import type { ChatListItemType, FilterOption } from '@/types/support';
 import { getChatList, getChatSearch } from '@/api/support/chatListPanelApi';
 import { PiChats } from 'react-icons/pi';
 
@@ -16,9 +17,7 @@ const ChatListPanel = ({ onChatSelect }: ChatListPanelProps) => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedChat, setSelectedChat] = useState(-1);
   const [chatListItems, setChatListItems] = useState<ChatListItemType[]>([]);
-  const [filterOption, setFilterOption] = useState<
-    'ALL' | 'IN_PROGRESS' | 'FINISHED'
-  >('ALL');
+  const [filterOption, setFilterOption] = useState<FilterOption>('ALL');
 
   const handleSearchChat = () => {
     const fetchChatSearch = async () => {
@@ -73,6 +72,10 @@ const ChatListPanel = ({ onChatSelect }: ChatListPanelProps) => {
               handleSearchChat();
             }}
             onChange={onChangeSearchChat}
+          />
+          <Filter
+            filterOption={filterOption}
+            onFilterChange={handleFilterChange}
           />
           <ChatList
             chatListItems={chatListItems}
