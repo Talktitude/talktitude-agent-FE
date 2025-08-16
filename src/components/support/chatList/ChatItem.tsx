@@ -1,6 +1,7 @@
 import React from 'react';
 import type { ChatListItemType } from '../../../types/support';
 import Image from 'next/image';
+import { useTimeFormat } from '../../../hooks/useTimeFormat';
 
 interface ChatItemProps {
   chatListItem: ChatListItemType;
@@ -13,6 +14,8 @@ export default function ChatItem({
   isSelected,
   onClick,
 }: ChatItemProps) {
+  const formattedTime = useTimeFormat(chatListItem.lastMessageTime);
+
   return (
     <div
       className={`px-5 py-3.5 cursor-pointer ${
@@ -39,7 +42,7 @@ export default function ChatItem({
               {chatListItem.clientLoginId}
             </span>
             <span className="text-textLightGray text-sm font-medium">
-              {chatListItem.lastMessageTime}
+              {formattedTime}
             </span>
           </div>
           <div className="text-[#5D5D5D] text-base font-normal">
