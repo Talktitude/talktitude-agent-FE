@@ -23,7 +23,10 @@ export default function ChatItem({
       <div className="flex items-center gap-3">
         <div className="w-14 h-14 rounded-full flex items-center justify-center">
           <Image
-            src={chatListItem.profileImageUrl}
+            src={
+              chatListItem.profileImageUrl ||
+              'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
+            }
             alt="profile"
             width={48}
             height={48}
