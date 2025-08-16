@@ -98,6 +98,7 @@ const ChatListPanel = ({ onChatSelect }: ChatListPanelProps) => {
               handleSearchChat();
             }}
             onChange={onChangeSearchChat}
+            value={searchValue}
           />
           <Filter
             filterOption={filterOption}
