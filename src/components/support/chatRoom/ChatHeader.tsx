@@ -1,9 +1,5 @@
-import type { ChatHeaderInfoType } from '@/types/support';
+import type { ChatHeaderProps } from '@/types/support';
 import { BsTelephoneXFill } from 'react-icons/bs';
-
-interface ChatHeaderProps {
-  chatInfo: ChatHeaderInfoType;
-}
 
 export default function ChatHeader({ chatInfo }: ChatHeaderProps) {
   const handleSupportEnd = (sessionId: number) => {
@@ -14,7 +10,7 @@ export default function ChatHeader({ chatInfo }: ChatHeaderProps) {
     <div className="sticky top-0 bg-bgLightBlue border-b border-lineGray p-5 m-0 flex flex-row items-center justify-between">
       <div className="flex flex-col items-start">
         <div className="text-textBlack text-xl font-bold">
-          {chatInfo.clientName} ({chatInfo.clientId})
+          {chatInfo.clientName} ({chatInfo.clientLoginId})
         </div>
         <div className="text-textLightGray text-sm font-medium leading-tight">
           {chatInfo.clientPhone}

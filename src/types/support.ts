@@ -32,19 +32,25 @@ export interface ChatItemProps {
   onClick: () => void;
 }
 
+// ChatHeader.tsx - props 아님, 타입 정의
+export interface ChatHeaderInfoType {
+  sessionId: number;
+  clientLoginId: string;
+  clientName: string;
+  clientPhone: string;
+}
+
+// ChatHeader.tsx - props
+export interface ChatHeaderProps {
+  chatInfo: ChatHeaderInfoType;
+}
+
 export interface MessageType {
   messageId: number;
   senderType: 'client' | 'user';
   original: string;
   polite?: string;
   timestamp: string;
-}
-
-export interface ChatHeaderInfoType {
-  sessionId: number;
-  clientName: string;
-  clientId: string;
-  clientPhone: string;
 }
 
 export interface ClientInfoType {
