@@ -45,12 +45,14 @@ export interface ChatHeaderProps {
   chatInfo: ChatHeaderInfoType;
 }
 
-export interface MessageType {
+// ChatRoom.tsx - props 아님, 타입 정의
+export interface SupportMessageType {
   messageId: number;
-  senderType: 'client' | 'user';
-  original: string;
-  polite?: string;
-  timestamp: string;
+  textToShow: string;
+  originalText: string;
+  showOriginal: boolean;
+  senderType: string;
+  createdAt: string;
 }
 
 export interface ClientInfoType {
