@@ -3,9 +3,12 @@
 import ChatHeader from './ChatHeader';
 import ChatRoom from './ChatRoom';
 import ChatInput from './ChatInput';
-import { MessageType, ChatHeaderInfoType } from '@/types/support';
-import { useEffect, useState } from 'react';
-import { getChatHeaderInfo } from '@/api/support/chatRoomPanelApi';
+import { SupportMessageType, ChatHeaderInfoType } from '@/types/support';
+import { useEffect, useState, useCallback } from 'react';
+import {
+  getChatHeaderInfo,
+  getChatMessage,
+} from '@/api/support/chatRoomPanelApi';
 import { useSearchParams } from 'next/navigation';
 
 interface ChatRoomPanelProps {
@@ -30,17 +33,24 @@ const ChatRoomPanel = ({
   const handleSendMessage = (message: string) => {
     const newMessage = {
       messageId: messages.length + 1,
-      senderType: 'user',
-      original: message,
-      timestamp: new Date().toISOString(),
-    } as MessageType;
+      senderType: 'USER',
+      originalText: message,
+      textToShow: message,
+      showOriginal: false,
+      createdAt: new Date().toISOString(),
+    } as SupportMessageType;
     setMessages([...messages, newMessage]);
-    currentSetInputMessage(''); // 메시지 전송 후 입력창 초기화
+    currentSetInputMessage('');
   };
 
   const handleInputChange = (value: string) => {
     currentSetInputMessage(value);
   };
+
+  const fetchChatMessage = useCallback(async () => {
+    const response = await getChatMessage(Number(sessionId));
+    setMessages(response.data);
+  }, [sessionId]);
 
   useEffect(() => {
     const fetchChatHeaderInfo = async (sessionId: number) => {
@@ -49,8 +59,9 @@ const ChatRoomPanel = ({
     };
     if (sessionId) {
       fetchChatHeaderInfo(Number(sessionId));
+      fetchChatMessage();
     }
-  }, [sessionId]);
+  }, [sessionId, fetchChatMessage]);
 
   return (
     <div className="flex flex-col w-[40%] border-r border-lineGray bg-bgLightBlue">
