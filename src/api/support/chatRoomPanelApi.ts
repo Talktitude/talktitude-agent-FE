@@ -35,3 +35,20 @@ export const getChatMessage = async (sessionId: number) => {
     throw error;
   }
 };
+
+export const patchEndChat = async (sessionId: number) => {
+  try {
+    const response = await axios.patch(
+      `${API_URL}/chat/sessions/${sessionId}/finish`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    console.log('채팅 종료', response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
