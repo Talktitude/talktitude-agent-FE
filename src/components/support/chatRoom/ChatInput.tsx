@@ -7,19 +7,23 @@ interface ChatInputProps {
   onSendMessage: (message: string) => void;
   value?: string;
   onChange?: (value: string) => void;
+  disabled?: boolean;
 }
 
 export default function ChatInput({
   onSendMessage,
   value: externalValue,
   onChange: externalOnChange,
+  disabled,
 }: ChatInputProps) {
   const [message, setMessage] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const isDisabled = !!disabled;
 
   // 외부에서 제어하는 경우(추천 답변 선택 시) 내부에서 제어하는 경우(기본 입력 시) 구분하여 값 설정
   const inputValue = externalValue !== undefined ? externalValue : message;
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isDisabled) return;
     const newValue = e.target.value;
     if (externalOnChange) {
       externalOnChange(newValue);
@@ -29,6 +33,7 @@ export default function ChatInput({
   };
 
   const handleImageUpload = () => {
+    if (isDisabled) return;
     fileInputRef.current?.click();
   };
 
@@ -42,7 +47,7 @@ export default function ChatInput({
   };
 
   const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+    if (isDisabled || !inputValue.trim()) return;
 
     onSendMessage(inputValue);
     if (!externalOnChange) {
@@ -51,6 +56,7 @@ export default function ChatInput({
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isDisabled) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
@@ -67,24 +73,35 @@ export default function ChatInput({
         className="hidden"
       />
       <button
-        className="bg-[#EEEEEE] flex items-center justify-center rounded-full w-10 h-10 mr-3"
+        className={`bg-[#EEEEEE] flex items-center justify-center rounded-full w-10 h-10 mr-3 ${
+          isDisabled ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
         onClick={handleImageUpload}
+        disabled={isDisabled}
+        aria-disabled={isDisabled}
       >
         <LuImagePlus size={30} color="#3b3b3b" />
       </button>
       <input
-        placeholder={PLACEHOLDERS.CHAT_INPUT}
+        placeholder={
+          isDisabled
+            ? PLACEHOLDERS.CHAT_INPUT_FINISHED
+            : PLACEHOLDERS.CHAT_INPUT
+        }
         value={inputValue}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
+        disabled={isDisabled}
         className="w-full h-12 px-5 py-3 text-textBlack text-base font-medium outline-none shadow-inputShadow rounded-[1.25rem] border-[1px] border-lineGray focus:border-[1px] focus:border-mainColor resize-none flex-1"
       />
       <button
         className={`ml-3 flex h-10 w-10 items-center justify-center rounded-full ${
-          inputValue.trim() ? 'bg-mainColor' : 'bg-lineGray aria-disabled'
+          !isDisabled && inputValue.trim()
+            ? 'bg-mainColor'
+            : 'bg-lineGray cursor-not-allowed'
         }`}
         onClick={handleSendMessage}
-        disabled={!inputValue.trim()}
+        disabled={isDisabled || !inputValue.trim()}
       >
         <IoMdArrowRoundUp size={30} color="white" />
       </button>

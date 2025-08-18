@@ -38,6 +38,7 @@ export interface ChatHeaderInfoType {
   clientLoginId: string;
   clientName: string;
   clientPhone: string;
+  status?: 'IN_PROGRESS' | 'FINISHED';
 }
 
 // ChatHeader.tsx - props

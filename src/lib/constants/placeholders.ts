@@ -1,5 +1,6 @@
 export const PLACEHOLDERS = {
   CHAT_INPUT: '메시지를 입력하세요',
+  CHAT_INPUT_FINISHED: '종료된 상담입니다.',
   CLIENT_SEARCH: '고객 아이디를 검색하세요',
   CHAT_MEMO: '상담 중 메모를 입력하세요',
   MEMO_INPUT: '상담 내용이나 특이사항을 입력하세요',
