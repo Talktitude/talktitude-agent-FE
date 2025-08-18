@@ -71,6 +71,7 @@ const ChatRoomPanel = ({
         onSendMessage={handleSendMessage}
         value={currentInputMessage}
         onChange={handleInputChange}
+        disabled={chatInfo?.status === 'FINISHED'}
       />
     </div>
   );
