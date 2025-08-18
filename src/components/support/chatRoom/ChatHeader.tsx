@@ -1,9 +1,11 @@
+import { patchEndChat } from '@/api/support/chatRoomPanelApi';
 import type { ChatHeaderProps } from '@/types/support';
 import { BsTelephoneXFill } from 'react-icons/bs';
 
 export default function ChatHeader({ chatInfo }: ChatHeaderProps) {
-  const handleSupportEnd = (sessionId: number) => {
-    console.log(sessionId);
+  const handleSupportEnd = async (sessionId: number) => {
+    const response = await patchEndChat(sessionId);
+    console.log(response.message);
   };
 
   return (
