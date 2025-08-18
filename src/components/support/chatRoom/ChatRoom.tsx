@@ -1,10 +1,10 @@
 import ClientBubble from './ClientBubble';
 import AgentBubble from './AgentBubble';
-import { MessageType } from '@/types/support';
+import { SupportMessageType } from '@/types/support';
 import { useRef, useEffect } from 'react';
 
 interface ChatRoomProps {
-  messages: MessageType[];
+  messages: SupportMessageType[];
 }
 
 export default function ChatRoom({ messages }: ChatRoomProps) {
@@ -19,10 +19,10 @@ export default function ChatRoom({ messages }: ChatRoomProps) {
   }, [messages]);
 
   return (
-    <div className="flex flex-col gap-2 p-5 overflow-y-auto">
+    <div className="flex flex-col h-[calc(100vh-56px)] gap-2 p-5 overflow-y-auto">
       {messages.map((message) => (
         <div key={message.messageId}>
-          {message.senderType === 'client' ? (
+          {message.senderType === 'CLIENT' ? (
             <ClientBubble message={message} />
           ) : (
             <AgentBubble message={message} />
