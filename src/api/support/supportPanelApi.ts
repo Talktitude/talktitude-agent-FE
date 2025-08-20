@@ -65,3 +65,18 @@ export const getSupportHistory = async (sessionId: number) => {
     throw error;
   }
 };
+
+export const getChatMemo = async (sessionId: number) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/clients/${sessionId}/during-session`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
