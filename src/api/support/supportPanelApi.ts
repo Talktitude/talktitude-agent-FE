@@ -20,3 +20,16 @@ export const getClientInfo = async (sessionId: number) => {
     throw error;
   }
 };
+
+export const getOrderHistory = async (sessionId: number) => {
+  try {
+    const response = await axios.get(`${API_URL}/clients/${sessionId}/orders`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
