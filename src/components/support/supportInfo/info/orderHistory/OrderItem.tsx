@@ -8,7 +8,7 @@ import { TiArrowSortedDown } from 'react-icons/ti';
 
 interface OrderItemProps {
   orderInfo: OrderHistoryItemType;
-  orderDetail: OrderDetailItemType;
+  orderDetail: OrderDetailItemType | null;
   onHandleOrderItemClick: () => void;
   isTabMenuOpen: boolean;
 }
@@ -43,7 +43,7 @@ const OrderItem = ({
       >
         <header className="flex items-center justify-between w-full">
           <div className="flex flex-row gap-2 items-center">
-            <span className="text-textBlack text-base font-medium">
+            <span className="text-textBlack text-base font-semibold">
               {orderInfo.orderDate}
             </span>
             <span className="text-textBlack text-base font-medium">•</span>
