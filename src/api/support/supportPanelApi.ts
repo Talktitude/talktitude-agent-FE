@@ -58,8 +58,8 @@ export const getSupportHistory = async (sessionId: number) => {
         headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    console.log('상담 이력 조회', response.data.data.content);
-    return response.data.data.content;
+    // console.log('상담 이력 조회', response.data.data);
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;
