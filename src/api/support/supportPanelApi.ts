@@ -49,3 +49,19 @@ export const getOrderDetail = async (
     throw error;
   }
 };
+
+export const getSupportHistory = async (sessionId: number) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/clients/${sessionId}/reports`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    console.log('상담 이력 조회', response.data.data.content);
+    return response.data.data.content;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
