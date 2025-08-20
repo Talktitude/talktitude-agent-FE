@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   ChatHistoryItemType,
   ClientInfoType,
@@ -65,15 +66,30 @@ const tabs = [
 
 const InfoPanel = () => {
   const [activeTab, setActiveTab] = useState('info');
-  const [clientInfo] = useState(MOCK_CLIENT_INFO);
+  const [clientInfo, setClientInfo] = useState<ClientInfoType>();
   const [orderHistory] = useState(MOCK_ORDER_HISTORY);
   const [chatHistory] = useState(MOCK_CHAT_HISTORY);
   const [chatMemo] = useState(MOCK_CHAT_MEMO);
+  const sessionId = useSearchParams().get('sessionId');
+
+  useEffect(() => {
+    const fetchClientInfo = async () => {
+      const response = await getClientInfo(Number(sessionId));
+      setClientInfo(response.data);
+    };
+    fetchClientInfo();
+  }, [sessionId]);
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'info':
-        return <ClientInfoPanel clientInfo={clientInfo} />;
+        return clientInfo ? (
+          <ClientInfoPanel clientInfo={clientInfo} />
+        ) : (
+          <div className="h-full p-4 flex items-center justify-center text-textGray font-medium">
+            고객 정보가 없습니다.
+          </div>
+        );
       case 'orders':
         return orderHistory.length > 0 ? (
           <OrderHistoryPanel orderHistory={orderHistory} />
