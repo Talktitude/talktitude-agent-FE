@@ -40,7 +40,7 @@ const tabs = [
 const InfoPanel = () => {
   const [activeTab, setActiveTab] = useState('info');
   const [clientInfo, setClientInfo] = useState<ClientInfoType>();
-  const [orderHistory] = useState(MOCK_ORDER_HISTORY);
+  const [orderHistory, setOrderHistory] = useState<OrderHistoryItemType[]>([]);
   const [chatHistory] = useState(MOCK_CHAT_HISTORY);
   const [chatMemo] = useState(MOCK_CHAT_MEMO);
   const sessionId = useSearchParams().get('sessionId');
@@ -50,7 +50,12 @@ const InfoPanel = () => {
       const response = await getClientInfo(Number(sessionId));
       setClientInfo(response.data);
     };
+    const fetchOrderHistory = async () => {
+      const response = await getOrderHistory(Number(sessionId));
+      setOrderHistory(response.data);
+    };
     fetchClientInfo();
+    fetchOrderHistory();
   }, [sessionId]);
 
   const renderTabContent = () => {
