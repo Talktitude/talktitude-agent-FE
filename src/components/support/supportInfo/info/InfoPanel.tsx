@@ -2,17 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
-  ChatHistoryItemType,
+  SupportHistoryItemType,
   ClientInfoType,
   OrderHistoryItemType,
 } from '@/types/support';
 import ClientInfoPanel from './clientInfo/ClientInfoPanel';
 import OrderHistoryPanel from './orderHistory/OrderHistoryPanel';
-import ChatHistoryPanel from './chatHistoty/ChatHistoryPanel';
+import SupportHistoryPanel from './supportHistoty/SupportHistoryPanel';
 import ChatMemoPanel from './chatMemo/ChatMemoPanel';
 import { getClientInfo, getOrderHistory } from '@/api/support/supportPanelApi';
 
-const MOCK_CHAT_HISTORY: ChatHistoryItemType[] = [
+const MOCK_CHAT_HISTORY: SupportHistoryItemType[] = [
   {
     id: 1,
     createdAt: '2025년 5월 1일 오후 12:43',
@@ -41,7 +41,7 @@ const InfoPanel = () => {
   const [activeTab, setActiveTab] = useState('info');
   const [clientInfo, setClientInfo] = useState<ClientInfoType>();
   const [orderHistory, setOrderHistory] = useState<OrderHistoryItemType[]>([]);
-  const [chatHistory] = useState(MOCK_CHAT_HISTORY);
+  const [supportHistory] = useState(MOCK_CHAT_HISTORY);
   const [chatMemo] = useState(MOCK_CHAT_MEMO);
   const sessionId = useSearchParams().get('sessionId');
 
@@ -77,8 +77,8 @@ const InfoPanel = () => {
           </div>
         );
       case 'history':
-        return chatHistory.length > 0 ? (
-          <ChatHistoryPanel chatHistories={chatHistory} />
+        return supportHistory.length > 0 ? (
+          <SupportHistoryPanel supportHistories={supportHistory} />
         ) : (
           <div className="h-full p-4 flex items-center justify-center text-textGray font-medium">
             상담 이력이 없습니다.

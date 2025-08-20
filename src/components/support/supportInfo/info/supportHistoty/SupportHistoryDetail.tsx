@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChatHistoryDetail = ({
+const SupportHistoryDetail = ({
   summaryText,
   onClose,
 }: {
@@ -22,4 +22,4 @@ const ChatHistoryDetail = ({
   );
 };
 
-export default ChatHistoryDetail;
+export default SupportHistoryDetail;

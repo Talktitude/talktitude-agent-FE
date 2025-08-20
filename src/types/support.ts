@@ -110,7 +110,7 @@ export interface OrderDetailItemType {
   };
 }
 
-export interface ChatHistoryItemType {
+export interface SupportHistoryItemType {
   id: number;
   createdAt: string;
   category: string;
