@@ -76,7 +76,9 @@ const OrderItem = ({
           </div>
         </main>
       </button>
-      {isTabMenuOpen && <OrderDetail orderDetail={orderDetail} />}
+      {isTabMenuOpen && orderDetail && (
+        <OrderDetail orderDetail={orderDetail} />
+      )}
     </>
   );
 };
