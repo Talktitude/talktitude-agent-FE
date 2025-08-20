@@ -9,20 +9,7 @@ import ClientInfoPanel from './clientInfo/ClientInfoPanel';
 import OrderHistoryPanel from './orderHistory/OrderHistoryPanel';
 import ChatHistoryPanel from './chatHistoty/ChatHistoryPanel';
 import ChatMemoPanel from './chatMemo/ChatMemoPanel';
-
-const MOCK_CLIENT_INFO: ClientInfoType = {
-  clientName: '홍길동',
-  clientId: 'hong123',
-  clientPhone: '010-1234-5678',
-  address: '서울시 강남구 역삼동',
-  point: 10000,
-  totalCouponCount: 6,
-  couponInfo: [
-    { currency: 1000, amount: 3 },
-    { currency: 5000, amount: 2 },
-    { currency: 10000, amount: 1 },
-  ],
-};
+import { getClientInfo } from '@/api/support/supportPanelApi';
 
 const MOCK_ORDER_HISTORY: OrderHistoryItemType[] = [
   {
