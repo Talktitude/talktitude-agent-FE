@@ -10,34 +10,7 @@ import ClientInfoPanel from './clientInfo/ClientInfoPanel';
 import OrderHistoryPanel from './orderHistory/OrderHistoryPanel';
 import ChatHistoryPanel from './chatHistoty/ChatHistoryPanel';
 import ChatMemoPanel from './chatMemo/ChatMemoPanel';
-import { getClientInfo } from '@/api/support/supportPanelApi';
-
-const MOCK_ORDER_HISTORY: OrderHistoryItemType[] = [
-  {
-    orderDate: '2025년 5월 1일 오후 12:43',
-    deliveryStatus: '배달중',
-    storeName: '교촌치킨',
-    storeImage:
-      'https://i.pinimg.com/736x/b0/a8/61/b0a8616afe69d927283130b6d67a2f75.jpg',
-    orderNumber: 'T22A0000DW',
-  },
-  {
-    orderDate: '2025년 5월 1일 오후 12:43',
-    deliveryStatus: '배달중',
-    storeName: '교촌치킨',
-    storeImage:
-      'https://i.pinimg.com/736x/b0/a8/61/b0a8616afe69d927283130b6d67a2f75.jpg',
-    orderNumber: 'T22A0000DW',
-  },
-  {
-    orderDate: '2025년 5월 1일 오후 12:43',
-    deliveryStatus: '배달중',
-    storeName: '교촌치킨',
-    storeImage:
-      'https://i.pinimg.com/736x/b0/a8/61/b0a8616afe69d927283130b6d67a2f75.jpg',
-    orderNumber: 'T22A0000DW',
-  },
-];
+import { getClientInfo, getOrderHistory } from '@/api/support/supportPanelApi';
 
 const MOCK_CHAT_HISTORY: ChatHistoryItemType[] = [
   {
