@@ -62,13 +62,13 @@ const OrderItem = ({
           <Image
             width={56}
             height={56}
-            src={orderInfo.storeImage}
-            alt={orderInfo.storeName}
+            src={orderInfo.restaurantImageUrl}
+            alt={`${orderInfo.restaurantName} 이미지`}
             className="w-14 h-14 rounded-[10px]"
           />
           <div className="flex flex-col gap-1 items-start">
             <span className="text-textBlack text-base font-medium">
-              {orderInfo.storeName}
+              {orderInfo.restaurantName}
             </span>
             <span className="text-textGray text-base font-medium whitespace-nowrap">
               주문 번호 {orderInfo.orderNumber}
