@@ -13,7 +13,6 @@ export const getClientInfo = async (sessionId: number) => {
         headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -26,7 +25,24 @@ export const getOrderHistory = async (sessionId: number) => {
     const response = await axios.get(`${API_URL}/clients/${sessionId}/orders`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getOrderDetail = async (
+  sessionId: number,
+  orderNumber: string,
+) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/clients/${sessionId}/orders/${orderNumber}`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
     return response.data;
   } catch (error) {
     console.log(error);
