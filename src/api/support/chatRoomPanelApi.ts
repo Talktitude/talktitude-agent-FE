@@ -10,7 +10,7 @@ export const getChatHeaderInfo = async (sessionId: number) => {
     const response = await axios.get(`${API_URL}/chat/sessions/${sessionId}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -28,7 +28,7 @@ export const getChatMessage = async (sessionId: number) => {
         },
       },
     );
-    console.log('채팅 내역 조회', response.data);
+    // console.log('채팅 내역 조회', response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -45,7 +45,7 @@ export const patchEndChat = async (sessionId: number) => {
         headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    console.log('채팅 종료', response.data);
+    // console.log('채팅 종료', response.data);
     return response.data;
   } catch (error) {
     console.error(error);
