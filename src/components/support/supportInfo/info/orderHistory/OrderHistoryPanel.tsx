@@ -1,20 +1,36 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import OrderItem from './OrderItem';
-import { OrderHistoryItemType } from '@/types/support';
+import { OrderDetailItemType, OrderHistoryItemType } from '@/types/support';
+import { getOrderDetail } from '@/api/support/supportPanelApi';
 
 interface OrderHistoryPanelProps {
   orderHistory: OrderHistoryItemType[];
 }
 
 const OrderHistoryPanel = ({ orderHistory }: OrderHistoryPanelProps) => {
-  const [orderDetail] = useState(orderMenu);
-  const [isTabMenuOpen, setIsTabMenuOpen] = useState(false);
+  const [orderDetail, setOrderDetail] = useState<OrderDetailItemType | null>(
+    null,
+  );
+  const [openOrderNumber, setOpenOrderNumber] = useState<string | null>(null);
+  const sessionId = useSearchParams().get('sessionId');
+
+  const fetchOrderDetail = async (orderNumber: string) => {
+    const response = await getOrderDetail(Number(sessionId), orderNumber);
+    setOrderDetail(response.data);
+  };
 
   const handleOrderItemClick = (orderNumber: string) => {
     console.log(orderNumber);
-    setIsTabMenuOpen(!isTabMenuOpen);
+    if (openOrderNumber === orderNumber) {
+      setOpenOrderNumber(null);
+      setOrderDetail(null);
+    } else {
+      setOpenOrderNumber(orderNumber);
+      fetchOrderDetail(orderNumber);
+    }
   };
 
   return (
@@ -27,7 +43,7 @@ const OrderHistoryPanel = ({ orderHistory }: OrderHistoryPanelProps) => {
           onHandleOrderItemClick={() =>
             handleOrderItemClick(orderInfo.orderNumber)
           }
-          isTabMenuOpen={isTabMenuOpen}
+          isTabMenuOpen={openOrderNumber === orderInfo.orderNumber}
         />
       ))}
     </div>
