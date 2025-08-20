@@ -56,10 +56,11 @@ export interface SupportMessageType {
   createdAt: string;
 }
 
+// ClientInfoPanel.tsx - props 아님, 타입 정의
 export interface ClientInfoType {
-  clientName: string;
-  clientId: string;
-  clientPhone: string;
+  name: string;
+  loginId: string;
+  phoneNumber: string;
   address: string;
   point: number;
   totalCouponCount: number;
