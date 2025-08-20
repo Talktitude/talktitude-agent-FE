@@ -70,14 +70,16 @@ export interface ClientInfoType {
   }[];
 }
 
+// OrderHistoryPanel.tsx - props 아님, 타입 정의
 export interface OrderHistoryItemType {
   orderDate: string;
   deliveryStatus: string;
-  storeName: string;
-  storeImage: string;
+  restaurantName: string;
+  restaurantImageUrl: string;
   orderNumber: string;
 }
 
+// OrderDetail.tsx - props 아님, 타입 정의
 export interface OrderDetailItemType {
   orderNumber: string;
   orderDate: string;
@@ -101,7 +103,7 @@ export interface OrderDetailItemType {
     couponAmount: number;
   };
   deliveryInfo: {
-    clientPhone: string;
+    phone: string;
     address: string;
     deliveryNote: string;
     restaurantNote: string;
