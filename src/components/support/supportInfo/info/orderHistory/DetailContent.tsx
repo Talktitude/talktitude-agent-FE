@@ -28,7 +28,7 @@ const DetailContent = ({ orderDetail, activeTab }: DetailContentProps) => {
       ))}
       <div className="border-t pt-3 flex justify-between items-center">
         <span className={blackBoldInfoStyle}>총 주문 금액</span>
-        <span className={`${blackBoldInfoStyle} text-[#5573E2]`}>
+        <span className={`${blackBoldInfoStyle} !text-mainColor`}>
           {orderDetail?.orderMenuSummary?.totalPrice.toLocaleString()}원
         </span>
       </div>
@@ -39,7 +39,7 @@ const DetailContent = ({ orderDetail, activeTab }: DetailContentProps) => {
     <div className="flex flex-col p-3 bg-gray-50 rounded-lg gap-2">
       <div className="flex justify-between items-center border-b pb-3">
         <span className={blackBoldInfoStyle}>총 결제 금액</span>
-        <span className={`${blackBoldInfoStyle} text-[#5573E2]`}>
+        <span className={`${blackBoldInfoStyle} !text-mainColor`}>
           {orderDetail.paymentInfo.paidAmount.toLocaleString()}원
         </span>
       </div>
@@ -96,20 +96,20 @@ const DetailContent = ({ orderDetail, activeTab }: DetailContentProps) => {
 
   const renderDeliveryInfo = () => (
     <div className="flex flex-col bg-gray-50 rounded-lg gap-1 px-3">
-      <div className="flex flex-col border-b py-3">
+      <div className="flex flex-col border-b last:border-b-0 py-3">
         <span className={blackSemiBoldInfoStyle}>전화번호</span>
         <p className="text-textGray text-sm mt-1 ">
-          {orderDetail.deliveryInfo.clientPhone}
+          {orderDetail.deliveryInfo.phone}
         </p>
       </div>
-      <div className="flex flex-col border-b py-3">
+      <div className="flex flex-col border-b last:border-b-0 py-3">
         <span className={blackSemiBoldInfoStyle}>배달 주소</span>
         <p className="text-textGray text-sm mt-1">
           {orderDetail.deliveryInfo.address}
         </p>
       </div>
       {orderDetail.deliveryInfo.deliveryNote && (
-        <div className="flex flex-col border-b py-3">
+        <div className="flex flex-col border-b last:border-b-0 py-3">
           <span className={blackSemiBoldInfoStyle}>배달 요청사항</span>
           <p className="text-textGray text-sm mt-1">
             {orderDetail.deliveryInfo.deliveryNote}
@@ -117,7 +117,7 @@ const DetailContent = ({ orderDetail, activeTab }: DetailContentProps) => {
         </div>
       )}
       {orderDetail.deliveryInfo.restaurantNote && (
-        <div className="flex flex-col py-3">
+        <div className="flex flex-col border-b last:border-b-0 py-3">
           <span className={blackSemiBoldInfoStyle}>매장 요청사항</span>
           <p className="text-textGray text-sm mt-1">
             {orderDetail.deliveryInfo.restaurantNote}

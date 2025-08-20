@@ -51,9 +51,9 @@ function InfoRow({
 
 export default function ClientInfoPanel({ clientInfo }: ClientInfoPanelProps) {
   const {
-    clientName,
-    clientId,
-    clientPhone,
+    name,
+    loginId,
+    phoneNumber,
     address,
     point,
     totalCouponCount,
@@ -65,16 +65,16 @@ export default function ClientInfoPanel({ clientInfo }: ClientInfoPanelProps) {
 
   return (
     <section className="flex flex-col gap-2 px-7 py-4">
-      <InfoRow icon={User} label="이름" value={clientName} />
-      <InfoRow icon={AtSign} label="아이디" value={clientId} />
-      <InfoRow icon={Phone} label="전화번호" value={clientPhone} />
+      <InfoRow icon={User} label="이름" value={name} />
+      <InfoRow icon={AtSign} label="아이디" value={loginId} />
+      <InfoRow icon={Phone} label="전화번호" value={phoneNumber} />
       <InfoRow
         icon={MapPin}
         label="주소"
         value={address}
         valueClassName="whitespace-normal break-words"
       />
-      <InfoRow icon={Coins} label="포인트" value={point} />
+      <InfoRow icon={Coins} label="포인트" value={`${point}P`} />
       <InfoRow
         icon={Ticket}
         label="쿠폰"

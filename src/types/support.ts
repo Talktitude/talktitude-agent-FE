@@ -56,10 +56,11 @@ export interface SupportMessageType {
   createdAt: string;
 }
 
+// ClientInfoPanel.tsx - props 아님, 타입 정의
 export interface ClientInfoType {
-  clientName: string;
-  clientId: string;
-  clientPhone: string;
+  name: string;
+  loginId: string;
+  phoneNumber: string;
   address: string;
   point: number;
   totalCouponCount: number;
@@ -69,14 +70,16 @@ export interface ClientInfoType {
   }[];
 }
 
+// OrderHistoryPanel.tsx - props 아님, 타입 정의
 export interface OrderHistoryItemType {
   orderDate: string;
   deliveryStatus: string;
-  storeName: string;
-  storeImage: string;
+  restaurantName: string;
+  restaurantImageUrl: string;
   orderNumber: string;
 }
 
+// OrderDetail.tsx - props 아님, 타입 정의
 export interface OrderDetailItemType {
   orderNumber: string;
   orderDate: string;
@@ -100,14 +103,14 @@ export interface OrderDetailItemType {
     couponAmount: number;
   };
   deliveryInfo: {
-    clientPhone: string;
+    phone: string;
     address: string;
     deliveryNote: string;
     restaurantNote: string;
   };
 }
 
-export interface ChatHistoryItemType {
+export interface SupportHistoryItemType {
   id: number;
   createdAt: string;
   category: string;
