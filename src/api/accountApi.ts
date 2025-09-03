@@ -3,6 +3,9 @@ import { LoginFormPropsType } from '@/types/auth';
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+const accessToken =
+  typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+
 interface SignupData {
   loginId: string;
   password: string;
@@ -18,7 +21,7 @@ export const postSignup = async (data: SignupData) => {
     alert(response.data.message);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     throw error; // 호출한 곳에서 에러 처리할 수 있게
   }
 };
@@ -31,7 +34,7 @@ export const getCheckId = async (loginId: string) => {
     console.log(response.data.message);
     return response.data.message;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     throw error;
   }
 };
@@ -46,7 +49,7 @@ export const postLogin = async (data: LoginFormPropsType['loginFormData']) => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     if (axios.isAxiosError(error)) {
       const status = error.response?.status;
       const message = error.response?.data?.message;
@@ -58,5 +61,17 @@ export const postLogin = async (data: LoginFormPropsType['loginFormData']) => {
       }
     }
     throw '로그인 중 오류가 발생했습니다.';
+  }
+};
+
+export const getUserInfo = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/members/me`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return response.data;
+  } catch (error) {
+    // console.error(error);
+    throw error;
   }
 };

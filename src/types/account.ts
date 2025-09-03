@@ -52,3 +52,11 @@ export interface ConfirmDeleteAccountModalPropsType {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+export interface UserInfoType {
+  name: string;
+  email: string;
+  // isFiltering: boolean;
+  phoneNum: string;
+  profileImageUrl: string;
+}

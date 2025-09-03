@@ -18,16 +18,17 @@ export default function ChatItem({
       onClick={onClick}
     >
       <div className="flex items-center gap-3">
-        <div className="w-14 h-14 rounded-full flex items-center justify-center">
+        <div className="relative w-14 h-14 rounded-full flex items-center justify-center">
           <Image
             src={
               chatListItem.profileImageUrl ||
               'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
             }
             alt="profile"
-            width={48}
-            height={48}
-            className="rounded-full"
+            fill
+            unoptimized={true}
+            sizes="48px"
+            className="rounded-full object-cover"
           />
         </div>
         <div className="flex-1">
