@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReportItem from './ReportItem';
 import { ReportItemType } from '@/types/reports';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -10,100 +10,11 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from '@/components/ui/pagination';
-
-const MOCK_REPORT_LIST: ReportItemType[] = [
-  {
-    reportId: 1,
-    sessionId: 1,
-    clientName: '홍길동',
-    clientPhone: '010-1234-5678',
-    createdAt: '2025-04-23',
-    category: '주문 문의',
-    clientId: '1',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    reportId: 2,
-    sessionId: 2,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    createdAt: '2025-04-23',
-    category: '주문 문의',
-    clientId: '3',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    reportId: 3,
-    sessionId: 3,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    createdAt: '2025-04-23',
-    category: '주문 문의',
-    clientId: '3',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    reportId: 4,
-    sessionId: 4,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    createdAt: '2025-04-23',
-    category: '주문 문의',
-    clientId: '3',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    reportId: 5,
-    sessionId: 5,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    createdAt: '2025-04-23',
-    category: '주문 문의',
-    clientId: '3',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    reportId: 6,
-    sessionId: 6,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    createdAt: '2025-04-23',
-    category: '주문 문의',
-    clientId: '3',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    reportId: 7,
-    sessionId: 7,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    createdAt: '2025-04-23',
-    category: '주문 문의',
-    clientId: '3',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    reportId: 8,
-    sessionId: 8,
-    clientName: '비회원',
-    clientPhone: '010-1234-5678',
-    createdAt: '2025-04-23',
-    category: '주문 문의',
-    clientId: '3',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-];
+import { getReportList } from '@/api/report/reportListApi';
+import { CalendarX2 } from 'lucide-react';
 
 const ReportList = () => {
-  const reportListItems = MOCK_REPORT_LIST;
+  const [reportListItems, setReportListItems] = useState<ReportItemType[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
@@ -120,19 +31,29 @@ const ReportList = () => {
     setCurrentPage(page);
   };
 
+  useEffect(() => {
+    const fetchReportList = async (date: string) => {
+      const response = await getReportList(date || '');
+      setReportListItems(response.data);
+    };
+    fetchReportList(date || '');
+  }, [date]);
+
   return (
     <>
       {paginatedItems.length > 0 ? (
         <div className="flex-1 flex flex-col">
-          {paginatedItems.map((reportItem) => (
-            <ReportItem
-              reportItem={reportItem}
-              key={reportItem.reportId}
-              onClick={() =>
-                router.push(`/reports/${reportItem.reportId}?date=${date}`)
-              }
-            />
-          ))}
+          <div className="flex flex-col min-h-[calc(100dvh-210px)]">
+            {paginatedItems.map((reportItem) => (
+              <ReportItem
+                reportItem={reportItem}
+                key={reportItem.id}
+                onClick={() =>
+                  router.push(`/reports/${reportItem.id}?date=${date}`)
+                }
+              />
+            ))}
+          </div>
           <div className="flex justify-center mt-3">
             <Pagination>
               <PaginationContent>
@@ -172,7 +93,8 @@ const ReportList = () => {
         </div>
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="text-textBlack text-base font-medium">
+          <CalendarX2 className="size-10 text-textLightGray" />
+          <div className="text-textLightGray text-base font-medium mt-2">
             해당 날짜에 상담 내역이 없습니다.
           </div>
         </div>

@@ -9,7 +9,7 @@ export default function ReportPage() {
   return (
     <>
       <Header />
-      <div className="flex w-full h-[calc(100vh-60px)]">
+      <div className="flex w-full h-[calc(100vh-56px)]">
         <ReportCalendar />
         <ReportListPanel />
       </div>
