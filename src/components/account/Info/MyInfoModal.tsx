@@ -1,22 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomModal from '@/components/common/CustomModal';
 import Image from 'next/image';
 // import { Switch } from '@/components/ui/switch';
 import { useRouter } from 'next/navigation';
 import { MyInfoModalPropsType } from '@/types/account';
-
-const userInfoData = {
-  name: '성윤정',
-  loginId: 'ynzung',
-  isFiltering: true,
-  profileImageUrl:
-    'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-};
+import { getUserInfo } from '@/api/accountApi';
+import { UserInfoType } from '@/types/account';
 
 const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
-  const [userInfo] = useState(userInfoData);
+  const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
   const router = useRouter();
 
   const handleGoEdit = () => {
@@ -39,6 +33,14 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
     localStorage.removeItem('refreshToken');
   };
 
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const response = await getUserInfo();
+      setUserInfo(response.data);
+    };
+    fetchUserInfo();
+  }, []);
+
   return (
     <div>
       <CustomModal
@@ -50,7 +52,10 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
       >
         <div className="flex flex-col items-center gap-2 pt-6 border-b border-lineGray pb-4">
           <Image
-            src={userInfo.profileImageUrl}
+            src={
+              userInfo?.profileImageUrl ||
+              'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
+            }
             alt="profile"
             width={85}
             height={85}
@@ -58,10 +63,10 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
           />
           <div className="flex flex-col items-center">
             <span className="text- textBlack text-2xl font-bold">
-              {userInfo.name}
+              {userInfo?.name}
             </span>
             <span className="text-textLightGray text-xs font-medium leading-none">
-              {userInfo.loginId}
+              {userInfo?.email}
             </span>
           </div>
           <button
