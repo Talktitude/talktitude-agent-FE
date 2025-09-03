@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import CustomModal from '@/components/common/CustomModal';
 import Image from 'next/image';
-import { Switch } from '@/components/ui/switch';
+// import { Switch } from '@/components/ui/switch';
 import { useRouter } from 'next/navigation';
 import { MyInfoModalPropsType } from '@/types/account';
 
@@ -16,7 +16,7 @@ const userInfoData = {
 };
 
 const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
-  const [userInfo, setUserInfo] = useState(userInfoData);
+  const [userInfo] = useState(userInfoData);
   const router = useRouter();
 
   const handleGoEdit = () => {
@@ -24,18 +24,19 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
     onOpenChange(false);
   };
 
-  const handleChangeFiltering = (checked: boolean) => {
-    setUserInfo({
-      ...userInfo,
-      isFiltering: checked,
-    });
-    console.log(checked);
-  };
+  // const handleChangeFiltering = (checked: boolean) => {
+  //   setUserInfo({
+  //     ...userInfo,
+  //     isFiltering: checked,
+  //   });
+  //   console.log(checked);
+  // };
 
   const handleLogout = () => {
-    // 로그아웃 API 연결
     router.push('/login');
     onOpenChange(false);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   };
 
   return (
@@ -47,7 +48,7 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
         isFooter
         onLogout={handleLogout}
       >
-        <div className="flex flex-col items-center gap-2 pt-6 mb-4">
+        <div className="flex flex-col items-center gap-2 pt-6 border-b border-lineGray pb-4">
           <Image
             src={userInfo.profileImageUrl}
             alt="profile"
@@ -71,7 +72,7 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
             내 정보 수정
           </button>
         </div>
-        <div className="flex flex-row items-center justify-between border-y border-lineGray py-4 px-6   ">
+        {/* <div className="flex flex-row items-center justify-between border-y border-lineGray py-4 px-6   ">
           <div className="flex flex-col">
             <div className="text-base font-semibold">필터링 설정</div>
             <div className="text-sm text-textLightGray">
@@ -84,7 +85,7 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
               onCheckedChange={handleChangeFiltering}
             />
           </div>
-        </div>
+        </div> */}
       </CustomModal>
     </div>
   );

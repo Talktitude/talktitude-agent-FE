@@ -36,7 +36,7 @@ const SupportHistoryItem: React.FC<SupportHistoryItemProps> = ({
             {supportHistory.category}
           </div>
           <div className="text-textLightGray text-sm font-medium">
-            {supportHistory.createdAt}
+            {supportHistory.time}
           </div>
         </div>
         <TiArrowSortedDown className={arrowStyle} />

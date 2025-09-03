@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Undo2, Clock, UserCheck, Phone, FileText } from 'lucide-react';
 import { ReportDetailType } from '@/types/reports';
@@ -22,22 +24,27 @@ const InfoItem = ({ icon, label, value }: InfoItemProps) => (
 
 const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
   const router = useRouter();
+  const [data] = useState<ReportDetailType>(reportDetail);
 
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <div className="relative aspect-square w-12 h-12 rounded-full flex items-center justify-center">
             <Image
-              src={reportDetail.profileImageUrl}
-              width={40}
-              height={40}
+              src={
+                data.profileImageUrl ||
+                'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
+              }
               alt="profileImageUrl"
-              className="rounded-full"
+              sizes="40px"
+              unoptimized={true}
+              className="object-cover rounded-full"
+              fill
             />
           </div>
           <div className="text-textBlack text-3xl font-bold">
-            {reportDetail.clientName}
+            {data.clientName}
           </div>
         </div>
         <button
@@ -52,26 +59,26 @@ const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
         <InfoItem
           icon={<Clock className="w-5 h-5" />}
           label="상담 시각"
-          value={reportDetail.createdAt}
+          value={data.createdAt}
         />
         <InfoItem
           icon={<UserCheck className="w-5 h-5" />}
           label="상담원"
-          value={reportDetail.userName}
+          value={data.memberName}
         />
         <InfoItem
           icon={<FileText className="w-5 h-5" />}
           label="상담 유형"
           value={
             <span className="bg-bgLightBlue text-mainColor text-xs px-2 py-1 rounded-full font-semibold w-fit">
-              {reportDetail.category}
+              {data.category} 문의
             </span>
           }
         />
         <InfoItem
           icon={<Phone className="w-5 h-5" />}
           label="전화번호"
-          value={reportDetail.clientPhone}
+          value={data.phone}
         />
       </div>
     </div>

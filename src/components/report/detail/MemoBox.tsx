@@ -4,13 +4,16 @@ import React, { useState } from 'react';
 import { CheckSquare } from 'lucide-react';
 import CommentList from './CommentList';
 import { PLACEHOLDERS } from '@/lib/constants/placeholders';
+import { MemoCommentType } from '@/types/reports';
 
 const MemoBox = ({
-  memoCreateAt,
-  chatMemo,
+  duringMemoCreateAt,
+  duringMemo,
+  afterMemo,
 }: {
-  memoCreateAt: string;
-  chatMemo: string;
+  duringMemoCreateAt: string;
+  duringMemo: string;
+  afterMemo: MemoCommentType[];
 }) => {
   const [memo, setMemo] = useState('');
   const handleSave = () => {
@@ -23,14 +26,14 @@ const MemoBox = ({
         <CheckSquare className="w-5 h-5 text-mainColor" />
         <h3 className="text-base font-bold text-textBlack">상담원 메모</h3>
       </div>
-      {chatMemo ? (
+      {duringMemo ? (
         <div className="w-full py-1 mb-1 flex-shrink-0">
           <div className="flex items-start space-x-2 p-2 bg-bgLightBlue border-l-4 border-mainColor rounded-r-lg">
             <span className="text-sm font-medium text-textGray">
-              {memoCreateAt}
+              {duringMemoCreateAt}
             </span>
             <span className="text-sm font-semibold text-mainColor">
-              {chatMemo}
+              {duringMemo}
             </span>
           </div>
         </div>
@@ -44,7 +47,7 @@ const MemoBox = ({
         </div>
       )}
       <div className="flex-1 min-h-0 overflow-y-auto mb-1">
-        <CommentList />
+        <CommentList memoList={afterMemo} />
       </div>
       <div className="flex items-center space-x-2 flex-shrink-0">
         <textarea
