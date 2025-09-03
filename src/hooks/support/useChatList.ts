@@ -65,6 +65,8 @@ export const useChatList = ({
     const initSessionId = searchParams.get('sessionId');
     if (initSessionId) {
       setSelectedChat(Number(initSessionId));
+    } else {
+      setSelectedChat(-1);
     }
   }, [searchParams]);
 

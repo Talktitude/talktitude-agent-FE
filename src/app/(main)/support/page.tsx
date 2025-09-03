@@ -27,6 +27,8 @@ export default function SupportPage() {
     const sessionId = searchParams.get('sessionId');
     if (sessionId) {
       setSelectedChat({ sessionId: Number(sessionId) } as ChatListItemType);
+    } else {
+      setSelectedChat(null);
     }
   }, [searchParams]);
 
