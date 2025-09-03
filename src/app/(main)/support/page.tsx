@@ -25,8 +25,13 @@ export default function SupportPage() {
 
   useEffect(() => {
     const sessionId = searchParams.get('sessionId');
-    if (sessionId) {
-      setSelectedChat({ sessionId: Number(sessionId) } as ChatListItemType);
+    if (sessionId !== null && sessionId !== '') {
+      const sessionIdNum = Number(sessionId);
+      if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
+        setSelectedChat({ sessionId: sessionIdNum } as ChatListItemType);
+      } else {
+        setSelectedChat(null);
+      }
     } else {
       setSelectedChat(null);
     }

@@ -27,32 +27,57 @@ export const useInfoPanel = () => {
 
   useEffect(() => {
     const fetchIsFinished = async () => {
-      const response = await getChatHeaderInfo(Number(sessionId));
-      const finished = response?.data?.status === 'FINISHED';
-      setIsFinished(finished);
+      if (sessionId !== null && sessionId !== '') {
+        const sessionIdNum = Number(sessionId);
+        if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
+          const response = await getChatHeaderInfo(sessionIdNum);
+          const finished = response?.data?.status === 'FINISHED';
+          setIsFinished(finished);
+        }
+      }
     };
     fetchIsFinished();
   }, [sessionId]);
 
   useEffect(() => {
     const fetchClientInfo = async () => {
-      const response = await getClientInfo(Number(sessionId));
-      setClientInfo(response.data);
+      if (sessionId !== null && sessionId !== '') {
+        const sessionIdNum = Number(sessionId);
+        if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
+          const response = await getClientInfo(sessionIdNum);
+          setClientInfo(response.data);
+        }
+      }
     };
     const fetchOrderHistory = async () => {
-      const response = await getOrderHistory(Number(sessionId));
-      setOrderHistory(response.data);
+      if (sessionId !== null && sessionId !== '') {
+        const sessionIdNum = Number(sessionId);
+        if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
+          const response = await getOrderHistory(sessionIdNum);
+          setOrderHistory(response.data);
+        }
+      }
     };
     const fetchSupportHistory = async () => {
-      const response = await getSupportHistory(Number(sessionId));
-      setSupportHistory(response.data);
+      if (sessionId !== null && sessionId !== '') {
+        const sessionIdNum = Number(sessionId);
+        if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
+          const response = await getSupportHistory(sessionIdNum);
+          setSupportHistory(response.data);
+        }
+      }
     };
     const fetchChatMemo = async () => {
-      const response = await getChatMemo(Number(sessionId));
-      if (response.data.length > 0) {
-        setChatMemo(response.data[0].memoText);
-      } else {
-        setChatMemo('');
+      if (sessionId !== null && sessionId !== '') {
+        const sessionIdNum = Number(sessionId);
+        if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
+          const response = await getChatMemo(sessionIdNum);
+          if (response.data.length > 0) {
+            setChatMemo(response.data[0].memoText);
+          } else {
+            setChatMemo('');
+          }
+        }
       }
     };
     fetchClientInfo();

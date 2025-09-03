@@ -11,7 +11,7 @@ export const useChatList = ({
   onChatSelect: (chatItem: ChatListItemType) => void;
 }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [selectedChat, setSelectedChat] = useState(-1);
+  const [selectedChat, setSelectedChat] = useState<number | null>(null);
   const [allChatListItems, setAllChatListItems] = useState<ChatListItemType[]>(
     [],
   );
@@ -51,22 +51,29 @@ export const useChatList = ({
   };
 
   const handleChatSelect = (sessionId: number) => {
-    setSelectedChat(sessionId);
-    const selectedChatItem = chatListItems.find(
-      (chat) => chat.sessionId === sessionId,
-    );
-    if (selectedChatItem && onChatSelect) {
-      onChatSelect(selectedChatItem);
+    if (typeof sessionId === 'number' && sessionId >= 0) {
+      setSelectedChat(sessionId);
+      const selectedChatItem = chatListItems.find(
+        (chat) => chat.sessionId === sessionId,
+      );
+      if (selectedChatItem && onChatSelect) {
+        onChatSelect(selectedChatItem);
+      }
     }
   };
 
   // 초기 세션 ID 설정
   useEffect(() => {
     const initSessionId = searchParams.get('sessionId');
-    if (initSessionId) {
-      setSelectedChat(Number(initSessionId));
+    if (initSessionId !== null && initSessionId !== '') {
+      const sessionIdNum = Number(initSessionId);
+      if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
+        setSelectedChat(sessionIdNum);
+      } else {
+        setSelectedChat(null);
+      }
     } else {
-      setSelectedChat(-1);
+      setSelectedChat(null);
     }
   }, [searchParams]);
 

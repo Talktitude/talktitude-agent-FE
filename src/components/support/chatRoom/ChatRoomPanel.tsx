@@ -57,9 +57,12 @@ const ChatRoomPanel = ({
       const response = await getChatHeaderInfo(sessionId);
       setChatInfo(response.data);
     };
-    if (sessionId) {
-      fetchChatHeaderInfo(Number(sessionId));
-      fetchChatMessage();
+    if (sessionId !== null && sessionId !== '') {
+      const sessionIdNum = Number(sessionId);
+      if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
+        fetchChatHeaderInfo(sessionIdNum);
+        fetchChatMessage();
+      }
     }
   }, [sessionId, fetchChatMessage]);
 
