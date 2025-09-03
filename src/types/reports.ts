@@ -10,23 +10,22 @@ export interface ReportItemType {
 }
 
 export interface ReportDetailType {
-  reportId: number;
-  sessionId: number;
+  id: number;
   clientName: string;
-  clientPhone: string;
+  phone: string;
   createdAt: string;
-  userName: string;
+  memberName: string;
   category: string;
   summaryText: string;
   profileImageUrl: string;
-  memoCreateAt: string;
-  chatMemo: string;
+  memos: MemoCommentType[];
 }
 
 export interface MemoCommentType {
-  memoId: number;
-  memoUpdateAt: string;
-  userName: string;
-  chatMemo: string;
+  id: number;
+  createdAt: string;
+  memberName: string;
+  memoText: string;
   profileImageUrl: string;
+  memoPhase: string;
 }
