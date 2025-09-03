@@ -10,6 +10,7 @@ import {
   getChatMessage,
 } from '@/api/support/chatRoomPanelApi';
 import { useSearchParams } from 'next/navigation';
+import { validateSessionId } from '@/lib/utils';
 
 interface ChatRoomPanelProps {
   inputMessage?: string;
@@ -57,12 +58,10 @@ const ChatRoomPanel = ({
       const response = await getChatHeaderInfo(sessionId);
       setChatInfo(response.data);
     };
-    if (sessionId !== null && sessionId !== '') {
-      const sessionIdNum = Number(sessionId);
-      if (!isNaN(sessionIdNum) && sessionIdNum >= 0) {
-        fetchChatHeaderInfo(sessionIdNum);
-        fetchChatMessage();
-      }
+    const validSessionId = validateSessionId(sessionId);
+    if (validSessionId !== null) {
+      fetchChatHeaderInfo(validSessionId);
+      fetchChatMessage();
     }
   }, [sessionId, fetchChatMessage]);
 
