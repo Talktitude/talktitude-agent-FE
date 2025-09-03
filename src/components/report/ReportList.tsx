@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReportItem from './ReportItem';
 import { ReportItemType } from '@/types/reports';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -13,7 +13,7 @@ import {
 import { getReportList } from '@/api/report/reportListApi';
 
 const ReportList = () => {
-  const reportListItems = MOCK_REPORT_LIST;
+  const [reportListItems, setReportListItems] = useState<ReportItemType[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
@@ -30,19 +30,29 @@ const ReportList = () => {
     setCurrentPage(page);
   };
 
+  useEffect(() => {
+    const fetchReportList = async (date: string) => {
+      const response = await getReportList(date || '');
+      setReportListItems(response.data);
+    };
+    fetchReportList(date || '');
+  }, [date]);
+
   return (
     <>
       {paginatedItems.length > 0 ? (
         <div className="flex-1 flex flex-col">
-          {paginatedItems.map((reportItem) => (
-            <ReportItem
-              reportItem={reportItem}
-              key={reportItem.reportId}
-              onClick={() =>
-                router.push(`/reports/${reportItem.reportId}?date=${date}`)
-              }
-            />
-          ))}
+          <div className="flex flex-col min-h-[calc(100dvh-210px)]">
+            {paginatedItems.map((reportItem) => (
+              <ReportItem
+                reportItem={reportItem}
+                key={reportItem.id}
+                onClick={() =>
+                  router.push(`/reports/${reportItem.id}?date=${date}`)
+                }
+              />
+            ))}
+          </div>
           <div className="flex justify-center mt-3">
             <Pagination>
               <PaginationContent>
