@@ -5,19 +5,27 @@ import { CheckSquare } from 'lucide-react';
 import CommentList from './CommentList';
 import { PLACEHOLDERS } from '@/lib/constants/placeholders';
 import { MemoCommentType } from '@/types/reports';
+import { postMemoComment } from '@/api/report/reportDetailApi';
 
 const MemoBox = ({
   duringMemoCreateAt,
   duringMemo,
   afterMemo,
+  sessionId,
+  onRefresh,
 }: {
   duringMemoCreateAt: string;
   duringMemo: string;
   afterMemo: MemoCommentType[];
+  sessionId: number;
+  onRefresh: () => Promise<void>;
 }) => {
   const [memo, setMemo] = useState('');
-  const handleSave = () => {
-    console.log('메모 저장', memo);
+  // const reportId = useParams().id;
+  const handleSave = async () => {
+    await postMemoComment(Number(sessionId), memo);
+    setMemo('');
+    await onRefresh();
   };
 
   return (
@@ -47,7 +55,7 @@ const MemoBox = ({
         </div>
       )}
       <div className="flex-1 min-h-0 overflow-y-auto mb-1">
-        <CommentList memoList={afterMemo} />
+        <CommentList memoList={afterMemo} onDelete={onRefresh} />
       </div>
       <div className="flex items-center space-x-2 flex-shrink-0">
         <textarea

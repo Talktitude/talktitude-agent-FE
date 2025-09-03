@@ -1,12 +1,23 @@
 import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { MemoCommentType } from '@/types/reports';
+import { deleteMemoComment } from '@/api/report/reportDetailApi';
 
 const MemoComment = ({
   memoCommentData,
+  onDelete,
 }: {
   memoCommentData: MemoCommentType;
+  onDelete: () => Promise<void>;
 }) => {
+  const handleDeleteMemo = async () => {
+    if (confirm('해당 메모를 삭제하시겠습니까?')) {
+      const response = await deleteMemoComment(memoCommentData.id);
+      alert(response.data);
+      await onDelete();
+    }
+  };
+
   return (
     <div className="bg-white p-2">
       <div className="flex items-start space-x-3">
@@ -33,7 +44,10 @@ const MemoComment = ({
             {memoCommentData.memoText}
           </p>
         </div>
-        <button className="text-xs px-2 py-1 bg-gray-100 rounded-lg border hover:bg-gray-200">
+        <button
+          className="text-xs px-2 py-1 bg-gray-100 rounded-lg border hover:bg-gray-200"
+          onClick={handleDeleteMemo}
+        >
           <Trash2 className="w-4 h-4 text-textGray" />
         </button>
       </div>

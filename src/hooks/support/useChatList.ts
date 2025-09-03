@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getChatList, getChatSearch } from '@/api/support/chatListPanelApi';
 import type { ChatListItemType, FilterOption } from '@/types/support';
+import { validateSessionId } from '@/lib/utils';
 
 export const useChatList = ({
   onChatSelect,
@@ -11,7 +12,7 @@ export const useChatList = ({
   onChatSelect: (chatItem: ChatListItemType) => void;
 }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [selectedChat, setSelectedChat] = useState(-1);
+  const [selectedChat, setSelectedChat] = useState<number | null>(null);
   const [allChatListItems, setAllChatListItems] = useState<ChatListItemType[]>(
     [],
   );
@@ -51,21 +52,22 @@ export const useChatList = ({
   };
 
   const handleChatSelect = (sessionId: number) => {
-    setSelectedChat(sessionId);
-    const selectedChatItem = chatListItems.find(
-      (chat) => chat.sessionId === sessionId,
-    );
-    if (selectedChatItem && onChatSelect) {
-      onChatSelect(selectedChatItem);
+    if (typeof sessionId === 'number' && sessionId >= 0) {
+      setSelectedChat(sessionId);
+      const selectedChatItem = chatListItems.find(
+        (chat) => chat.sessionId === sessionId,
+      );
+      if (selectedChatItem && onChatSelect) {
+        onChatSelect(selectedChatItem);
+      }
     }
   };
 
   // 초기 세션 ID 설정
   useEffect(() => {
     const initSessionId = searchParams.get('sessionId');
-    if (initSessionId) {
-      setSelectedChat(Number(initSessionId));
-    }
+    const validSessionId = validateSessionId(initSessionId);
+    setSelectedChat(validSessionId);
   }, [searchParams]);
 
   // 전체 데이터: 최초 1회 렌더링

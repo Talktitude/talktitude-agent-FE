@@ -11,6 +11,7 @@ export interface ReportItemType {
 
 export interface ReportDetailType {
   id: number;
+  sessionId: number;
   clientName: string;
   phone: string;
   createdAt: string;

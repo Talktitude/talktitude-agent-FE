@@ -14,6 +14,7 @@ import {
   getChatMemo,
 } from '@/api/support/supportPanelApi';
 import { useSearchParams } from 'next/navigation';
+import { validateSessionId } from '@/lib/utils';
 
 export const useInfoPanel = () => {
   const [clientInfo, setClientInfo] = useState<ClientInfoType>();
@@ -27,32 +28,47 @@ export const useInfoPanel = () => {
 
   useEffect(() => {
     const fetchIsFinished = async () => {
-      const response = await getChatHeaderInfo(Number(sessionId));
-      const finished = response?.data?.status === 'FINISHED';
-      setIsFinished(finished);
+      const validSessionId = validateSessionId(sessionId);
+      if (validSessionId !== null) {
+        const response = await getChatHeaderInfo(validSessionId);
+        const finished = response?.data?.status === 'FINISHED';
+        setIsFinished(finished);
+      }
     };
     fetchIsFinished();
   }, [sessionId]);
 
   useEffect(() => {
     const fetchClientInfo = async () => {
-      const response = await getClientInfo(Number(sessionId));
-      setClientInfo(response.data);
+      const validSessionId = validateSessionId(sessionId);
+      if (validSessionId !== null) {
+        const response = await getClientInfo(validSessionId);
+        setClientInfo(response.data);
+      }
     };
     const fetchOrderHistory = async () => {
-      const response = await getOrderHistory(Number(sessionId));
-      setOrderHistory(response.data);
+      const validSessionId = validateSessionId(sessionId);
+      if (validSessionId !== null) {
+        const response = await getOrderHistory(validSessionId);
+        setOrderHistory(response.data);
+      }
     };
     const fetchSupportHistory = async () => {
-      const response = await getSupportHistory(Number(sessionId));
-      setSupportHistory(response.data);
+      const validSessionId = validateSessionId(sessionId);
+      if (validSessionId !== null) {
+        const response = await getSupportHistory(validSessionId);
+        setSupportHistory(response.data);
+      }
     };
     const fetchChatMemo = async () => {
-      const response = await getChatMemo(Number(sessionId));
-      if (response.data.length > 0) {
-        setChatMemo(response.data[0].memoText);
-      } else {
-        setChatMemo('');
+      const validSessionId = validateSessionId(sessionId);
+      if (validSessionId !== null) {
+        const response = await getChatMemo(validSessionId);
+        if (response.data.length > 0) {
+          setChatMemo(response.data[0].memoText);
+        } else {
+          setChatMemo('');
+        }
       }
     };
     fetchClientInfo();

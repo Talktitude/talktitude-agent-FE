@@ -49,7 +49,9 @@ export default function ChatList({
               <ContactItem
                 key={index}
                 chatListItem={chat}
-                isSelected={chat.sessionId === selectedChat}
+                isSelected={
+                  selectedChat !== null && chat.sessionId === selectedChat
+                }
                 onClick={() => onChatSelect(chat.sessionId)}
               />
             ))}

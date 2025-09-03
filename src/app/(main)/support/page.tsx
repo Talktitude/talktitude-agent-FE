@@ -9,6 +9,7 @@ import SupportInfoPanel from '@/components/support/supportInfo/SupportInfoPanel'
 import type { ChatListItemType } from '@/types/support';
 import Image from 'next/image';
 import GrayLogo from '/public/logo/gray-logo.svg';
+import { validateSessionId } from '@/lib/utils';
 
 export default function SupportPage() {
   const router = useRouter();
@@ -25,8 +26,11 @@ export default function SupportPage() {
 
   useEffect(() => {
     const sessionId = searchParams.get('sessionId');
-    if (sessionId) {
-      setSelectedChat({ sessionId: Number(sessionId) } as ChatListItemType);
+    const validSessionId = validateSessionId(sessionId);
+    if (validSessionId !== null) {
+      setSelectedChat({ sessionId: validSessionId } as ChatListItemType);
+    } else {
+      setSelectedChat(null);
     }
   }, [searchParams]);
 
