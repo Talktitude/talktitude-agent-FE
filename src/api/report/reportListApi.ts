@@ -12,7 +12,7 @@ export const getReportList = async (date: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log('리포트 목록', response.data);
+    // console.log('리포트 목록', response.data);
     return response.data;
   } catch (error) {
     console.error(error);
