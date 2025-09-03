@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import MemoComment from './MemoComment';
 import { MemoCommentType } from '@/types/reports';
 import { MessageSquareMore } from 'lucide-react';
@@ -9,8 +9,8 @@ const CommentList = ({ memoList }: { memoList: MemoCommentType[] }) => {
   const safeMemoList = Array.isArray(memoList) ? memoList : [];
   return safeMemoList.length > 0 ? (
     <div className="overflow-y-auto">
-      {memoList.map((memo) => (
-        <MemoComment memoCommentData={memo} key={memo.memoId} />
+      {safeMemoList.map((memo) => (
+        <MemoComment memoCommentData={memo} key={memo.id} />
       ))}
     </div>
   ) : (
