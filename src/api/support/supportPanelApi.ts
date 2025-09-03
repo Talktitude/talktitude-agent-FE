@@ -116,8 +116,18 @@ export const getChatMemo = async (sessionId: number) => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 404) {
+        console.log('채팅 메모를 찾을 수 없습니다.');
+        return {
+          data: [],
+        };
+      }
+    }
+    console.error(error);
+    return {
+      data: [],
+    };
   }
 };
 
