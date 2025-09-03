@@ -11,6 +11,7 @@ import {
   PaginationNext,
 } from '@/components/ui/pagination';
 import { getReportList } from '@/api/report/reportListApi';
+import { CalendarX2 } from 'lucide-react';
 
 const ReportList = () => {
   const [reportListItems, setReportListItems] = useState<ReportItemType[]>([]);
@@ -92,7 +93,8 @@ const ReportList = () => {
         </div>
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="text-textBlack text-base font-medium">
+          <CalendarX2 className="size-10 text-textLightGray" />
+          <div className="text-textLightGray text-base font-medium mt-2">
             해당 날짜에 상담 내역이 없습니다.
           </div>
         </div>
