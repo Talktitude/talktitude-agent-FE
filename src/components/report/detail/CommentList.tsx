@@ -5,12 +5,18 @@ import MemoComment from './MemoComment';
 import { MemoCommentType } from '@/types/reports';
 import { MessageSquareMore } from 'lucide-react';
 
-const CommentList = ({ memoList }: { memoList: MemoCommentType[] }) => {
+const CommentList = ({
+  memoList,
+  onDelete,
+}: {
+  memoList: MemoCommentType[];
+  onDelete: () => Promise<void>;
+}) => {
   const safeMemoList = Array.isArray(memoList) ? memoList : [];
   return safeMemoList.length > 0 ? (
     <div className="overflow-y-auto">
       {safeMemoList.map((memo) => (
-        <MemoComment memoCommentData={memo} key={memo.id} />
+        <MemoComment memoCommentData={memo} key={memo.id} onDelete={onDelete} />
       ))}
     </div>
   ) : (
