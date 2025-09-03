@@ -15,8 +15,18 @@ export const getClientInfo = async (sessionId: number) => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 404) {
+        console.log('고객 정보를 찾을 수 없습니다.');
+        return {
+          data: [],
+        };
+      }
+    }
+    console.error(error);
+    return {
+      data: [],
+    };
   }
 };
 
@@ -27,8 +37,18 @@ export const getOrderHistory = async (sessionId: number) => {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 404) {
+        console.log('주문 내역을 찾을 수 없습니다.');
+        return {
+          data: [],
+        };
+      }
+    }
+    console.error(error);
+    return {
+      data: [],
+    };
   }
 };
 
@@ -45,8 +65,18 @@ export const getOrderDetail = async (
     );
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 404) {
+        console.log('주문 상세 내역을 찾을 수 없습니다.');
+        return {
+          data: [],
+        };
+      }
+    }
+    console.error(error);
+    return {
+      data: [],
+    };
   }
 };
 
@@ -61,8 +91,18 @@ export const getSupportHistory = async (sessionId: number) => {
     // console.log('상담 이력 조회', response.data.data);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 404) {
+        console.log('상담 이력을 찾을 수 없습니다.');
+        return {
+          data: [],
+        };
+      }
+    }
+    console.error(error);
+    return {
+      data: [],
+    };
   }
 };
 
@@ -76,8 +116,18 @@ export const getChatMemo = async (sessionId: number) => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 404) {
+        console.log('채팅 메모를 찾을 수 없습니다.');
+        return {
+          data: [],
+        };
+      }
+    }
+    console.error(error);
+    return {
+      data: [],
+    };
   }
 };
 
