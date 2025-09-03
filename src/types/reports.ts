@@ -1,8 +1,8 @@
 export interface ReportItemType {
-  reportId: number;
+  id: number;
   sessionId: number;
   clientName: string;
-  clientPhone: string;
+  phone: string;
   createdAt: string;
   category: string;
   clientId: string;
