@@ -5,60 +5,9 @@ import MemoComment from './MemoComment';
 import { MemoCommentType } from '@/types/reports';
 import { MessageSquareMore } from 'lucide-react';
 
-const MOCK_MEMO_LIST = [
-  {
-    memoId: 1,
-    memoUpdateAt: '2025.05.08',
-    userName: '성윤정',
-    chatMemo: '고객이 동일한 사유로 3회째 요청 중입니다. 반복 설명이 필요.',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    memoId: 2,
-    memoUpdateAt: '2025.05.08',
-    userName: '성윤정',
-    chatMemo: '고객이 동일한 사유로 3회째 요청 중입니다. 반복 설명이 필요.',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    memoId: 3,
-    memoUpdateAt: '2025.05.08',
-    userName: '성윤정',
-    chatMemo: '고객이 동일한 사유로 3회째 요청 중입니다. 반복 설명이 필요.',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    memoId: 4,
-    memoUpdateAt: '2025.05.08',
-    userName: '성윤정',
-    chatMemo: '고객이 동일한 사유로 3회째 요청 중입니다. 반복 설명이 필요.',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    memoId: 5,
-    memoUpdateAt: '2025.05.08',
-    userName: '성윤정',
-    chatMemo: '고객이 동일한 사유로 3회째 요청 중입니다. 반복 설명이 필요.',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-  {
-    memoId: 6,
-    memoUpdateAt: '2025.05.08',
-    userName: '성윤정',
-    chatMemo: '고객이 동일한 사유로 3회째 요청 중입니다. 반복 설명이 필요.',
-    profileImageUrl:
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
-  },
-];
-
-const CommentList = () => {
-  const [memoList] = useState<MemoCommentType[]>(MOCK_MEMO_LIST);
-  return memoList.length > 0 ? (
+const CommentList = ({ memoList }: { memoList: MemoCommentType[] }) => {
+  const safeMemoList = Array.isArray(memoList) ? memoList : [];
+  return safeMemoList.length > 0 ? (
     <div className="overflow-y-auto">
       {memoList.map((memo) => (
         <MemoComment memoCommentData={memo} key={memo.memoId} />
