@@ -112,7 +112,7 @@ export interface OrderDetailItemType {
 
 export interface SupportHistoryItemType {
   id: number;
-  createdAt: string;
+  time: string;
   category: string;
   summaryText: string;
 }
