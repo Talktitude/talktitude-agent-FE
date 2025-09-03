@@ -37,3 +37,15 @@ export const postMemoComment = async (sessionId: number, memoText: string) => {
     throw error;
   }
 };
+
+export const deleteMemoComment = async (memoId: number) => {
+  try {
+    const response = await axios.delete(`${API_URL}/memos/delete/${memoId}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
