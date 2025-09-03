@@ -22,14 +22,14 @@ const MemoComment = ({
         <div className="flex-1">
           <div className="flex items-center space-x-2">
             <span className="text-sm font-semibold text-textBlack">
-              {memoCommentData.userName}
+              {memoCommentData.memberName}
             </span>
             <span className="text-xs text-textGray">
-              {memoCommentData.memoUpdateAt}
+              {memoCommentData.createdAt}
             </span>
           </div>
           <p className="text-sm text-textBlack leading-relaxed">
-            {memoCommentData.chatMemo}
+            {memoCommentData.memoText}
           </p>
         </div>
         <button className="text-xs px-2 py-1 bg-gray-100 rounded-lg border hover:bg-gray-200">
