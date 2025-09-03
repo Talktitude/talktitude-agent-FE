@@ -10,18 +10,19 @@ interface ReportItemProps {
 const ReportItem = ({ reportItem, onClick }: ReportItemProps) => {
   return (
     <button className="px-10 py-2.5 hover:bg-gray-100" onClick={onClick}>
-      <div className="flex items-center gap-3">
-        <div className="aspect-square w-14 h-14 rounded-full">
+      <div className="flex items-center gap-4">
+        <div className="relative aspect-square w-16 h-16 rounded-full overflow-hidden">
           <Image
             src={reportItem.profileImageUrl}
             alt="profile"
-            width={50}
-            height={50}
-            className="rounded-full"
+            fill
+            sizes="60px"
+            unoptimized={true}
+            className="object-cover"
           />
         </div>
         <div className="flex-1">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between px-1">
             <div className="text-textBlack text-base font-semibold">
               {reportItem.clientName}
             </div>
@@ -29,11 +30,11 @@ const ReportItem = ({ reportItem, onClick }: ReportItemProps) => {
               {reportItem.createdAt}
             </div>
           </div>
-          <div className="w-fit text-textGray text-base font-medium">
-            {reportItem.clientPhone}
+          <div className="w-fit text-textGray text-base font-medium px-1">
+            {reportItem.phone}
           </div>
           <div className="bg-bgLightBlue text-mainColor text-sm px-2 py-1 rounded-full font-semibold w-fit">
-            {reportItem.category}
+            {reportItem.category} 문의
           </div>
         </div>
       </div>
