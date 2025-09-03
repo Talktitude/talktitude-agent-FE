@@ -29,17 +29,18 @@ const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <div className="relative aspect-square w-12 h-12 rounded-full flex items-center justify-center">
             <Image
               src={
                 data.profileImageUrl ||
                 'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
               }
-              width={40}
-              height={40}
               alt="profileImageUrl"
-              className="rounded-full"
+              sizes="40px"
+              unoptimized={true}
+              className="object-cover rounded-full"
+              fill
             />
           </div>
           <div className="text-textBlack text-3xl font-bold">
