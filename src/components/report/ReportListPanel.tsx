@@ -11,6 +11,8 @@ const ReportListPanel = () => {
     handleSearchReport,
     handleChangeReport,
     searchValue,
+    searchResultItems,
+    isSearchMode,
   } = useReportList();
 
   return (
@@ -22,7 +24,10 @@ const ReportListPanel = () => {
         onChange={handleChangeReport}
         value={searchValue}
       />
-      <ReportList reportListItems={reportListItems} />
+      <ReportList
+        reportListItems={isSearchMode ? searchResultItems : reportListItems}
+        isSearchMode={isSearchMode}
+      />
     </div>
   );
 };
