@@ -23,7 +23,7 @@ const ReportList = ({
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = isSearchMode ? 5 : 6;
   const totalPages = Math.ceil(reportListItems.length / itemsPerPage);
   const paginatedItems = reportListItems.slice(
     (currentPage - 1) * itemsPerPage,
@@ -44,7 +44,7 @@ const ReportList = ({
     <>
       {isSearchMode && (
         <div className="px-4 py-2 text-sm text-textGray border-b border-lineGray">
-          검색 결과 ({paginatedItems.length}건)
+          검색 결과 ({reportListItems.length}건)
         </div>
       )}
       {paginatedItems.length > 0 ? (
