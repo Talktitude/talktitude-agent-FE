@@ -1,14 +1,12 @@
-import { patchEndChat } from '@/api/support/chatRoomPanelApi';
 import type { ChatHeaderProps } from '@/types/support';
 import { BsTelephoneXFill } from 'react-icons/bs';
 
-export default function ChatHeader({ chatInfo }: ChatHeaderProps) {
+export default function ChatHeader({
+  chatInfo,
+  onSupportEnd,
+  forcedRefresh,
+}: ChatHeaderProps) {
   const isFinished = chatInfo.status === 'FINISHED';
-  const handleSupportEnd = async (sessionId: number) => {
-    if (isFinished) return;
-    const response = await patchEndChat(sessionId);
-    console.log(response.message);
-  };
 
   return (
     <div className="sticky top-0 bg-bgLightBlue border-b border-lineGray p-5 m-0 flex flex-row items-center justify-between">
@@ -27,9 +25,9 @@ export default function ChatHeader({ chatInfo }: ChatHeaderProps) {
               ? 'bg-lineGray text-white cursor-not-allowed'
               : 'bg-textRed text-white hover:bg-textRed/80'
           }`}
-          onClick={() => handleSupportEnd(chatInfo.sessionId)}
-          disabled={isFinished}
-          aria-disabled={isFinished}
+          onClick={() => onSupportEnd(chatInfo.sessionId)}
+          disabled={forcedRefresh || isFinished}
+          aria-disabled={forcedRefresh || isFinished}
         >
           <BsTelephoneXFill className="w-4 h-4" />
         </button>
