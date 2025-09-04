@@ -37,7 +37,7 @@ export default function SupportPage() {
   return (
     <>
       <Header />
-      <div className="flex w-full h-[calc(100vh-56px)]">
+      <div className="flex w-full h-[calc(100vh-60px)]">
         <ChatListPanel onChatSelect={handleChatSelect} />
         {selectedChat ? (
           <>
