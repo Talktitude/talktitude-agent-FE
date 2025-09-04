@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReportItem from './ReportItem';
 import { ReportItemType } from '@/types/reports';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -10,13 +10,14 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from '@/components/ui/pagination';
-// import { getReportList } from '@/api/report/reportListApi';
 import { CalendarX2 } from 'lucide-react';
 
 const ReportList = ({
   reportListItems,
+  isSearchMode = false,
 }: {
   reportListItems: ReportItemType[];
+  isSearchMode: boolean;
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,6 +30,11 @@ const ReportList = ({
     currentPage * itemsPerPage,
   );
 
+  // 리스트 데이터가 변경되면 첫 페이지로 리셋
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [reportListItems]);
+
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
@@ -36,9 +42,20 @@ const ReportList = ({
 
   return (
     <>
+      {isSearchMode && (
+        <div className="px-4 py-2 text-sm text-textGray border-b border-lineGray">
+          검색 결과 ({paginatedItems.length}건)
+        </div>
+      )}
       {paginatedItems.length > 0 ? (
         <div className="flex-1 flex flex-col">
-          <div className="flex flex-col min-h-[calc(100dvh-210px)]">
+          <div
+            className={`flex flex-col ${
+              isSearchMode
+                ? 'min-h-[calc(100dvh-260px)]'
+                : 'min-h-[calc(100dvh-220px)]'
+            }`}
+          >
             {paginatedItems.map((reportItem) => (
               <ReportItem
                 reportItem={reportItem}
