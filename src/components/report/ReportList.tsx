@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReportItem from './ReportItem';
 import { ReportItemType } from '@/types/reports';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -10,11 +10,14 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from '@/components/ui/pagination';
-import { getReportList } from '@/api/report/reportListApi';
+// import { getReportList } from '@/api/report/reportListApi';
 import { CalendarX2 } from 'lucide-react';
 
-const ReportList = () => {
-  const [reportListItems, setReportListItems] = useState<ReportItemType[]>([]);
+const ReportList = ({
+  reportListItems,
+}: {
+  reportListItems: ReportItemType[];
+}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
@@ -30,14 +33,6 @@ const ReportList = () => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
   };
-
-  useEffect(() => {
-    const fetchReportList = async (date: string) => {
-      const response = await getReportList(date || '');
-      setReportListItems(response.data);
-    };
-    fetchReportList(date || '');
-  }, [date]);
 
   return (
     <>
