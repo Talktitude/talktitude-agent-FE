@@ -44,6 +44,8 @@ export interface ChatHeaderInfoType {
 // ChatHeader.tsx - props
 export interface ChatHeaderProps {
   chatInfo: ChatHeaderInfoType;
+  onSupportEnd: (sessionId: number) => void;
+  forcedRefresh?: boolean;
 }
 
 // ChatRoom.tsx - props 아님, 타입 정의

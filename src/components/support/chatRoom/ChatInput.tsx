@@ -8,6 +8,7 @@ interface ChatInputProps {
   value?: string;
   onChange?: (value: string) => void;
   disabled?: boolean;
+  forcedRefresh?: boolean;
 }
 
 export default function ChatInput({
@@ -15,6 +16,7 @@ export default function ChatInput({
   value: externalValue,
   onChange: externalOnChange,
   disabled,
+  forcedRefresh,
 }: ChatInputProps) {
   const [message, setMessage] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -77,8 +79,8 @@ export default function ChatInput({
           isDisabled ? 'opacity-50 cursor-not-allowed' : ''
         }`}
         onClick={handleImageUpload}
-        disabled={isDisabled}
-        aria-disabled={isDisabled}
+        disabled={isDisabled || forcedRefresh}
+        aria-disabled={isDisabled || forcedRefresh}
       >
         <LuImagePlus size={30} color="#3b3b3b" />
       </button>
@@ -91,17 +93,17 @@ export default function ChatInput({
         value={inputValue}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
-        disabled={isDisabled}
+        disabled={isDisabled || forcedRefresh}
         className="w-full h-12 px-5 py-3 text-textBlack text-base font-medium outline-none shadow-inputShadow rounded-[1.25rem] border-[1px] border-lineGray focus:border-[1px] focus:border-mainColor resize-none flex-1"
       />
       <button
         className={`ml-3 flex h-10 w-10 items-center justify-center rounded-full ${
-          !isDisabled && inputValue.trim()
+          !isDisabled && inputValue.trim() && !forcedRefresh
             ? 'bg-mainColor'
             : 'bg-lineGray cursor-not-allowed'
         }`}
         onClick={handleSendMessage}
-        disabled={isDisabled || !inputValue.trim()}
+        disabled={isDisabled || !inputValue.trim() || forcedRefresh}
       >
         <IoMdArrowRoundUp size={30} color="white" />
       </button>

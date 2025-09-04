@@ -8,6 +8,7 @@ import { useEffect, useState, useCallback } from 'react';
 import {
   getChatHeaderInfo,
   getChatMessage,
+  patchEndChat,
 } from '@/api/support/chatRoomPanelApi';
 import { useSearchParams } from 'next/navigation';
 import { validateSessionId } from '@/lib/utils';
@@ -25,6 +26,7 @@ const ChatRoomPanel = ({
   const [chatInfo, setChatInfo] = useState<ChatHeaderInfoType | null>(null);
   const [messages, setMessages] = useState<SupportMessageType[]>([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [forcedRefresh, setForcedRefresh] = useState(false);
 
   // 외부에서 제어하는 경우(추천 답변 선택 시) 내부에서 제어하는 경우(기본 입력 시) 구분하여 값 설정
   const currentInputMessage =
@@ -65,14 +67,31 @@ const ChatRoomPanel = ({
     }
   }, [sessionId, fetchChatMessage]);
 
+  const isFinished = chatInfo?.status === 'FINISHED';
+  const handleSupportEnd = async (sessionId: number) => {
+    if (confirm('상담을 종료하시겠습니까?')) {
+      if (isFinished) return;
+      const response = await patchEndChat(sessionId);
+      console.log(response.message);
+      setForcedRefresh(true);
+    }
+  };
+
   return (
     <div className="flex flex-col w-[40%] border-r border-lineGray bg-bgLightBlue">
-      {chatInfo && <ChatHeader chatInfo={chatInfo} />}
+      {chatInfo && (
+        <ChatHeader
+          chatInfo={chatInfo}
+          onSupportEnd={handleSupportEnd}
+          forcedRefresh={forcedRefresh}
+        />
+      )}
       <ChatRoom messages={messages} />
       <ChatInput
         onSendMessage={handleSendMessage}
         value={currentInputMessage}
         onChange={handleInputChange}
+        forcedRefresh={forcedRefresh}
         disabled={chatInfo?.status === 'FINISHED'}
       />
     </div>

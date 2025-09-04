@@ -1,19 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import ReportList from './ReportList';
 import SearchInput from '@/components/common/SearchInput';
+import { useReportList } from '@/hooks/report/useReportList';
 
 const ReportListPanel = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const handleSearchReport = () => {
-    console.log(searchValue);
-    setSearchValue('');
-  };
-  const handleChangeReport = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-    // console.log(searchValue);
-  };
+  const {
+    reportListItems,
+    handleSearchReport,
+    handleChangeReport,
+    searchValue,
+    searchResultItems,
+    isSearchMode,
+  } = useReportList();
+
   return (
     <div className="flex flex-col overflow-y-auto h-full w-[50%] bg-white p-3">
       <SearchInput
@@ -21,8 +22,12 @@ const ReportListPanel = () => {
           handleSearchReport();
         }}
         onChange={handleChangeReport}
+        value={searchValue}
       />
-      <ReportList />
+      <ReportList
+        reportListItems={isSearchMode ? searchResultItems : reportListItems}
+        isSearchMode={isSearchMode}
+      />
     </div>
   );
 };

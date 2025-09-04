@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReportItem from './ReportItem';
 import { ReportItemType } from '@/types/reports';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -10,40 +10,52 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from '@/components/ui/pagination';
-import { getReportList } from '@/api/report/reportListApi';
 import { CalendarX2 } from 'lucide-react';
 
-const ReportList = () => {
-  const [reportListItems, setReportListItems] = useState<ReportItemType[]>([]);
+const ReportList = ({
+  reportListItems,
+  isSearchMode = false,
+}: {
+  reportListItems: ReportItemType[];
+  isSearchMode: boolean;
+}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = isSearchMode ? 5 : 6;
   const totalPages = Math.ceil(reportListItems.length / itemsPerPage);
   const paginatedItems = reportListItems.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
 
+  // 리스트 데이터가 변경되면 첫 페이지로 리셋
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [reportListItems]);
+
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
   };
 
-  useEffect(() => {
-    const fetchReportList = async (date: string) => {
-      const response = await getReportList(date || '');
-      setReportListItems(response.data);
-    };
-    fetchReportList(date || '');
-  }, [date]);
-
   return (
     <>
+      {isSearchMode && (
+        <div className="px-4 py-2 text-sm text-textGray border-b border-lineGray">
+          검색 결과 ({reportListItems.length}건)
+        </div>
+      )}
       {paginatedItems.length > 0 ? (
         <div className="flex-1 flex flex-col">
-          <div className="flex flex-col min-h-[calc(100dvh-210px)]">
+          <div
+            className={`flex flex-col ${
+              isSearchMode
+                ? 'min-h-[calc(100dvh-260px)]'
+                : 'min-h-[calc(100dvh-220px)]'
+            }`}
+          >
             {paginatedItems.map((reportItem) => (
               <ReportItem
                 reportItem={reportItem}

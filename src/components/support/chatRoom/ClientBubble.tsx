@@ -19,7 +19,7 @@ export default function ClientBubble({
       <div className="max-w-[70%] px-4 py-1.5 rounded-[20px] flex justify-between text-base font-medium break-words shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] bg-white text-textBlack self-start rounded-bl-none whitespace-pre-wrap">
         {content}
       </div>
-      {message.textToShow && (
+      {message.showOriginal && (
         <button
           onClick={() => setShowOriginal(!showOriginal)}
           className="h-7 px-5 py-1.5 bg-white rounded-[20px] outline outline-1 outline-offset-[-1px] outline-textLightGray overflow-hidden text-textGray text-xs font-medium self-center transition-colors hover:bg-gray-100 hover:outline-textGray hover:text-textBlack"
