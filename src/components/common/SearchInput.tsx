@@ -13,6 +13,12 @@ export default function SearchInput({
   value = '',
 }: SearchInputProps) {
   const isSearchDisabled = value.trim() === '';
+
+  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSearchClick();
+    }
+  };
   return (
     <div className="relative w-full px-5 py-3.5">
       <input
@@ -20,6 +26,7 @@ export default function SearchInput({
         placeholder={PLACEHOLDERS.CLIENT_SEARCH}
         onChange={onChange}
         value={value}
+        onKeyDown={handleEnterPress}
         className="w-full h-12 px-5 py-3 text-textBlack text-base font-medium outline-none shadow-inputShadow rounded-[1.25rem] border-[1px] border-lineGray focus:border-[1px] focus:border-mainColor resize-none flex-1"
       />
       <button
