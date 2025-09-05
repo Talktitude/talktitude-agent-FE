@@ -2,6 +2,7 @@ import React from 'react';
 import type { ChatItemProps } from '../../../types/support';
 import Image from 'next/image';
 import { useTimeFormat } from '../../../hooks/useTimeFormat';
+import Badge from '@/components/common/Badge';
 
 export default function ChatItem({
   chatListItem,
@@ -40,8 +41,13 @@ export default function ChatItem({
               {formattedTime}
             </span>
           </div>
-          <div className="text-[#5D5D5D] text-base font-normal">
-            {chatListItem.clientPhone}
+          <div className="flex items-center justify-between">
+            <div className="text-[#5D5D5D] text-base font-normal">
+              {chatListItem.clientPhone}
+            </div>
+            <Badge>
+              {chatListItem.status === 'IN_PROGRESS' ? '진행중' : '종료'}
+            </Badge>
           </div>
         </div>
       </div>
