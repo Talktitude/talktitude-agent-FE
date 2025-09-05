@@ -1,4 +1,3 @@
-// src/hooks/useChatSocket.ts
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
@@ -7,6 +6,7 @@ import type { Client, IMessage } from '@stomp/stompjs';
 
 type ReceiveHandler = (msg: unknown) => void;
 type StompErrorFrame = { headers?: { message?: string } };
+type StatusHandler = (s: { sessionId: number; status: string }) => void;
 
 /** 쿼리스트링에 token을 안전하게 붙여주는 헬퍼 (로컬 토큰 = 순수 JWT 전제) */
 function buildSocketUrlWithToken(base: string, jwt: string) {
@@ -15,13 +15,22 @@ function buildSocketUrlWithToken(base: string, jwt: string) {
   return u.toString();
 }
 
-export function useChatSocket(onReceive?: ReceiveHandler) {
+export function useChatSocket(
+  onReceive?: ReceiveHandler,
+  onStatus?: StatusHandler,
+) {
   const searchParams = useSearchParams();
   const sessionIdParam = searchParams.get('sessionId');
   const sessionId = sessionIdParam ? Number(sessionIdParam) : null;
 
   const clientRef = useRef<Client | null>(null);
   const [connected, setConnected] = useState(false);
+  const [status, setStatus] = useState<string>('');
+
+  const onStatusRef = useRef(onStatus);
+  useEffect(() => {
+    onStatusRef.current = onStatus;
+  }, [onStatus]);
 
   /** 최신 onReceive를 ref에 보관 (deps에서 빼서 재연결 방지) */
   const onReceiveRef = useRef<ReceiveHandler | undefined>(onReceive);
@@ -60,7 +69,8 @@ export function useChatSocket(onReceive?: ReceiveHandler) {
 
   useEffect(() => {
     sendRef.current = sendMessage;
-  }, [sendMessage]);
+    setStatus('');
+  }, [sendMessage, sessionId]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || !sessionId) return;
@@ -110,6 +120,20 @@ export function useChatSocket(onReceive?: ReceiveHandler) {
                 }
               },
             );
+
+            // 상태 구독
+            client.subscribe(
+              `/user/queue/chat/${sessionId}/status`,
+              (message: IMessage) => {
+                try {
+                  const s = JSON.parse(message.body);
+                  setStatus(s.status);
+                  onStatusRef.current?.(s);
+                } catch (e) {
+                  console.error('status parse error', e, message.body);
+                }
+              },
+            );
           },
 
           onStompError: (frame: unknown) => {
@@ -141,9 +165,13 @@ export function useChatSocket(onReceive?: ReceiveHandler) {
     // 재연결 트리거는 sessionId만. onReceive는 ref로 처리했으므로 deps에서 제외
   }, [sessionId]);
 
+  const finishedChat = status === 'FINISHED';
+
   return {
     connected,
     sendMessage: (data: Parameters<typeof sendRef.current>[0]) =>
       sendRef.current(data),
+    status,
+    finishedChat,
   };
 }

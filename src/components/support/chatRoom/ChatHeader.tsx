@@ -1,12 +1,16 @@
 import type { ChatHeaderProps } from '@/types/support';
 import { BsTelephoneXFill } from 'react-icons/bs';
+import { useChatStatusStore } from '@/store/chatStatusStore';
 
 export default function ChatHeader({
   chatInfo,
   onSupportEnd,
-  forcedRefresh,
 }: ChatHeaderProps) {
-  const isFinished = chatInfo.status === 'FINISHED';
+  const liveStatus =
+    useChatStatusStore((s) => s.bySession[chatInfo.sessionId]) ||
+    chatInfo.status;
+
+  const isFinished = liveStatus === 'FINISHED';
 
   return (
     <div className="sticky top-0 bg-bgLightBlue border-b border-lineGray p-5 m-0 flex flex-row items-center justify-between">
@@ -26,8 +30,8 @@ export default function ChatHeader({
               : 'bg-textRed text-white hover:bg-textRed/80'
           }`}
           onClick={() => onSupportEnd(chatInfo.sessionId)}
-          disabled={forcedRefresh || isFinished}
-          aria-disabled={forcedRefresh || isFinished}
+          disabled={isFinished}
+          aria-disabled={isFinished}
         >
           <BsTelephoneXFill className="w-4 h-4" />
         </button>

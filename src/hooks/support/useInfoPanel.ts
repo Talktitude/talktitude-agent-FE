@@ -15,6 +15,7 @@ import {
 } from '@/api/support/supportPanelApi';
 import { useSearchParams } from 'next/navigation';
 import { validateSessionId } from '@/lib/utils';
+import { useChatStatusStore } from '@/store/chatStatusStore';
 
 export const useInfoPanel = () => {
   const [clientInfo, setClientInfo] = useState<ClientInfoType>();
@@ -25,18 +26,21 @@ export const useInfoPanel = () => {
   const [chatMemo, setChatMemo] = useState<string>('');
   const sessionId = useSearchParams().get('sessionId');
   const [isFinished, setIsFinished] = useState(false);
+  const liveStatus =
+    useChatStatusStore((s) => s.bySession[Number(sessionId)]) || isFinished;
 
   useEffect(() => {
     const fetchIsFinished = async () => {
       const validSessionId = validateSessionId(sessionId);
       if (validSessionId !== null) {
         const response = await getChatHeaderInfo(validSessionId);
-        const finished = response?.data?.status === 'FINISHED';
+        const finished =
+          response?.data?.status === 'FINISHED' || liveStatus === 'FINISHED';
         setIsFinished(finished);
       }
     };
     fetchIsFinished();
-  }, [sessionId]);
+  }, [sessionId, liveStatus]);
 
   useEffect(() => {
     const fetchClientInfo = async () => {

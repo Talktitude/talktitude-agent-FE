@@ -3,6 +3,7 @@ import type { ChatItemProps } from '../../../types/support';
 import Image from 'next/image';
 import { useTimeFormat } from '../../../hooks/useTimeFormat';
 import Badge from '@/components/common/Badge';
+import { useChatStatusStore } from '@/store/chatStatusStore';
 
 export default function ChatItem({
   chatListItem,
@@ -10,6 +11,11 @@ export default function ChatItem({
   onClick,
 }: ChatItemProps) {
   const formattedTime = useTimeFormat(chatListItem.lastMessageTime);
+
+  const liveStatus =
+    useChatStatusStore((s) => s.bySession[chatListItem.sessionId]) ||
+    chatListItem.status;
+  const isFinished = liveStatus === 'FINISHED';
 
   return (
     <div
@@ -45,9 +51,7 @@ export default function ChatItem({
             <div className="text-[#5D5D5D] text-base font-normal">
               {chatListItem.clientPhone}
             </div>
-            <Badge>
-              {chatListItem.status === 'IN_PROGRESS' ? '진행중' : '종료'}
-            </Badge>
+            <Badge>{isFinished ? '종료' : '진행중'}</Badge>
           </div>
         </div>
       </div>
