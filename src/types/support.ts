@@ -23,6 +23,7 @@ export interface ChatListItemType {
   clientPhone: string;
   lastMessageTime: string;
   profileImageUrl: string;
+  status: 'ALL' | 'IN_PROGRESS' | 'FINISHED';
 }
 
 // ChatItem.tsx - props
