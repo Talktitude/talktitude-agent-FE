@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import ContactItem from './ChatItem';
+import ChatItem from './ChatItem';
 import { PiChats } from 'react-icons/pi';
 import type { ChatListProp } from '@/types/support';
 import { CHAT_LIST_PLACEHOLDERS } from '@/lib/constants/placeholders';
@@ -46,7 +46,7 @@ export default function ChatList({
         <div className="flex-1 overflow-y-auto">
           {chatListItems.length > 0 &&
             chatListItems.map((chat, index) => (
-              <ContactItem
+              <ChatItem
                 key={index}
                 chatListItem={chat}
                 isSelected={
