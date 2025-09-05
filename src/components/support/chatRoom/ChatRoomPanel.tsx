@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatRoom from './ChatRoom';
 import ChatInput from './ChatInput';
@@ -13,6 +13,7 @@ import {
 } from '@/api/support/chatRoomPanelApi';
 import { validateSessionId } from '@/lib/utils';
 import { useChatSocket } from '@/hooks/support/useChatSocket';
+import { useChatStatusStore } from '@/store/chatStatusStore';
 
 interface ChatRoomPanelProps {
   inputMessage?: string;
@@ -30,14 +31,13 @@ const ChatRoomPanel = ({
   const [chatInfo, setChatInfo] = useState<ChatHeaderInfoType | null>(null);
   const [messages, setMessages] = useState<SupportMessageType[]>([]);
   const [inputMessage, setInputMessage] = useState('');
-  const [forcedRefresh, setForcedRefresh] = useState(false);
 
   // 외부 제어/내부 제어 분기
   const currentInputMessage =
     externalInputMessage !== undefined ? externalInputMessage : inputMessage;
   const currentSetInputMessage = externalSetInputMessage || setInputMessage;
 
-  // 1) 초기 메시지 조회
+  // 1) 초기 메시지
   const fetchChatMessage = useCallback(async () => {
     if (validSessionId == null) return;
     try {
@@ -48,7 +48,7 @@ const ChatRoomPanel = ({
     }
   }, [validSessionId]);
 
-  // 2) 헤더 정보 조회
+  // 2) 헤더 정보
   const fetchHeaderInfo = useCallback(async () => {
     if (validSessionId == null) return;
     try {
@@ -59,22 +59,37 @@ const ChatRoomPanel = ({
     }
   }, [validSessionId]);
 
-  // 3) 소켓 수신
+  // 3) 메시지 푸시 수신
   const handleReceive = useCallback((msg: unknown) => {
-    setMessages((prev) => {
-      return [...prev, msg as SupportMessageType];
-    });
+    setMessages((prev) => [...prev, msg as SupportMessageType]);
   }, []);
 
-  // 4) 소켓 훅 (연결, 전송)
-  const { connected, sendMessage } = useChatSocket(handleReceive);
+  // 4) 상태 푸시 수신
+  const handleStatus = useCallback(
+    (s: { sessionId: number; status: string }) => {
+      if (validSessionId == null) return;
+      if (s.sessionId !== validSessionId) return;
+
+      // 전역 상태 업데이트
+      if (s.status === 'IN_PROGRESS' || s.status === 'FINISHED') {
+        useChatStatusStore.getState().setStatus(s.sessionId, s.status);
+      }
+    },
+    [validSessionId],
+  );
+
+  // 5) 소켓 훅
+  const { connected, sendMessage, finishedChat } = useChatSocket(
+    handleReceive,
+    handleStatus,
+  );
 
   useEffect(() => {
     fetchHeaderInfo();
     fetchChatMessage();
-  }, [fetchHeaderInfo, fetchChatMessage]);
+  }, [fetchHeaderInfo, fetchChatMessage, validSessionId]);
 
-  // 5) 소켓 송신
+  // 6) 전송
   const handleSendMessage = (text: string) => {
     if (validSessionId == null) return;
     if (!text.trim()) return;
@@ -88,25 +103,28 @@ const ChatRoomPanel = ({
     currentSetInputMessage('');
   };
 
-  const isFinished = chatInfo?.status === 'FINISHED';
+  // 7) 비활성화 조건: 헤더 상태 or 실시간 상태 중 하나라도 FINISHED
+  const disabled = useMemo(() => {
+    const headerFinished = chatInfo?.status === 'FINISHED';
+    return (
+      headerFinished || finishedChat || !connected || validSessionId == null
+    );
+  }, [chatInfo?.status, finishedChat, connected, validSessionId]);
 
   const handleSupportEnd = async (sessionId: number) => {
-    if (confirm('상담을 종료하시겠습니까?')) {
-      if (isFinished) return;
+    if (!confirm('상담을 종료하시겠습니까?')) return;
+    try {
       const response = await patchEndChat(sessionId);
       console.log(response.message);
-      setForcedRefresh(true);
+    } catch (e) {
+      console.error(e);
     }
   };
 
   return (
     <div className="flex flex-col w-[40%] border-r border-lineGray bg-bgLightBlue">
       {chatInfo && (
-        <ChatHeader
-          chatInfo={chatInfo}
-          onSupportEnd={handleSupportEnd}
-          forcedRefresh={forcedRefresh}
-        />
+        <ChatHeader chatInfo={chatInfo} onSupportEnd={handleSupportEnd} />
       )}
 
       <ChatRoom messages={messages} />
@@ -115,8 +133,7 @@ const ChatRoomPanel = ({
         onSendMessage={handleSendMessage}
         value={currentInputMessage}
         onChange={(v) => currentSetInputMessage(v)}
-        forcedRefresh={forcedRefresh}
-        disabled={isFinished || !connected || validSessionId == null}
+        disabled={disabled}
       />
     </div>
   );
