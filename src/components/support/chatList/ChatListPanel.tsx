@@ -29,7 +29,7 @@ const ChatListPanel = ({
   } = useChatList({ onChatSelect });
 
   return (
-    <div className="flex flex-col w-[30%] gap-1 border-r border-lineGray overflow-y-auto">
+    <div className="flex flex-col w-[30%] gap-1 border-r border-lineGray overflow-hidden">
       <SectionHeader title="상담 목록" />
       {allChatListItems.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full gap-2">
@@ -39,7 +39,7 @@ const ChatListPanel = ({
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-1 h-full">
+        <div className="flex flex-col gap-1 h-[calc(100dvh-115px)]">
           <SearchInput
             onSearchClick={() => {
               handleSearchChat();
@@ -51,14 +51,16 @@ const ChatListPanel = ({
             filterOption={filterOption}
             onFilterChange={handleFilterChange}
           />
-          <ChatList
-            chatListItems={isSearchMode ? searchResultItems : chatListItems}
-            selectedChat={selectedChat ?? -1}
-            filterOption={filterOption}
-            onFilterChange={handleFilterChange}
-            onChatSelect={handleChatSelect}
-            isSearchMode={isSearchMode}
-          />
+          <div className="flex-1 min-h-0">
+            <ChatList
+              chatListItems={isSearchMode ? searchResultItems : chatListItems}
+              selectedChat={selectedChat ?? -1}
+              filterOption={filterOption}
+              onFilterChange={handleFilterChange}
+              onChatSelect={handleChatSelect}
+              isSearchMode={isSearchMode}
+            />
+          </div>
         </div>
       )}
     </div>
