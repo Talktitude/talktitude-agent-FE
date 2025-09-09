@@ -43,7 +43,10 @@ const CustomModal = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogPortal>
         <DialogOverlay className={getOverlayClasses()} />
-        <DialogContent className={getModalClasses()}>
+        <DialogContent
+          className={getModalClasses()}
+          aria-describedby={undefined}
+        >
           <DialogClose className="absolute right-6 focus:outline-none"></DialogClose>
           <DialogTitle className="sr-only">Modal</DialogTitle>
           {children}

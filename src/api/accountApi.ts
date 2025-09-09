@@ -3,9 +3,6 @@ import { LoginFormPropsType } from '@/types/auth';
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-const accessToken =
-  typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
-
 interface SignupData {
   loginId: string;
   password: string;
@@ -66,6 +63,10 @@ export const postLogin = async (data: LoginFormPropsType['loginFormData']) => {
 
 export const getUserInfo = async () => {
   try {
+    const accessToken =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('accessToken')
+        : null;
     const response = await axios.get(`${API_URL}/members/me`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
