@@ -27,7 +27,11 @@ export default function Header() {
       const response = await getUserInfo();
       setUserInfo(response.data);
     };
-    fetchUserInfo();
+    const token =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('accessToken')
+        : null;
+    if (token) fetchUserInfo();
   }, []);
 
   return (
@@ -69,7 +73,6 @@ export default function Header() {
                 'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
               }
               alt="profile"
-              // fill
               width={30}
               height={30}
               unoptimized={true}
