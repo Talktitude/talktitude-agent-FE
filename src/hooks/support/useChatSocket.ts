@@ -3,10 +3,14 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import type { Client, IMessage } from '@stomp/stompjs';
+import type { RecommendationItemType } from '@/types/support';
 
 type ReceiveHandler = (msg: unknown) => void;
-type StompErrorFrame = { headers?: { message?: string } };
 type StatusHandler = (s: { sessionId: number; status: string }) => void;
+type RecommendationsHandler = (s: {
+  recommendations: RecommendationItemType[];
+}) => void;
+type StompErrorFrame = { headers?: { message?: string } };
 
 /** 쿼리스트링에 token을 안전하게 붙여주는 헬퍼 (로컬 토큰 = 순수 JWT 전제) */
 function buildSocketUrlWithToken(base: string, jwt: string) {
@@ -18,6 +22,7 @@ function buildSocketUrlWithToken(base: string, jwt: string) {
 export function useChatSocket(
   onReceive?: ReceiveHandler,
   onStatus?: StatusHandler,
+  onRecommendations?: RecommendationsHandler,
 ) {
   const searchParams = useSearchParams();
   const sessionIdParam = searchParams.get('sessionId');
@@ -26,17 +31,29 @@ export function useChatSocket(
   const clientRef = useRef<Client | null>(null);
   const [connected, setConnected] = useState(false);
   const [status, setStatus] = useState<string>('');
-
-  const onStatusRef = useRef(onStatus);
-  useEffect(() => {
-    onStatusRef.current = onStatus;
-  }, [onStatus]);
+  const [recommendations, setRecommendations] = useState<
+    RecommendationItemType[]
+  >([]);
 
   /** 최신 onReceive를 ref에 보관 (deps에서 빼서 재연결 방지) */
   const onReceiveRef = useRef<ReceiveHandler | undefined>(onReceive);
   useEffect(() => {
     onReceiveRef.current = onReceive;
   }, [onReceive]);
+
+  /** 최신 onStatus를 ref에 보관 (deps에서 빼서 재연결 방지) */
+  const onStatusRef = useRef(onStatus);
+  useEffect(() => {
+    onStatusRef.current = onStatus;
+  }, [onStatus]);
+
+  /** 최신 onRecommendations를 ref에 보관 (deps에서 빼서 재연결 방지) */
+  const onRecommendationsRef = useRef<RecommendationsHandler | undefined>(
+    onRecommendations,
+  );
+  useEffect(() => {
+    onRecommendationsRef.current = onRecommendations;
+  }, [onRecommendations]);
 
   /** 최신 send 함수를 외부로 노출하기 위한 ref */
   const sendRef = useRef<
@@ -70,6 +87,7 @@ export function useChatSocket(
   useEffect(() => {
     sendRef.current = sendMessage;
     setStatus('');
+    setRecommendations([]);
   }, [sendMessage, sessionId]);
 
   useEffect(() => {
@@ -134,6 +152,27 @@ export function useChatSocket(
                 }
               },
             );
+
+            // 추천 답변 조회 구독
+            client.subscribe(
+              `/user/queue/chat/${sessionId}/recommendations`,
+              (message: IMessage) => {
+                try {
+                  const raw = JSON.parse(message.body);
+                  let list: RecommendationItemType[] = [];
+                  if (raw && raw.messageId && Array.isArray(raw.items)) {
+                    list = [raw as RecommendationItemType];
+                  } else {
+                    console.warn('Unknown recommendations payload shape:', raw);
+                  }
+
+                  setRecommendations(list);
+                  onRecommendationsRef.current?.({ recommendations: list });
+                } catch (e) {
+                  console.error('recommendations parse error', e, message.body);
+                }
+              },
+            );
           },
 
           onStompError: (frame: unknown) => {
@@ -173,5 +212,6 @@ export function useChatSocket(
       sendRef.current(data),
     status,
     finishedChat,
+    recommendations,
   };
 }
