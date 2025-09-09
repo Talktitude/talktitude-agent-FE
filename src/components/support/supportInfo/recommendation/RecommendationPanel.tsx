@@ -1,45 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import RecommendationList from './RecommendationList';
+import { useChatSocket } from '@/hooks/support/useChatSocket';
+import { RecommendationItemType } from '@/types/support';
 
 interface RecommendationPanelProps {
   setInputMessage?: (message: string) => void;
 }
 
-const MOCK_RECOMMENDATION_LIST = [
-  {
-    id: 1,
-    recommendation: '원래 그래요',
-  },
-  {
-    id: 2,
-    recommendation:
-      '저도 잘 몰라요. 확인 후 다시 연락드릴게요. 확인 후 다시 연락드릴게요',
-  },
-  {
-    id: 3,
-    recommendation: '원래 그래요',
-  },
-  {
-    id: 4,
-    recommendation: '원래 그래요',
-  },
-  {
-    id: 5,
-    recommendation:
-      '저도 잘 몰라요. 확인 후 다시 연락드릴게요. 확인 후 다시 연락드릴게요',
-  },
-  {
-    id: 6,
-    recommendation: '원래 그래요',
-  },
-  {
-    id: 7,
-    recommendation: '원래 그래요',
-  },
-];
-
 const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
-  const [recommendationList] = useState(MOCK_RECOMMENDATION_LIST);
+  const handleRecommendations = useCallback(
+    (s: { recommendations: RecommendationItemType[] }) => {
+      setRecommendationList(s.recommendations);
+    },
+    [],
+  );
+
+  const { recommendations } = useChatSocket(
+    /* onReceive   */ undefined,
+    /* onStatus    */ undefined,
+    /* onRecs      */ handleRecommendations,
+  );
+
+  const [recommendationList, setRecommendationList] = useState<
+    RecommendationItemType[]
+  >([]);
+
+  useEffect(() => {
+    setRecommendationList(recommendations);
+  }, [recommendations]);
   return (
     <div className="h-[50%]">
       <div className="px-5 py-3 justify-start text-mainColor text-lg font-bold">
