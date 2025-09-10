@@ -60,3 +60,11 @@ export interface UserInfoType {
   phoneNum: string;
   profileImageUrl: string;
 }
+
+export interface EditUserData {
+  name: string;
+  phone: string;
+  email: string;
+  password: string;
+  profileImageUrl: string;
+}
