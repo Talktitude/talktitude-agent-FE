@@ -1,13 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import RecommendationList from './RecommendationList';
 import { useChatSocket } from '@/hooks/support/useChatSocket';
 import { RecommendationItemType } from '@/types/support';
+import { getRecommendations } from '@/api/support/chatRoomPanelApi';
 
 interface RecommendationPanelProps {
   setInputMessage?: (message: string) => void;
 }
 
 const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
+  const sessionId = useSearchParams().get('sessionId');
   const handleRecommendations = useCallback(
     (s: { recommendations: RecommendationItemType[] }) => {
       setRecommendationList(s.recommendations);
@@ -26,8 +29,36 @@ const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
   >([]);
 
   useEffect(() => {
-    setRecommendationList(recommendations);
-  }, [recommendations]);
+    if (recommendations && recommendations.length > 0) {
+      setRecommendationList(recommendations);
+      return;
+    }
+    const sid = Number(sessionId);
+    if (!sid) {
+      setRecommendationList([]);
+      return;
+    }
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const items = await getRecommendations(sid);
+        if (cancelled) return;
+        const wrapped: RecommendationItemType[] = items?.length
+          ? [{ messageId: 0, items }]
+          : [];
+        setRecommendationList(wrapped);
+      } catch (e) {
+        if (cancelled) return;
+        console.error('추천 답변 조회 API 오류', e);
+        setRecommendationList([]);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [recommendations, sessionId]);
   return (
     <div className="h-[50%]">
       <div className="px-5 py-3 justify-start text-mainColor text-lg font-bold">
