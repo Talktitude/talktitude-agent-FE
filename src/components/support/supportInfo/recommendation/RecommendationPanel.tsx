@@ -1,45 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import RecommendationList from './RecommendationList';
+import { useChatSocket } from '@/hooks/support/useChatSocket';
+import { RecommendationItemType } from '@/types/support';
+import { getRecommendations } from '@/api/support/chatRoomPanelApi';
 
 interface RecommendationPanelProps {
   setInputMessage?: (message: string) => void;
 }
 
-const MOCK_RECOMMENDATION_LIST = [
-  {
-    id: 1,
-    recommendation: '원래 그래요',
-  },
-  {
-    id: 2,
-    recommendation:
-      '저도 잘 몰라요. 확인 후 다시 연락드릴게요. 확인 후 다시 연락드릴게요',
-  },
-  {
-    id: 3,
-    recommendation: '원래 그래요',
-  },
-  {
-    id: 4,
-    recommendation: '원래 그래요',
-  },
-  {
-    id: 5,
-    recommendation:
-      '저도 잘 몰라요. 확인 후 다시 연락드릴게요. 확인 후 다시 연락드릴게요',
-  },
-  {
-    id: 6,
-    recommendation: '원래 그래요',
-  },
-  {
-    id: 7,
-    recommendation: '원래 그래요',
-  },
-];
-
 const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
-  const [recommendationList] = useState(MOCK_RECOMMENDATION_LIST);
+  const sessionId = useSearchParams().get('sessionId');
+  const handleRecommendations = useCallback(
+    (s: { recommendations: RecommendationItemType[] }) => {
+      setRecommendationList(s.recommendations);
+    },
+    [],
+  );
+
+  const { recommendations } = useChatSocket(
+    /* onReceive   */ undefined,
+    /* onStatus    */ undefined,
+    /* onRecs      */ handleRecommendations,
+  );
+
+  const [recommendationList, setRecommendationList] = useState<
+    RecommendationItemType[]
+  >([]);
+
+  useEffect(() => {
+    if (recommendations && recommendations.length > 0) {
+      setRecommendationList(recommendations);
+      return;
+    }
+    const sid = Number(sessionId);
+    if (!sid) {
+      setRecommendationList([]);
+      return;
+    }
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const items = await getRecommendations(sid);
+        if (cancelled) return;
+        const wrapped: RecommendationItemType[] = items?.length
+          ? [{ messageId: 0, items }]
+          : [];
+        setRecommendationList(wrapped);
+      } catch (e) {
+        if (cancelled) return;
+        console.error('추천 답변 조회 API 오류', e);
+        setRecommendationList([]);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [recommendations, sessionId]);
   return (
     <div className="h-[50%]">
       <div className="px-5 py-3 justify-start text-mainColor text-lg font-bold">
@@ -53,7 +72,7 @@ const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
           />
         ) : (
           <div className="h-full flex items-center justify-center">
-            <div className="text-textGray font-medium">
+            <div className="text-textLightGray font-medium">
               추천 답변이 없습니다.
             </div>
           </div>

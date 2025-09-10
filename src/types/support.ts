@@ -121,6 +121,6 @@ export interface SupportHistoryItemType {
 }
 
 export interface RecommendationItemType {
-  id: number;
-  recommendation: string;
+  messageId: number;
+  items: { id: number; text: string; priority: number; policyIds: string[] }[];
 }
