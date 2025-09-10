@@ -72,7 +72,7 @@ const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
           />
         ) : (
           <div className="h-full flex items-center justify-center">
-            <div className="text-textGray font-medium">
+            <div className="text-textLightGray font-medium">
               추천 답변이 없습니다.
             </div>
           </div>
