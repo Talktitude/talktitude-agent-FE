@@ -45,6 +45,7 @@ export function useSessionPush(opts: Options = {}) {
           'http://localhost:8080/ws';
         const SOCKET_URL = buildSocketUrlWithToken(BASE, rawToken);
         const topic = topicOverride ?? '/user/queue/sessions/created';
+        const topic2 = topicOverride ?? '/user/queue/sessions/updated';
 
         const client: Client = new StompJs.Client({
           webSocketFactory: () => {
@@ -68,7 +69,16 @@ export function useSessionPush(opts: Options = {}) {
                 const json = JSON.parse(message.body) as ChatListItemType;
                 onCreatedRef.current?.(json);
               } catch (e) {
-                console.error('[SESS] parse error', e, message.body);
+                console.error('[SESS] created parse error', e, message.body);
+              }
+            });
+
+            client.subscribe(topic2, (message: IMessage) => {
+              try {
+                const json = JSON.parse(message.body) as ChatListItemType;
+                onCreatedRef.current?.(json);
+              } catch (e) {
+                console.error('[SESS] updateparse error', e, message.body);
               }
             });
           },
