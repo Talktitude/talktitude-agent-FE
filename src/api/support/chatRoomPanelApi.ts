@@ -61,7 +61,7 @@ export const getRecommendations = async (sessionId: number) => {
         headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    console.log('추천 답변 조회', response.data.data.items);
+    // console.log('추천 답변 조회', response.data.data.items);
     return response.data.data.items;
   } catch (error) {
     console.error(error);
