@@ -10,6 +10,13 @@ type StatusHandler = (s: { sessionId: number; status: string }) => void;
 type RecommendationsHandler = (s: {
   recommendations: RecommendationItemType[];
 }) => void;
+type RecommendationsStatus = {
+  messageId: number;
+  state: 'STARTED' | 'DONE' | 'ERROR';
+  reason?: string;
+  timestamp: number;
+};
+type RecommendationsStatusHandler = (s: RecommendationsStatus) => void;
 type StompErrorFrame = { headers?: { message?: string } };
 
 /** 쿼리스트링에 token을 안전하게 붙여주는 헬퍼 (로컬 토큰 = 순수 JWT 전제) */
@@ -23,6 +30,7 @@ export function useChatSocket(
   onReceive?: ReceiveHandler,
   onStatus?: StatusHandler,
   onRecommendations?: RecommendationsHandler,
+  onRecommendationsStatus?: RecommendationsStatusHandler,
 ) {
   const searchParams = useSearchParams();
   const sessionIdParam = searchParams.get('sessionId');
@@ -54,6 +62,14 @@ export function useChatSocket(
   useEffect(() => {
     onRecommendationsRef.current = onRecommendations;
   }, [onRecommendations]);
+
+  /** 최신 onRecommendationsStatus를 ref에 보관 */
+  const onRecommendationsStatusRef = useRef<
+    RecommendationsStatusHandler | undefined
+  >(onRecommendationsStatus);
+  useEffect(() => {
+    onRecommendationsStatusRef.current = onRecommendationsStatus;
+  }, [onRecommendationsStatus]);
 
   /** 최신 send 함수를 외부로 노출하기 위한 ref */
   const sendRef = useRef<
@@ -170,6 +186,23 @@ export function useChatSocket(
                   onRecommendationsRef.current?.({ recommendations: list });
                 } catch (e) {
                   console.error('recommendations parse error', e, message.body);
+                }
+              },
+            );
+
+            // 추천 답변 상태 구독
+            client.subscribe(
+              `/user/queue/chat/${sessionId}/recommendations/status`,
+              (message: IMessage) => {
+                try {
+                  const s = JSON.parse(message.body) as RecommendationsStatus;
+                  onRecommendationsStatusRef.current?.(s);
+                } catch (e) {
+                  console.error(
+                    'recommendations status parse error',
+                    e,
+                    message.body,
+                  );
                 }
               },
             );
