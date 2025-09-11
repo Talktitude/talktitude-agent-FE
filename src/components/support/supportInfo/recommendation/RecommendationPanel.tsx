@@ -4,6 +4,7 @@ import RecommendationList from './RecommendationList';
 import { useChatSocket } from '@/hooks/support/useChatSocket';
 import { RecommendationItemType } from '@/types/support';
 import { getRecommendations } from '@/api/support/chatRoomPanelApi';
+import { useChatStatusStore } from '@/store/chatStatusStore';
 
 interface RecommendationPanelProps {
   setInputMessage?: (message: string) => void;
@@ -59,23 +60,30 @@ const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
       cancelled = true;
     };
   }, [recommendations, sessionId]);
+
+  const liveStatus = useChatStatusStore((s) =>
+    sessionId ? s.bySession[Number(sessionId)] : undefined,
+  );
+  const isFinished = liveStatus === 'FINISHED';
+  const disabled =
+    isFinished || !recommendations || recommendationList.length === 0;
   return (
     <div className="h-[50%]">
       <div className="px-5 py-3 justify-start text-mainColor text-lg font-bold">
         추천 답변 리스트
       </div>
       <div className="h-[calc(100%-51px)] flex-1 overflow-y-auto">
-        {recommendationList.length > 0 ? (
-          <RecommendationList
-            recommendationList={recommendationList}
-            setInputMessage={setInputMessage}
-          />
-        ) : (
+        {disabled ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-textLightGray font-medium">
               추천 답변이 없습니다.
             </div>
           </div>
+        ) : (
+          <RecommendationList
+            recommendationList={recommendationList}
+            setInputMessage={setInputMessage}
+          />
         )}
       </div>
     </div>
