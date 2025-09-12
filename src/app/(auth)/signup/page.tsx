@@ -19,7 +19,7 @@ export default function SignupPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="shrink-0 sticky top-0">
-        <Header />
+        <Header showNavItems={false} />
       </div>
       <main className="flex-1 overflow-y-auto flex flex-col items-center justify-center gap-10 py-10">
         <h1 className="text-2xl font-bold text-textBlack">회원가입</h1>

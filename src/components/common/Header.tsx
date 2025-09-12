@@ -8,7 +8,11 @@ import MyInfoModal from '@/components/account/Info/MyInfoModal';
 import { getUserInfo } from '@/api/accountApi';
 import { UserInfoType } from '@/types/account';
 
-export default function Header() {
+interface HeaderProps {
+  showNavItems?: boolean;
+}
+
+export default function Header({ showNavItems = true }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
   const date = new Date().toLocaleDateString('sv-SE', {
@@ -46,7 +50,7 @@ export default function Header() {
           priority={true}
         />
       </button>
-      {pathname !== '/signup' && (
+      {showNavItems && (
         <div className="flex items-center gap-9">
           {navItems.map((item) => (
             <button
