@@ -8,7 +8,11 @@ import MyInfoModal from '@/components/account/Info/MyInfoModal';
 import { getUserInfo } from '@/api/accountApi';
 import { UserInfoType } from '@/types/account';
 
-export default function Header() {
+interface HeaderProps {
+  showNavItems?: boolean;
+}
+
+export default function Header({ showNavItems = true }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
   const date = new Date().toLocaleDateString('sv-SE', {
@@ -35,8 +39,11 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-mainColor text-white px-16 py-2.5 flex items-center justify-between">
-      <button onClick={() => router.push('/support')}>
+    <header className="bg-mainColor text-white h-14 px-16 py-2.5 flex items-center justify-between">
+      <button
+        onClick={showNavItems ? () => router.push('/support') : undefined}
+        className={showNavItems ? 'cursor-pointer' : 'cursor-default'}
+      >
         <Image
           src={WhiteLogo}
           alt="Talktitude white Logo"
@@ -46,7 +53,7 @@ export default function Header() {
           priority={true}
         />
       </button>
-      {pathname !== '/signup' && (
+      {showNavItems && (
         <div className="flex items-center gap-9">
           {navItems.map((item) => (
             <button

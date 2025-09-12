@@ -9,7 +9,7 @@ export default function BottomButton({
 }: BottomButtonPropsType) {
   const loginStyle = disabled
     ? 'bg-lineGray text-white'
-    : 'bg-mainColor text-white hover:bg-mainColor/80';
+    : 'bg-mainColor text-white hover:bg-[#4A66C9]';
   const signupStyle =
     'bg-white text-mainColor border border-mainColor hover:bg-mainColor hover:text-white';
   return (

@@ -57,7 +57,7 @@ const EditForm = ({
             className={`px-5 py-3 flex-1 text-l font-semibold rounded-2xl ${
               isPasswordEmpty
                 ? 'bg-lineGray text-white'
-                : 'bg-mainColor text-white hover:bg-mainColor/80'
+                : 'bg-mainColor text-white hover:bg-[#4A66C9]'
             }`}
             type="submit"
             disabled={isPasswordEmpty}
