@@ -6,7 +6,7 @@ import { RecommendationItemType } from '@/types/support';
 import { getRecommendations } from '@/api/support/chatRoomPanelApi';
 import { useChatStatusStore } from '@/store/chatStatusStore';
 import { useLoading } from '@/hooks/useLoading';
-import LoadingDots from '@/components/common/LoadingDots';
+import LoadingDots from '@/components/common/loading/LoadingDots';
 
 interface RecommendationPanelProps {
   setInputMessage?: (message: string) => void;

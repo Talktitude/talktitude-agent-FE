@@ -4,7 +4,7 @@ import InputField from '../InputField';
 import BottomButton from '../BottomButton';
 import RememberBox from './RememberBox';
 import { LOGIN_PLACEHOLDERS } from '@/lib/constants/placeholders';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import LoadingSpinner from '@/components/common/loading/LoadingSpinner';
 
 const LoginForm = ({
   loginFormData,

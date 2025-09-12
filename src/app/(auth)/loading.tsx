@@ -1,4 +1,4 @@
-import LoadingPage from '@/components/common/LoadingPage';
+import LoadingPage from '@/components/common/loading/LoadingPage';
 
 export default function AuthLoading() {
   return <LoadingPage />;
