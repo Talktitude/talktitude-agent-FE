@@ -17,7 +17,7 @@ const DetailTabs = ({ activeTab, onTabChange }: DetailTabsProps) => {
           className={`px-2 py-1 text-xs rounded-2xl font-semibold transition-colors ${
             activeTab === tab
               ? 'text-white bg-mainColor border border-mainColor'
-              : 'text-mainColor border border-mainColor hover:bg-mainColor/80 hover:text-white'
+              : 'text-mainColor border border-mainColor hover:bg-[#4A66C9] hover:text-white'
           }`}
         >
           {tab}

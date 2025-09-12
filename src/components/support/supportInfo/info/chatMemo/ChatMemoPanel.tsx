@@ -68,7 +68,7 @@ const ChatMemoPanel = ({ initialMemo = '', hasMemo }: ChatMemoPanelProps) => {
           {isEditing ? (
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-mainColor text-white text-sm font-semibold rounded-[10px] hover:bg-mainColor/80"
+              className="px-4 py-2 bg-mainColor text-white text-sm font-semibold rounded-[10px] hover:bg-[#4A66C9]"
             >
               저장
             </button>
