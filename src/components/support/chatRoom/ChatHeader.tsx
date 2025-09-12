@@ -1,6 +1,7 @@
 import type { ChatHeaderProps } from '@/types/support';
 import { BsTelephoneXFill } from 'react-icons/bs';
 import { useChatStatusStore } from '@/store/chatStatusStore';
+import Badge from '@/components/common/Badge';
 
 export default function ChatHeader({
   chatInfo,
@@ -18,9 +19,21 @@ export default function ChatHeader({
         <div className="text-textBlack text-xl font-bold">
           {chatInfo.clientName} ({chatInfo.clientLoginId})
         </div>
-        <div className="text-textLightGray text-sm font-medium leading-tight">
+        <div className="text-textLightGray text-base font-medium leading-tight">
           {chatInfo.clientPhone}
         </div>
+        {chatInfo.orderRelated ? (
+          <div className="flex flex-row items-center justify-center mt-2 gap-1">
+            <Badge>주문 문의</Badge>
+            <div className="text-textGray text-sm font-semibold leading-tight">
+              {chatInfo.storeName}({chatInfo.orderNumber})
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-row items-center justify-center mt-2 gap-1">
+            <Badge>기타 문의</Badge>
+          </div>
+        )}
       </div>
       <div className="flex flex-row gap-2">
         <button
