@@ -14,13 +14,18 @@ const ErrorPage: React.FC<ErrorPageProps> = ({
   subMessage,
   actions,
 }) => {
+  const errorcode = Number(title);
   return (
     <div className="min-h-screen bg-white">
       <Header showNavItems={false} />
-      <div className="h-[calc(100vh-50px)] text-center flex flex-col items-center justify-center max-w-md mx-auto">
+      <div className="h-[calc(100vh-60px)] text-center flex flex-col items-center justify-center max-w-md mx-auto">
         {/* 에러 메시지 */}
         <div className="mb-8">
-          <h1 className="text-6xl font-bold text-textLightGray mb-2">
+          <h1
+            className={`${
+              errorcode ? 'text-6xl' : 'text-2xl'
+            } text-textLightGray font-bold mb-2`}
+          >
             {title}
           </h1>
           <p className="text-[#C5C6CB] font-bold mb-4 whitespace-pre-line">
