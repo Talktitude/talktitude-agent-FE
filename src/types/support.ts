@@ -40,6 +40,9 @@ export interface ChatHeaderInfoType {
   clientName: string;
   clientPhone: string;
   status?: 'IN_PROGRESS' | 'FINISHED';
+  orderRelated?: boolean;
+  storeName?: string;
+  orderNumber?: string;
 }
 
 // ChatHeader.tsx - props
