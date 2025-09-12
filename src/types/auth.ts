@@ -12,6 +12,7 @@ export interface LoginFormPropsType {
   handleKeepLoggedInClick: () => void; // 로그인 유지 토큰 설정 로직 함수 연결
   disabled: boolean; // 로그인 버튼 비활성화 상태
   loginErrorMessage: string; // 로그인 에러 메시지
+  isLoading?: boolean; // 로딩 상태
 }
 
 // 로그인 유지 체크박스 타입
