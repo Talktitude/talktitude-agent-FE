@@ -39,8 +39,11 @@ export default function Header({ showNavItems = true }: HeaderProps) {
   }, []);
 
   return (
-    <header className="bg-mainColor text-white px-16 py-2.5 flex items-center justify-between">
-      <button onClick={() => router.push('/support')}>
+    <header className="bg-mainColor text-white h-14 px-16 py-2.5 flex items-center justify-between">
+      <button
+        onClick={showNavItems ? () => router.push('/support') : undefined}
+        className={showNavItems ? 'cursor-pointer' : 'cursor-default'}
+      >
         <Image
           src={WhiteLogo}
           alt="Talktitude white Logo"
