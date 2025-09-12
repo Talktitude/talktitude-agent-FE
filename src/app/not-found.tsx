@@ -11,7 +11,7 @@ export default function NotFound() {
         href="/support"
         className="inline-block w-full bg-mainColor hover:bg-[#4A66C9] text-white font-medium py-3 px-6 rounded-2xl transition-colors duration-200"
       >
-        상담 서비스로 돌아가기
+        메인 페이지로 돌아가기
       </Link>
 
       <button
