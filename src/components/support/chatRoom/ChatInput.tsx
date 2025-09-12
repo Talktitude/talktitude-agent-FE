@@ -1,7 +1,6 @@
 import { PLACEHOLDERS } from '@/lib/constants/placeholders';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { IoMdArrowRoundUp } from 'react-icons/io';
-import { LuImagePlus } from 'react-icons/lu';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -19,7 +18,6 @@ export default function ChatInput({
   forcedRefresh,
 }: ChatInputProps) {
   const [message, setMessage] = useState('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const isDisabled = !!disabled;
 
   // 외부에서 제어하는 경우(추천 답변 선택 시) 내부에서 제어하는 경우(기본 입력 시) 구분하여 값 설정
@@ -32,20 +30,6 @@ export default function ChatInput({
     } else {
       setMessage(newValue);
     }
-  };
-
-  const handleImageUpload = () => {
-    if (isDisabled) return;
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    console.log('선택된 이미지:', file);
-
-    e.target.value = '';
   };
 
   const handleSendMessage = () => {
@@ -67,23 +51,6 @@ export default function ChatInput({
 
   return (
     <div className="sticky bottom-0 flex items-center justify-center w-full bg-white border-t border-lineGray px-5 py-3.5">
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        accept="image/*"
-        className="hidden"
-      />
-      <button
-        className={`bg-[#EEEEEE] flex items-center justify-center rounded-full w-10 h-10 mr-3 ${
-          isDisabled ? 'opacity-50 cursor-not-allowed' : ''
-        }`}
-        onClick={handleImageUpload}
-        disabled={isDisabled || forcedRefresh}
-        aria-disabled={isDisabled || forcedRefresh}
-      >
-        <LuImagePlus size={30} color="#3b3b3b" />
-      </button>
       <input
         placeholder={
           isDisabled
