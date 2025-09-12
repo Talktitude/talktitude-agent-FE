@@ -5,6 +5,8 @@ import { useChatSocket } from '@/hooks/support/useChatSocket';
 import { RecommendationItemType } from '@/types/support';
 import { getRecommendations } from '@/api/support/chatRoomPanelApi';
 import { useChatStatusStore } from '@/store/chatStatusStore';
+import { useLoading } from '@/hooks/useLoading';
+import LoadingDots from '@/components/common/LoadingDots';
 
 interface RecommendationPanelProps {
   setInputMessage?: (message: string) => void;
@@ -12,31 +14,68 @@ interface RecommendationPanelProps {
 
 const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
   const sessionId = useSearchParams().get('sessionId');
+  const { isLoading, stopLoading, startLoading } = useLoading(true);
+
   const handleRecommendations = useCallback(
     (s: { recommendations: RecommendationItemType[] }) => {
       setRecommendationList(s.recommendations);
+      if (s.recommendations && s.recommendations.length > 0) {
+        // 종료된 세션이 아니고 웹소켓으로 추천 목록을 받으면 로딩 해제
+        stopLoading();
+        return;
+      }
     },
-    [],
+    [stopLoading],
   );
 
   const { recommendations } = useChatSocket(
     /* onReceive   */ undefined,
     /* onStatus    */ undefined,
     /* onRecs      */ handleRecommendations,
+    /* onRecsStat  */ (s) => {
+      if (s.state === 'STARTED') {
+        startLoading();
+      } else if (s.state === 'DONE' || s.state === 'ERROR') {
+        stopLoading();
+      }
+    },
   );
 
   const [recommendationList, setRecommendationList] = useState<
     RecommendationItemType[]
   >([]);
 
+  const liveStatus = useChatStatusStore((s) =>
+    sessionId ? s.bySession[Number(sessionId)] : undefined,
+  );
+  const isFinished = liveStatus === 'FINISHED';
+  const disabled =
+    isFinished || !recommendations || recommendationList.length === 0;
+
+  // 세션 전환 시 즉시 초기화
+  useEffect(() => {
+    setRecommendationList([]);
+    stopLoading();
+  }, [sessionId, stopLoading]);
+
+  useEffect(() => {
+    if (isFinished) {
+      setRecommendationList([]);
+      stopLoading(); // sessionId가 없으면 로딩 상태 해제
+      return;
+    }
+  }, [isFinished, stopLoading]);
+
   useEffect(() => {
     if (recommendations && recommendations.length > 0) {
       setRecommendationList(recommendations);
+      stopLoading(); // 웹소켓으로 추천 답변을 받으면 로딩 상태 해제
       return;
     }
     const sid = Number(sessionId);
     if (!sid) {
       setRecommendationList([]);
+      stopLoading(); // sessionId가 없으면 로딩 상태 해제
       return;
     }
 
@@ -59,14 +98,8 @@ const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
     return () => {
       cancelled = true;
     };
-  }, [recommendations, sessionId]);
+  }, [recommendations, sessionId, stopLoading, isFinished]);
 
-  const liveStatus = useChatStatusStore((s) =>
-    sessionId ? s.bySession[Number(sessionId)] : undefined,
-  );
-  const isFinished = liveStatus === 'FINISHED';
-  const disabled =
-    isFinished || !recommendations || recommendationList.length === 0;
   return (
     <div className="h-[50%]">
       <div className="px-5 py-3 justify-start text-mainColor text-lg font-bold">
@@ -78,6 +111,16 @@ const RecommendationPanel = ({ setInputMessage }: RecommendationPanelProps) => {
             <div className="text-textLightGray font-medium">
               추천 답변이 없습니다.
             </div>
+          </div>
+        ) : isLoading ? (
+          <div className="h-full flex flex-col items-center justify-center space-y-3">
+            <LoadingDots
+              size="md"
+              dotColors={['primary', 'secondary', 'lightBlue']}
+            />
+            <p className="text-textLightGray text-sm font-medium">
+              추천 답변을 생성하고 있습니다.
+            </p>
           </div>
         ) : (
           <RecommendationList
