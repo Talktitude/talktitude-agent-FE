@@ -4,6 +4,7 @@ import InputField from '../InputField';
 import BottomButton from '../BottomButton';
 import RememberBox from './RememberBox';
 import { LOGIN_PLACEHOLDERS } from '@/lib/constants/placeholders';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 const LoginForm = ({
   loginFormData,
@@ -13,6 +14,7 @@ const LoginForm = ({
   handleKeepLoggedInClick,
   disabled,
   loginErrorMessage,
+  isLoading = false,
 }: LoginFormPropsType) => {
   return (
     <div className="w-full">
@@ -40,7 +42,14 @@ const LoginForm = ({
           </p>
         )}
         <BottomButton type="submit" disabled={disabled}>
-          로그인
+          {isLoading ? (
+            <div className="flex items-center justify-center gap-2">
+              <LoadingSpinner size="sm" color="white" />
+              로그인 중...
+            </div>
+          ) : (
+            '로그인'
+          )}
         </BottomButton>
       </form>
     </div>

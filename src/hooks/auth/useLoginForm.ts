@@ -4,15 +4,19 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LOGIN_ERROR_MESSAGES } from '@/lib/constants/errorMessages';
 import { postLogin } from '@/api/accountApi';
+import { useLoading } from '@/hooks/useLoading';
 
 export const useLoginForm = () => {
   const router = useRouter();
+  const { isLoading, withLoading } = useLoading();
   const [loginFormData, setLoginFormData] = useState({
     loginId: '',
     password: '',
   });
   const disabled =
-    loginFormData.loginId.trim() === '' || loginFormData.password.trim() === '';
+    loginFormData.loginId.trim() === '' ||
+    loginFormData.password.trim() === '' ||
+    isLoading;
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState('');
 
@@ -30,12 +34,15 @@ export const useLoginForm = () => {
       setLoginErrorMessage(LOGIN_ERROR_MESSAGES.EMPTY_LOGIN);
       return;
     }
-    try {
-      await postLogin(loginFormData);
-      router.push('/support');
-    } catch (error) {
-      alert(error);
-    }
+
+    await withLoading(async () => {
+      try {
+        await postLogin(loginFormData);
+        router.push('/support');
+      } catch (error) {
+        alert(error);
+      }
+    });
   };
 
   const handleLoginChange =
@@ -55,6 +62,7 @@ export const useLoginForm = () => {
     disabled,
     keepLoggedIn,
     loginErrorMessage,
+    isLoading,
     handleKeepLoggedInClick,
     handleLogin,
     handleLoginChange,
