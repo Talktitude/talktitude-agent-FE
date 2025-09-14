@@ -1,15 +1,25 @@
 import React from 'react';
-import { CustomModalPropsType } from '@/types/account';
 import {
   Dialog,
   DialogContent,
-  DialogClose,
+  // DialogClose,
   DialogTitle,
   DialogOverlay,
   DialogPortal,
   DialogFooter,
 } from '@/components/ui/dialog';
 
+interface CustomModalPropsType {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  children: React.ReactNode;
+  mode?: 'center' | 'top-right';
+  isFooter?: boolean;
+  onLogout?: () => void;
+  isAlert?: boolean;
+  isWarning?: boolean;
+  footerText?: string;
+}
 const CustomModal = ({
   open,
   onOpenChange,
@@ -17,6 +27,9 @@ const CustomModal = ({
   mode = 'center',
   isFooter = false,
   onLogout,
+  isAlert = false,
+  isWarning = false,
+  footerText = '로그아웃',
 }: CustomModalPropsType) => {
   const getModalClasses = () => {
     switch (mode) {
@@ -46,8 +59,18 @@ const CustomModal = ({
         <DialogContent
           className={getModalClasses()}
           aria-describedby={undefined}
+          hideCloseButton={isAlert || isWarning}
         >
-          <DialogClose className="absolute right-6 focus:outline-none"></DialogClose>
+          {isAlert && (
+            <DialogTitle className="flex justify-center items-center text-xl font-semibold py-3 bg-mainColor text-white rounded-t-3xl">
+              알림
+            </DialogTitle>
+          )}
+          {isWarning && (
+            <DialogTitle className="flex justify-center items-center text-xl font-semibold py-3 bg-textRed text-white rounded-t-3xl">
+              경고
+            </DialogTitle>
+          )}
           <DialogTitle className="sr-only">Modal</DialogTitle>
           {children}
           {isFooter && (
@@ -56,7 +79,7 @@ const CustomModal = ({
                 onClick={onLogout}
                 className="text-center text-mainColor font-medium rounded-3xl text-lg py-[16px] w-full hover:bg-gray-50"
               >
-                로그아웃
+                {footerText}
               </button>
             </DialogFooter>
           )}
