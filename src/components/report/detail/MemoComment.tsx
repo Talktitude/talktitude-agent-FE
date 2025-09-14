@@ -1,7 +1,13 @@
 import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
+import { useState } from 'react';
 import { MemoCommentType } from '@/types/reports';
 import { deleteMemoComment } from '@/api/report/reportDetailApi';
+import CustomModal from '@/components/common/modal/CustomModal';
+import {
+  ConfirmCancelButtons,
+  SingleConfirmButton,
+} from '@/components/common/modal/ModalButtonGroup';
 
 const MemoComment = ({
   memoCommentData,
@@ -10,12 +16,15 @@ const MemoComment = ({
   memoCommentData: MemoCommentType;
   onDelete: () => Promise<void>;
 }) => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
   const handleDeleteMemo = async () => {
-    if (confirm('해당 메모를 삭제하시겠습니까?')) {
-      const response = await deleteMemoComment(memoCommentData.id);
-      alert(response.data);
-      await onDelete();
-    }
+    const response = await deleteMemoComment(memoCommentData.id);
+    setSuccessMessage(response.data);
+    setIsSuccessModalOpen(true);
+    await onDelete();
   };
 
   return (
@@ -46,11 +55,54 @@ const MemoComment = ({
         </div>
         <button
           className="text-xs px-2 py-1 bg-gray-100 rounded-lg border hover:bg-gray-200"
-          onClick={handleDeleteMemo}
+          onClick={() => setIsDeleteModalOpen(true)}
         >
           <Trash2 className="w-4 h-4 text-textGray" />
         </button>
       </div>
+
+      {/* 삭제 확인 모달 */}
+      <CustomModal
+        open={isDeleteModalOpen}
+        onOpenChange={setIsDeleteModalOpen}
+        mode="center"
+        isAlert={true}
+      >
+        <div className="text-center p-8 bg-bgLightBlue rounded-b-3xl">
+          <p className="text-textGray text-lg font-semibold pb-8">
+            해당 메모를 삭제하시겠습니까?
+          </p>
+          <ConfirmCancelButtons
+            onCancel={() => setIsDeleteModalOpen(false)}
+            onConfirm={() => {
+              setIsDeleteModalOpen(false);
+              handleDeleteMemo();
+            }}
+            cancelText="취소"
+            confirmText="삭제"
+            confirmVariant="confirm"
+          />
+        </div>
+      </CustomModal>
+
+      {/* 삭제 성공 모달 */}
+      <CustomModal
+        open={isSuccessModalOpen}
+        onOpenChange={setIsSuccessModalOpen}
+        mode="center"
+        isAlert={true}
+      >
+        <div className="text-center p-8 bg-bgLightBlue rounded-b-3xl">
+          <p className="text-textGray text-lg font-semibold pb-8">
+            {successMessage}
+          </p>
+          <SingleConfirmButton
+            onConfirm={() => setIsSuccessModalOpen(false)}
+            confirmText="확인"
+            variant="confirm"
+          />
+        </div>
+      </CustomModal>
     </div>
   );
 };

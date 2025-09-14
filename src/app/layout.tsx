@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Talktitude-agent",
-  description: "Talktitude 사담원용 웹서비스",
+  title: 'Talktitude-agent',
+  description: 'Talktitude 상담원용 웹서비스',
   icons: {
-    icon: "/logo/logo.svg",
+    icon: '/logo/logo.svg',
   },
 };
 

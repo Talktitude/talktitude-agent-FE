@@ -142,7 +142,6 @@ export const postChatMemo = async (sessionId: number, memo: string) => {
         headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    alert('메모 저장 완료');
     return response.data;
   } catch (error) {
     console.log(error);

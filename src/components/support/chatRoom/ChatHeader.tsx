@@ -40,7 +40,7 @@ export default function ChatHeader({
           className={`px-4 py-2.5 font-semibold rounded-[10px] text-sm w-full flex items-center gap-2 transition-colors ${
             isFinished
               ? 'bg-lineGray text-white cursor-not-allowed'
-              : 'bg-textRed text-white hover:bg-textRed/80'
+              : 'bg-textRed text-white hover:bg-[#D55A5A]'
           }`}
           onClick={() => onSupportEnd(chatInfo.sessionId)}
           disabled={isFinished}

@@ -4,6 +4,11 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatRoom from './ChatRoom';
 import ChatInput from './ChatInput';
+import CustomModal from '@/components/common/modal/CustomModal';
+import {
+  ConfirmCancelButtons,
+  SingleConfirmButton,
+} from '@/components/common/modal/ModalButtonGroup';
 import { SupportMessageType, ChatHeaderInfoType } from '@/types/support';
 import { useSearchParams } from 'next/navigation';
 import {
@@ -31,6 +36,9 @@ const ChatRoomPanel = ({
   const [chatInfo, setChatInfo] = useState<ChatHeaderInfoType | null>(null);
   const [messages, setMessages] = useState<SupportMessageType[]>([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [isEndConfirmModalOpen, setIsEndConfirmModalOpen] = useState(false);
+  const [isEndSuccessModalOpen, setIsEndSuccessModalOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // 외부 제어/내부 제어 분기
   const currentInputMessage =
@@ -111,13 +119,20 @@ const ChatRoomPanel = ({
     );
   }, [chatInfo?.status, finishedChat, connected, validSessionId]);
 
-  const handleSupportEnd = async (sessionId: number) => {
-    if (!confirm('상담을 종료하시겠습니까?')) return;
+  const handleSupportEnd = () => {
+    setIsEndConfirmModalOpen(true);
+  };
+
+  const handleConfirmEnd = async () => {
+    if (validSessionId == null) return;
     try {
-      const response = await patchEndChat(sessionId);
-      console.log(response.message);
+      const response = await patchEndChat(validSessionId);
+      setSuccessMessage(response.message || '상담이 종료되었습니다.');
+      setIsEndSuccessModalOpen(true);
+      setIsEndConfirmModalOpen(false);
     } catch (e) {
       console.error(e);
+      setIsEndConfirmModalOpen(false);
     }
   };
 
@@ -135,6 +150,46 @@ const ChatRoomPanel = ({
         onChange={(v) => currentSetInputMessage(v)}
         disabled={disabled}
       />
+
+      {/* 상담 종료 확인 모달 */}
+      <CustomModal
+        open={isEndConfirmModalOpen}
+        onOpenChange={setIsEndConfirmModalOpen}
+        mode="center"
+        isAlert={true}
+      >
+        <div className="text-center p-8 bg-bgLightBlue rounded-b-3xl">
+          <p className="text-textGray text-lg font-semibold pb-8">
+            상담을 종료하시겠습니까?
+          </p>
+          <ConfirmCancelButtons
+            onCancel={() => setIsEndConfirmModalOpen(false)}
+            onConfirm={handleConfirmEnd}
+            cancelText="취소"
+            confirmText="종료"
+            confirmVariant="confirm"
+          />
+        </div>
+      </CustomModal>
+
+      {/* 상담 종료 성공 모달 */}
+      <CustomModal
+        open={isEndSuccessModalOpen}
+        onOpenChange={setIsEndSuccessModalOpen}
+        mode="center"
+        isAlert={true}
+      >
+        <div className="text-center p-8 bg-bgLightBlue rounded-b-3xl">
+          <p className="text-textGray text-lg font-semibold pb-8">
+            {successMessage}
+          </p>
+          <SingleConfirmButton
+            onConfirm={() => setIsEndSuccessModalOpen(false)}
+            confirmText="확인"
+            variant="confirm"
+          />
+        </div>
+      </CustomModal>
     </div>
   );
 };
