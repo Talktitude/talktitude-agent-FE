@@ -1,7 +1,7 @@
 import React from 'react';
-import CustomModal from '@/components/common/CustomModal';
+import CustomModal from '@/components/common/modal/CustomModal';
+import { ConfirmCancelButtons } from '@/components/common/modal/ModalButtonGroup';
 import { ConfirmDeleteAccountModalPropsType } from '@/types/account';
-import { IoAlertCircle } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 
 const ConfirmDeleteAccountModal = ({
@@ -11,38 +11,35 @@ const ConfirmDeleteAccountModal = ({
   const router = useRouter();
 
   const handleDeleteAccount = () => {
+    localStorage.clear();
     router.push('/login');
     onOpenChange(false);
   };
 
   return (
-    <CustomModal open={open} onOpenChange={onOpenChange} mode="center">
-      <div className="p-6">
-        <div className="flex flex-col items-center gap-4">
-          <IoAlertCircle color="#F06969" className="w-24 h-24" />
-          <div className="flex flex-col items-center">
-            <span className="text-texBlack text-2xl font-bold">
-              정말 탈퇴하시겠어요?
-            </span>
-            <span className="text-sm font-medium text-textLightGray">
-              계정을 삭제하면 모든 데이터가 삭제되며 복구할 수 없어요.
-            </span>
-          </div>
+    <CustomModal
+      open={open}
+      onOpenChange={onOpenChange}
+      mode="center"
+      isWarning={true}
+    >
+      <div className="text-center p-8 bg-[#F9EEEE] rounded-b-3xl">
+        <div className="pb-8">
+          <p className="font-bold text-textBlack text-xl mb-4">
+            정말 탈퇴하시겠어요?
+          </p>
+          <p className="text-textGray text-base font-medium">
+            계정을 삭제하면 모든 데이터가 삭제되며 <br />
+            복구할 수 없어요.
+          </p>
         </div>
-        <div className="flex flex-col items-center gap-3 py-5 px-6">
-          <button
-            className="px-5 py-2.5 text-textBlack font-semibold rounded-full text-lg w-full border-lineGray border"
-            onClick={() => onOpenChange(false)}
-          >
-            취소
-          </button>
-          <button
-            className="px-5 py-2.5 text-white bg-textRed font-semibold rounded-full text-lg w-full"
-            onClick={handleDeleteAccount}
-          >
-            계속 탈퇴하기
-          </button>
-        </div>
+        <ConfirmCancelButtons
+          onCancel={() => onOpenChange(false)}
+          onConfirm={handleDeleteAccount}
+          cancelText="취소"
+          confirmText="계속 탈퇴하기"
+          confirmVariant="warning"
+        />
       </div>
     </CustomModal>
   );
