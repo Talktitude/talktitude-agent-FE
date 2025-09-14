@@ -19,6 +19,8 @@ export const useLoginForm = () => {
     isLoading;
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState('');
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleKeepLoggedInClick = () => {
     setKeepLoggedIn((prev) => !prev);
@@ -40,7 +42,8 @@ export const useLoginForm = () => {
         await postLogin(loginFormData);
         router.push('/support');
       } catch (error) {
-        alert(error);
+        setErrorMessage(String(error));
+        setIsErrorModalOpen(true);
       }
     });
   };
@@ -63,6 +66,9 @@ export const useLoginForm = () => {
     keepLoggedIn,
     loginErrorMessage,
     isLoading,
+    isErrorModalOpen,
+    errorMessage,
+    setIsErrorModalOpen,
     handleKeepLoggedInClick,
     handleLogin,
     handleLoginChange,
