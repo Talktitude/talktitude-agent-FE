@@ -1,12 +1,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
 import { SIGNUP_ERROR_MESSAGES } from '@/lib/constants/errorMessages';
 import { postSignup, getCheckId } from '@/api/accountApi';
 
 export const useSignupForm = () => {
-  const router = useRouter();
   const [signupFormData, setSignupFormData] = useState({
     loginId: '',
     password: '',
@@ -22,6 +20,10 @@ export const useSignupForm = () => {
   >({});
   const [isIdChecked, setIsIdChecked] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // 개별 필드 유효성 검사 함수들
   const validateLoginId = (value: string) => {
@@ -199,16 +201,18 @@ export const useSignupForm = () => {
       };
 
       try {
-        await postSignup(signupData);
-        // 회원가입 성공 시 로그인 페이지로 이동
-        router.push('/login');
+        const response = await postSignup(signupData);
+        // 회원가입 성공 메시지를 모달로 표시
+        setSuccessMessage(response.message || '회원가입이 완료되었습니다.');
+        setIsSuccessModalOpen(true);
       } catch (error) {
-        // 서버 에러 메시지를 alert로 표시
+        // 서버 에러 메시지를 모달로 표시
         if (error instanceof Error) {
-          alert(error.message);
+          setErrorMessage(error.message);
         } else {
-          alert('회원가입 중 오류가 발생했습니다.');
+          setErrorMessage('회원가입 중 오류가 발생했습니다.');
         }
+        setIsErrorModalOpen(true);
       }
     }
   };
@@ -252,6 +256,12 @@ export const useSignupForm = () => {
     errors,
     successMessages,
     disabled,
+    isErrorModalOpen,
+    errorMessage,
+    setIsErrorModalOpen,
+    isSuccessModalOpen,
+    successMessage,
+    setIsSuccessModalOpen,
     handleSignupChange,
     handleBlur,
     handleSubmit,

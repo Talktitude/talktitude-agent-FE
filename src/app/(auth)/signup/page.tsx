@@ -3,6 +3,8 @@
 import React from 'react';
 import SignupForm from '@/components/auth/signup/SignupForm';
 import Header from '@/components/common/Header';
+import CustomModal from '@/components/common/modal/CustomModal';
+import { SingleConfirmButton } from '@/components/common/modal/ModalButtonGroup';
 import { useSignupForm } from '@/hooks/auth/useSignupForm';
 
 export default function SignupPage() {
@@ -11,6 +13,12 @@ export default function SignupPage() {
     errors,
     disabled,
     successMessages,
+    isErrorModalOpen,
+    errorMessage,
+    setIsErrorModalOpen,
+    isSuccessModalOpen,
+    successMessage,
+    setIsSuccessModalOpen,
     handleSignupChange,
     handleBlur,
     handleSubmit,
@@ -34,6 +42,47 @@ export default function SignupPage() {
           disabled={disabled}
         />
       </main>
+
+      {/* 에러 모달 */}
+      <CustomModal
+        open={isErrorModalOpen}
+        onOpenChange={setIsErrorModalOpen}
+        mode="center"
+        isAlert={true}
+      >
+        <div className="text-center p-8 bg-bgLightBlue rounded-b-3xl">
+          <p className="text-textGray text-lg font-semibold pb-8">
+            {errorMessage}
+          </p>
+          <SingleConfirmButton
+            onConfirm={() => setIsErrorModalOpen(false)}
+            confirmText="확인"
+            variant="confirm"
+          />
+        </div>
+      </CustomModal>
+
+      {/* 성공 모달 */}
+      <CustomModal
+        open={isSuccessModalOpen}
+        onOpenChange={setIsSuccessModalOpen}
+        mode="center"
+        isAlert={true}
+      >
+        <div className="text-center p-8 bg-bgLightBlue rounded-b-3xl">
+          <p className="text-textGray text-lg font-semibold pb-8">
+            {successMessage}
+          </p>
+          <SingleConfirmButton
+            onConfirm={() => {
+              setIsSuccessModalOpen(false);
+              window.location.href = '/login';
+            }}
+            confirmText="로그인 페이지로 이동"
+            variant="confirm"
+          />
+        </div>
+      </CustomModal>
     </div>
   );
 }
