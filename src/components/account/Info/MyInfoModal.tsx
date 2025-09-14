@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import CustomModal from '@/components/common/CustomModal';
+import CustomModal from '@/components/common/modal/CustomModal';
 import Image from 'next/image';
 // import { Switch } from '@/components/ui/switch';
 import { useRouter } from 'next/navigation';
