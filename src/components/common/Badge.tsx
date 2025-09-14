@@ -20,7 +20,7 @@ const Badge = ({ children, size }: BadgeProps) => {
   const getColor = () => {
     switch (children) {
       case '주문 문의':
-        return 'bg-[#E8F7F2] text-[#1FAA77]';
+        return 'bg-[#F9EEEE] text-[#F06969]';
       case '기타 문의':
         return 'bg-[#FFFBEB] text-[#DEAB35]';
       case '리뷰 문의':
@@ -30,7 +30,7 @@ const Badge = ({ children, size }: BadgeProps) => {
       case '쿠폰 문의':
         return 'bg-[#F2F7E8] text-[#7EAA25]';
       case '회원 문의':
-        return 'bg-[#F3F3F3] text-[#5D5D5D]';
+        return 'bg-[#E8F7F2] text-[#1FAA77]';
       case '배달 문의':
         return 'bg-[#E8F6FA] text-[#2B9BB8]';
       case '안전거래 문의':
@@ -38,7 +38,7 @@ const Badge = ({ children, size }: BadgeProps) => {
       case '서비스 이용 문의':
         return 'bg-[#F3EDFF] text-[#6C4BC4]';
       case '종료':
-        return 'bg-[#F9EEEE] text-[#F06969]';
+        return 'bg-[#F3F3F3] text-[#5D5D5D]';
       default:
         return 'bg-bgLightBlue text-mainColor';
     }
