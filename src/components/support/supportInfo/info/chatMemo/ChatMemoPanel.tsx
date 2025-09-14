@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { PLACEHOLDERS } from '@/lib/constants/placeholders';
 import { postChatMemo } from '@/api/support/supportPanelApi';
 import { useInfoPanel } from '@/hooks/support/useInfoPanel';
+import CustomModal from '@/components/common/modal/CustomModal';
+import { SingleConfirmButton } from '@/components/common/modal/ModalButtonGroup';
 
 interface ChatMemoPanelProps {
   initialMemo?: string;
@@ -14,6 +16,7 @@ interface ChatMemoPanelProps {
 const ChatMemoPanel = ({ initialMemo = '', hasMemo }: ChatMemoPanelProps) => {
   const [isEditing, setIsEditing] = useState(!hasMemo);
   const [memo, setMemo] = useState(initialMemo);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const sessionId = useSearchParams().get('sessionId');
   const { isFinished } = useInfoPanel();
 
@@ -36,11 +39,16 @@ const ChatMemoPanel = ({ initialMemo = '', hasMemo }: ChatMemoPanelProps) => {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (isFinished) return;
     console.log('메모 저장', memo);
-    postChatMemo(Number(sessionId), memo);
-    setIsEditing(false);
+    try {
+      await postChatMemo(Number(sessionId), memo);
+      setIsSuccessModalOpen(true);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('메모 저장 실패:', error);
+    }
   };
 
   return (
@@ -82,6 +90,25 @@ const ChatMemoPanel = ({ initialMemo = '', hasMemo }: ChatMemoPanelProps) => {
           )}
         </div>
       )}
+
+      {/* 메모 저장 성공 모달 */}
+      <CustomModal
+        open={isSuccessModalOpen}
+        onOpenChange={setIsSuccessModalOpen}
+        mode="center"
+        isAlert={true}
+      >
+        <div className="text-center p-8 bg-bgLightBlue rounded-b-3xl">
+          <p className="text-textGray text-lg font-semibold pb-8">
+            메모 저장이 완료되었습니다.
+          </p>
+          <SingleConfirmButton
+            onConfirm={() => setIsSuccessModalOpen(false)}
+            confirmText="확인"
+            variant="confirm"
+          />
+        </div>
+      </CustomModal>
     </div>
   );
 };
