@@ -40,6 +40,9 @@ export interface ChatHeaderInfoType {
   clientName: string;
   clientPhone: string;
   status?: 'IN_PROGRESS' | 'FINISHED';
+  orderRelated?: boolean;
+  storeName?: string;
+  orderNumber?: string;
 }
 
 // ChatHeader.tsx - props
@@ -80,6 +83,7 @@ export interface OrderHistoryItemType {
   restaurantName: string;
   restaurantImageUrl: string;
   orderNumber: string;
+  isCurrentOrder: boolean;
 }
 
 // OrderDetail.tsx - props 아님, 타입 정의

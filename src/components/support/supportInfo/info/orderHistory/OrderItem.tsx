@@ -13,12 +13,20 @@ interface OrderItemProps {
   isTabMenuOpen: boolean;
 }
 
+const getCurrnetOrderBorder = (
+  currentOrder: OrderHistoryItemType['isCurrentOrder'],
+) => {
+  return currentOrder
+    ? 'border-l-4 bg-[#EEF2F9] hover:bg-[#D6E0F5]'
+    : 'border-l-4 border-transparent hover:bg-gray-100';
+};
+
 const getStatusColor = (status: OrderHistoryItemType['deliveryStatus']) => {
   switch (status) {
     case '배달중':
-      return 'text-textRed';
-    case '배달완료':
       return 'text-mainColor';
+    case '배달완료':
+      return 'text-textLightGray';
     default:
       return 'text-textGray';
   }
@@ -31,14 +39,16 @@ const OrderItem = ({
   isTabMenuOpen,
 }: OrderItemProps) => {
   const statusColor = getStatusColor(orderInfo.deliveryStatus);
+  const currentOrderBorder = getCurrnetOrderBorder(orderInfo.isCurrentOrder);
 
   return (
     <>
       <button
         type="button"
-        className={`w-full px-5 py-4 flex flex-col gap-5 items-start border-b border-zinc-100 hover:bg-gray-100 ${
+        className={`w-full px-5 py-4 flex flex-col gap-5 items-start border-b border-zinc-100 ${currentOrderBorder} ${
           isTabMenuOpen ? 'border-b-0' : ''
         }`}
+        style={orderInfo.isCurrentOrder ? { borderLeftColor: '#5573E2' } : {}}
         onClick={onHandleOrderItemClick}
       >
         <header className="flex items-center justify-between w-full">
@@ -50,6 +60,11 @@ const OrderItem = ({
             <span className={`text-base font-semibold ${statusColor}`}>
               {orderInfo.deliveryStatus}
             </span>
+            {orderInfo.isCurrentOrder && (
+              <span className="px-2 py-1 text-xs font-medium text-white bg-mainColor rounded-full">
+                현재 주문
+              </span>
+            )}
           </div>
           <TiArrowSortedDown
             className={`w-5 h-5 transition-transform duration-200 ${

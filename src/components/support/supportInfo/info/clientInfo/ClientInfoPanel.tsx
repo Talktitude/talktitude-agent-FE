@@ -78,20 +78,7 @@ export default function ClientInfoPanel({ clientInfo }: ClientInfoPanelProps) {
       <InfoRow
         icon={Ticket}
         label="쿠폰"
-        value={
-          <span
-            className={`
-              inline-flex items-center px-2 py-0.5 rounded-full text-xs md:text-sm
-              ${
-                hasCoupons
-                  ? 'bg-blue-50 text-mainColor font-semibold'
-                  : 'bg-gray-100 text-textGray'
-              }
-            `}
-          >
-            {totalCouponCount}장
-          </span>
-        }
+        value={`${totalCouponCount}장`}
         toggle={
           hasCoupons && (
             <button

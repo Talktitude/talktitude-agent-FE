@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReportItemType } from '@/types/reports';
 import Image from 'next/image';
+import Badge from '@/components/common/Badge';
 
 interface ReportItemProps {
   reportItem: ReportItemType;
@@ -33,8 +34,8 @@ const ReportItem = ({ reportItem, onClick }: ReportItemProps) => {
           <div className="w-fit text-textGray text-base font-medium px-1">
             {reportItem.phone}
           </div>
-          <div className="bg-bgLightBlue text-mainColor text-sm px-2 py-1 rounded-full font-semibold w-fit">
-            {reportItem.category} 문의
+          <div className="w-fit">
+            <Badge size="sm">{`${reportItem.category} 문의`}</Badge>
           </div>
         </div>
       </div>
