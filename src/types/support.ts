@@ -83,6 +83,7 @@ export interface OrderHistoryItemType {
   restaurantName: string;
   restaurantImageUrl: string;
   orderNumber: string;
+  isCurrentOrder: boolean;
 }
 
 // OrderDetail.tsx - props 아님, 타입 정의
