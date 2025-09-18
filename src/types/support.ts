@@ -60,6 +60,7 @@ export interface SupportMessageType {
   showOriginal: boolean;
   senderType: string;
   createdAt: string;
+  medias?: { url: string; mediaType?: string }[];
 }
 
 // ClientInfoPanel.tsx - props 아님, 타입 정의
