@@ -51,16 +51,19 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
         onLogout={handleLogout}
       >
         <div className="flex flex-col items-center gap-2 pt-6 border-b border-lineGray pb-4">
-          <Image
-            src={
-              userInfo?.profileImageUrl ||
-              'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
-            }
-            alt="profile"
-            width={85}
-            height={85}
-            className="rounded-full object-cover"
-          />
+          <div className="relative aspect-square w-20 h-20 rounded-full overflow-hidden">
+            <Image
+              src={
+                userInfo?.profileImageUrl ||
+                'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
+              }
+              alt={`${userInfo?.name}의 profile`}
+              fill
+              unoptimized={true}
+              sizes="85px"
+              className="object-cover"
+            />
+          </div>
           <div className="flex flex-col items-center">
             <span className="text- textBlack text-2xl font-bold">
               {userInfo?.name}
