@@ -69,7 +69,7 @@ export default function Header({ showNavItems = true }: HeaderProps) {
             </button>
           ))}
           <button
-            className={`relative rounded-full w-10 h-10 flex items-center justify-center p-0 m-0 hover:bg-white/40 transition-colors ${
+            className={`relative aspect-square rounded-full w-10 h-10 flex items-center justify-center p-0 m-0 hover:bg-white/40 transition-colors ${
               userInfoModalOpen ? 'bg-white/40' : ''
             }`}
             onClick={() => setUserInfoModalOpen(true)}
@@ -79,12 +79,12 @@ export default function Header({ showNavItems = true }: HeaderProps) {
                 userInfo?.profileImageUrl ||
                 'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
               }
-              alt="profile"
-              width={30}
-              height={30}
+              alt={`${userInfo?.name}의 profile`}
+              width={32}
+              height={32}
               unoptimized={true}
-              sizes="28px"
-              className="rounded-full object-cover"
+              sizes="36px"
+              className="rounded-full object-cover w-8 h-8"
             />
           </button>
           {userInfoModalOpen && (

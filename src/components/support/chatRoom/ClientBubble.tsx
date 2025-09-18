@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { SupportMessageType } from '@/types/support';
 
 export default function ClientBubble({
@@ -17,7 +18,26 @@ export default function ClientBubble({
   return (
     <div className="flex justify-start flex-row gap-2">
       <div className="max-w-[70%] px-4 py-1.5 rounded-[20px] flex justify-between text-base font-medium break-words shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] bg-white text-textBlack self-start rounded-bl-none whitespace-pre-wrap">
-        {content}
+        {message.medias && message.medias.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            {message.medias.map((media, index) => (
+              <div key={index}>
+                <Image
+                  src={media.url}
+                  alt="채팅 메시지 이미지"
+                  width={200}
+                  height={200}
+                  className="rounded-lg max-w-full h-auto object-contain"
+                  // onLoad={() => console.log('[IMAGE] loaded:', media.url)}
+                  // onError={(e) => console.error('[IMAGE] error:', e, media.url)}
+                />
+              </div>
+            ))}
+            {content && <div className="mt-2">{content}</div>}
+          </div>
+        ) : (
+          content
+        )}
       </div>
       {message.showOriginal && (
         <button
