@@ -12,7 +12,7 @@ export default function ChatRoom({ messages }: ChatRoomProps) {
   const chatEndRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    chatEndRef.current?.scrollIntoView({ behavior: 'auto' });
   };
 
   useEffect(() => {
