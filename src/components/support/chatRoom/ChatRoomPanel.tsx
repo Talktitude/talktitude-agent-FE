@@ -15,6 +15,7 @@ import {
   getChatHeaderInfo,
   getChatMessage,
   patchEndChat,
+  triggerReport,
 } from '@/api/support/chatRoomPanelApi';
 import { validateSessionId } from '@/lib/utils';
 import { useChatSocket } from '@/hooks/support/useChatSocket';
@@ -123,6 +124,9 @@ const ChatRoomPanel = ({
     setIsEndConfirmModalOpen(true);
   };
 
+  const targetDate = new Date().toISOString().split('T')[0];
+  // console.log('targetDate', targetDate);
+
   const handleConfirmEnd = async () => {
     if (validSessionId == null) return;
     try {
@@ -130,6 +134,7 @@ const ChatRoomPanel = ({
       setSuccessMessage(response.message || '상담이 종료되었습니다.');
       setIsEndSuccessModalOpen(true);
       setIsEndConfirmModalOpen(false);
+      await triggerReport(targetDate);
     } catch (e) {
       console.error(e);
       setIsEndConfirmModalOpen(false);
