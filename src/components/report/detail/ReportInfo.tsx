@@ -70,7 +70,7 @@ const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
         <InfoItem
           icon={<FileText className="w-5 h-5" />}
           label="상담 유형"
-          value={<Badge size="sm">{`${data.category} 문의`}</Badge>}
+          value={<Badge>{`${data.category} 문의`}</Badge>}
         />
         <InfoItem
           icon={<Phone className="w-5 h-5" />}
