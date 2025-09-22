@@ -124,9 +124,6 @@ const ChatRoomPanel = ({
     setIsEndConfirmModalOpen(true);
   };
 
-  const targetDate = new Date().toISOString().split('T')[0];
-  // console.log('targetDate', targetDate);
-
   const handleConfirmEnd = async () => {
     if (validSessionId == null) return;
     try {
@@ -134,7 +131,14 @@ const ChatRoomPanel = ({
       setSuccessMessage(response.message || '상담이 종료되었습니다.');
       setIsEndSuccessModalOpen(true);
       setIsEndConfirmModalOpen(false);
-      await triggerReport(targetDate);
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      const targetDate = `${y}-${m}-${d}`; // 한국 기준 로컬 시간
+      void triggerReport(targetDate).catch((err) => {
+        console.error('리포트 생성 실패', err);
+      });
     } catch (e) {
       console.error(e);
       setIsEndConfirmModalOpen(false);
