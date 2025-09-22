@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Undo2, Clock, UserCheck, Phone, FileText } from 'lucide-react';
 import { ReportDetailType } from '@/types/reports';
+import Badge from '@/components/common/Badge';
 import { useRouter } from 'next/navigation';
 
 type InfoItemProps = {
@@ -69,11 +70,7 @@ const ReportInfo = ({ reportDetail }: { reportDetail: ReportDetailType }) => {
         <InfoItem
           icon={<FileText className="w-5 h-5" />}
           label="상담 유형"
-          value={
-            <span className="bg-bgLightBlue text-mainColor text-xs px-2 py-1 rounded-full font-semibold w-fit">
-              {data.category} 문의
-            </span>
-          }
+          value={<Badge>{`${data.category} 문의`}</Badge>}
         />
         <InfoItem
           icon={<Phone className="w-5 h-5" />}

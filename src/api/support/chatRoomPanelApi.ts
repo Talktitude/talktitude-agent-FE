@@ -68,3 +68,20 @@ export const getRecommendations = async (sessionId: number) => {
     throw error;
   }
 };
+
+export const triggerReport = async (targetDate: string) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/reports/generate-reports-direct?targetDate=${targetDate}`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    console.log('리포트 생성', response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    // throw error;
+  }
+};

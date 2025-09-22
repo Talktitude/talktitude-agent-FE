@@ -15,6 +15,7 @@ import {
   getChatHeaderInfo,
   getChatMessage,
   patchEndChat,
+  triggerReport,
 } from '@/api/support/chatRoomPanelApi';
 import { validateSessionId } from '@/lib/utils';
 import { useChatSocket } from '@/hooks/support/useChatSocket';
@@ -130,6 +131,14 @@ const ChatRoomPanel = ({
       setSuccessMessage(response.message || '상담이 종료되었습니다.');
       setIsEndSuccessModalOpen(true);
       setIsEndConfirmModalOpen(false);
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      const targetDate = `${y}-${m}-${d}`; // 한국 기준 로컬 시간
+      void triggerReport(targetDate).catch((err) => {
+        console.error('리포트 생성 실패', err);
+      });
     } catch (e) {
       console.error(e);
       setIsEndConfirmModalOpen(false);

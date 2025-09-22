@@ -9,7 +9,7 @@ const SummaryBox = ({ summaryText }: { summaryText: string }) => {
         <div className="text-base font-bold text-textBlack">상담 내용 요약</div>
       </div>
       <div className="w-full h-full pt-2">
-        <p className="text-sm text-textBlack font-medium flex-wrap break-keep overflow-y-auto max-h-14">
+        <p className="text-sm text-textBlack font-medium break-keep overflow-y-auto max-h-14 whitespace-pre-line">
           {summaryText}
         </p>
       </div>
