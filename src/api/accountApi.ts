@@ -89,7 +89,7 @@ export const postLogout = async () => {
         headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    console.log('로그아웃 성공');
+    // console.log('로그아웃 성공');
     return response.data;
   } catch (error) {
     // console.error(error);
