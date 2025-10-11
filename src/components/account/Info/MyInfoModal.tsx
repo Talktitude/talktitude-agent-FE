@@ -6,7 +6,7 @@ import Image from 'next/image';
 // import { Switch } from '@/components/ui/switch';
 import { useRouter } from 'next/navigation';
 import { MyInfoModalPropsType } from '@/types/account';
-import { getUserInfo, postLogout } from '@/api/accountApi';
+import { getUserInfo } from '@/api/accountApi';
 import { UserInfoType } from '@/types/account';
 
 const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
@@ -27,15 +27,10 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
   // };
 
   const handleLogout = () => {
-    try {
-      postLogout();
-      router.push('/login');
-      onOpenChange(false);
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-    } catch (error) {
-      console.error(error);
-    }
+    router.push('/login');
+    onOpenChange(false);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   };
 
   useEffect(() => {
