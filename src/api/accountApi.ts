@@ -75,3 +75,24 @@ export const getUserInfo = async () => {
     throw error;
   }
 };
+
+export const postLogout = async () => {
+  try {
+    const accessToken =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('accessToken')
+        : null;
+    const response = await axios.post(
+      `${API_URL}/logout`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    console.log('로그아웃 성공');
+    return response.data;
+  } catch (error) {
+    // console.error(error);
+    throw error;
+  }
+};
