@@ -27,13 +27,13 @@ function validateDifferentPassword(
 interface PasswordData {
   currentPassword: string;
   newPassword: string;
-  newPasswordConfirm: string;
+  confirmPassword: string;
 }
 
 interface PasswordErrors {
   currentPassword: string;
   newPassword: string;
-  newPasswordConfirm: string;
+  confirmPassword: string;
 }
 
 // 필드별 유효성 검사 함수
@@ -57,7 +57,7 @@ const validateField = (
         return PASSWORD_CHANGE_ERROR_MESSAGES.SAME_AS_CURRENT;
       }
       return '';
-    case 'newPasswordConfirm':
+    case 'confirmPassword':
       if (!value)
         return PASSWORD_CHANGE_ERROR_MESSAGES.EMPTY_NEW_PASSWORD_CONFIRM;
       if (!validatePasswordConfirm(data.newPassword, value)) {
@@ -73,13 +73,13 @@ export const usePasswordForm = () => {
   const [passwordData, setPasswordData] = useState<PasswordData>({
     currentPassword: '',
     newPassword: '',
-    newPasswordConfirm: '',
+    confirmPassword: '',
   });
 
   const [errors, setErrors] = useState<PasswordErrors>({
     currentPassword: '',
     newPassword: '',
-    newPasswordConfirm: '',
+    confirmPassword: '',
   });
 
   // 전체 폼 유효성 검사
@@ -95,9 +95,9 @@ export const usePasswordForm = () => {
         passwordData.newPassword,
         passwordData,
       ),
-      newPasswordConfirm: validateField(
-        'newPasswordConfirm',
-        passwordData.newPasswordConfirm,
+      confirmPassword: validateField(
+        'confirmPassword',
+        passwordData.confirmPassword,
         passwordData,
       ),
     };
@@ -136,7 +136,7 @@ export const usePasswordForm = () => {
     return (
       passwordData.currentPassword &&
       passwordData.newPassword &&
-      passwordData.newPasswordConfirm &&
+      passwordData.confirmPassword &&
       !Object.values(errors).some((error) => error !== '')
     );
   };
