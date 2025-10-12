@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { PASSWORD_CHANGE_ERROR_MESSAGES } from '@/lib/constants/errorMessages';
+import { patchUserPassword } from '@/api/accountApi';
 
 // 비밀번호 유효성 검사 함수
 function validatePassword(password: string): boolean {
@@ -82,6 +83,11 @@ export const usePasswordForm = () => {
     confirmPassword: '',
   });
 
+  const [modalMessage, setModalMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isPasswordChangeModalOpen, setIsPasswordChangeModalOpen] =
+    useState(false);
+
   // 전체 폼 유효성 검사
   const validateForm = (): boolean => {
     const newErrors: PasswordErrors = {
@@ -118,13 +124,36 @@ export const usePasswordForm = () => {
     };
 
   // submit 핸들러
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log('비밀번호 변경 API 연결 필요:', passwordData);
-
-      return true;
+      try {
+        await patchUserPassword(passwordData);
+        setPasswordData({
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: '',
+        });
+        setErrors({
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: '',
+        });
+        setModalMessage('비밀번호가 성공적으로 변경되었습니다.');
+        setIsSuccess(true);
+        setIsPasswordChangeModalOpen(true);
+        return true;
+      } catch (error) {
+        const errorMessage =
+          typeof error === 'string'
+            ? { error: error + '\n다시 시도해주세요.' }
+            : { error: '비밀번호 변경에 실패했습니다.\n다시 시도해주세요.' };
+        setModalMessage(errorMessage.error);
+        setIsSuccess(false);
+        setIsPasswordChangeModalOpen(true);
+        return false;
+      }
     } else {
       console.log('유효성 검사 실패');
       return false;
@@ -155,5 +184,9 @@ export const usePasswordForm = () => {
     handleSubmit,
     isFormValid,
     disabled,
+    modalMessage,
+    isSuccess,
+    isPasswordChangeModalOpen,
+    setIsPasswordChangeModalOpen,
   };
 };
