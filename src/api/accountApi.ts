@@ -96,3 +96,49 @@ export const postLogout = async () => {
     throw error;
   }
 };
+
+export const patchUserProfileInfo = async (data: {
+  name: string;
+  phone: string;
+  email: string;
+  currentPassword: string;
+  profileImage?: File;
+}) => {
+  try {
+    const accessToken =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('accessToken')
+        : null;
+
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('phone', data.phone);
+    formData.append('email', data.email);
+    formData.append('currentPassword', data.currentPassword);
+
+    if (data.profileImage) {
+      formData.append('profileImage', data.profileImage);
+    }
+
+    const response = await axios.patch(`${API_URL}/members/me`, formData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const code = error.response?.data?.code;
+      const message = error.response?.data?.message;
+      switch (code) {
+        case 'MEMBER_006':
+          throw message;
+        default:
+          throw '프로필 수정 중 오류가 발생했습니다.\n다시 시도해주세요.';
+      }
+    }
+    throw '프로필 수정 중 오류가 발생했습니다.\n다시 시도해주세요.';
+  }
+};
