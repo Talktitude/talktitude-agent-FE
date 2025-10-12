@@ -3,17 +3,20 @@ export interface EditFormPropsType {
     name: string;
     phone: string;
     email: string;
-    password: string;
+    currentPassword: string;
+    profileImage?: File | null;
   };
+  currentProfileImageUrl?: string;
   onEditChange: (
-    key: string,
+    key: 'name' | 'phone' | 'email' | 'currentPassword',
   ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onProfileImageChange: (file: File) => void;
   onEditSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export interface ProfileImagePropsType {
   profileImageUrl: string;
-  onChangePhoto: () => void;
+  onChangePhoto: (file: File) => void;
 }
 
 export interface ChangePasswordFormPropsType {
