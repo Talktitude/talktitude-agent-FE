@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { PASSWORD_CHANGE_ERROR_MESSAGES } from '@/lib/constants/errorMessages';
+import { patchUserPassword } from '@/api/accountApi';
 
 // 비밀번호 유효성 검사 함수
 function validatePassword(password: string): boolean {
@@ -27,13 +28,13 @@ function validateDifferentPassword(
 interface PasswordData {
   currentPassword: string;
   newPassword: string;
-  newPasswordConfirm: string;
+  confirmPassword: string;
 }
 
 interface PasswordErrors {
   currentPassword: string;
   newPassword: string;
-  newPasswordConfirm: string;
+  confirmPassword: string;
 }
 
 // 필드별 유효성 검사 함수
@@ -57,7 +58,7 @@ const validateField = (
         return PASSWORD_CHANGE_ERROR_MESSAGES.SAME_AS_CURRENT;
       }
       return '';
-    case 'newPasswordConfirm':
+    case 'confirmPassword':
       if (!value)
         return PASSWORD_CHANGE_ERROR_MESSAGES.EMPTY_NEW_PASSWORD_CONFIRM;
       if (!validatePasswordConfirm(data.newPassword, value)) {
@@ -73,14 +74,19 @@ export const usePasswordForm = () => {
   const [passwordData, setPasswordData] = useState<PasswordData>({
     currentPassword: '',
     newPassword: '',
-    newPasswordConfirm: '',
+    confirmPassword: '',
   });
 
   const [errors, setErrors] = useState<PasswordErrors>({
     currentPassword: '',
     newPassword: '',
-    newPasswordConfirm: '',
+    confirmPassword: '',
   });
+
+  const [modalMessage, setModalMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isPasswordChangeModalOpen, setIsPasswordChangeModalOpen] =
+    useState(false);
 
   // 전체 폼 유효성 검사
   const validateForm = (): boolean => {
@@ -95,9 +101,9 @@ export const usePasswordForm = () => {
         passwordData.newPassword,
         passwordData,
       ),
-      newPasswordConfirm: validateField(
-        'newPasswordConfirm',
-        passwordData.newPasswordConfirm,
+      confirmPassword: validateField(
+        'confirmPassword',
+        passwordData.confirmPassword,
         passwordData,
       ),
     };
@@ -118,15 +124,38 @@ export const usePasswordForm = () => {
     };
 
   // submit 핸들러
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log('비밀번호 변경 API 연결 필요:', passwordData);
-
-      return true;
+      try {
+        await patchUserPassword(passwordData);
+        setPasswordData({
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: '',
+        });
+        setErrors({
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: '',
+        });
+        setModalMessage('비밀번호가 성공적으로 변경되었습니다.');
+        setIsSuccess(true);
+        setIsPasswordChangeModalOpen(true);
+        return true;
+      } catch (error) {
+        const errorMessage =
+          typeof error === 'string'
+            ? error
+            : '비밀번호 변경에 실패했습니다.\n다시 시도해주세요.';
+        setModalMessage(errorMessage);
+        setIsSuccess(false);
+        setIsPasswordChangeModalOpen(true);
+        return false;
+      }
     } else {
-      console.log('유효성 검사 실패');
+      // console.log('유효성 검사 실패');
       return false;
     }
   };
@@ -136,7 +165,7 @@ export const usePasswordForm = () => {
     return (
       passwordData.currentPassword &&
       passwordData.newPassword &&
-      passwordData.newPasswordConfirm &&
+      passwordData.confirmPassword &&
       !Object.values(errors).some((error) => error !== '')
     );
   };
@@ -155,5 +184,9 @@ export const usePasswordForm = () => {
     handleSubmit,
     isFormValid,
     disabled,
+    modalMessage,
+    isSuccess,
+    isPasswordChangeModalOpen,
+    setIsPasswordChangeModalOpen,
   };
 };
