@@ -23,7 +23,10 @@ const ProfileImage = ({
     <div className="max-w-[420px] mx-auto flex items-center justify-start gap-6 mb-2">
       <div className="w-20 h-20 border border-lineGray rounded-full flex items-center justify-center">
         <Image
-          src={profileImageUrl}
+          src={
+            profileImageUrl ||
+            'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
+          }
           alt="profile"
           width={82}
           height={82}
