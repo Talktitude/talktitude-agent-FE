@@ -1,21 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import InputField from '../auth/InputField';
+import ProfileImage from './ProfileImage';
 import { EditFormPropsType } from '@/types/account';
 import { useRouter } from 'next/navigation';
 
 const EditForm = ({
   userData,
+  currentProfileImageUrl,
   onEditChange,
+  onProfileImageChange,
   onEditSubmit,
 }: EditFormPropsType) => {
   const router = useRouter();
+  const [previewUrl, setPreviewUrl] = useState<string>('');
 
-  // 현재 비밀번호 input 비어있는지 확인
-  const isPasswordEmpty = !userData.password || userData.password.trim() === '';
+  const isPasswordEmpty =
+    !userData.currentPassword || userData.currentPassword.trim() === '';
+
+  // 프로필 이미지 URL 생성
+  useEffect(() => {
+    if (userData.profileImage) {
+      const url = URL.createObjectURL(userData.profileImage);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+    return setPreviewUrl(
+      currentProfileImageUrl ||
+        'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
+    );
+  }, [userData.profileImage, currentProfileImageUrl]);
 
   return (
     <div className="w-full max-w-[420px] mx-auto py-4">
       <form className="flex flex-col gap-4 h-full" onSubmit={onEditSubmit}>
+        <ProfileImage
+          profileImageUrl={previewUrl}
+          onChangePhoto={onProfileImageChange}
+        />
         <InputField
           type="text"
           value={userData.name}
@@ -40,8 +61,8 @@ const EditForm = ({
         <InputField
           placeholder="정보를 안전하게 보호하기 위해 비밀번호를 입력해주세요."
           type="password"
-          value={userData.password}
-          onChange={onEditChange('password')}
+          value={userData.currentPassword}
+          onChange={onEditChange('currentPassword')}
           inputLabel="현재 비밀번호"
           isSignup
         />

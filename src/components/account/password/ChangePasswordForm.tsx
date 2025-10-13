@@ -41,12 +41,12 @@ const ChangePasswordForm = ({
           <div>
             <InputField
               type="password"
-              value={passwordData.newPasswordConfirm}
-              onChange={onPasswordChange('newPasswordConfirm')}
+              value={passwordData.confirmPassword}
+              onChange={onPasswordChange('confirmPassword')}
               inputLabel="새 비밀번호 확인"
               placeholder="새 비밀번호를 다시 입력해주세요."
               isSignup
-              errorMessage={errors.newPasswordConfirm}
+              errorMessage={errors.confirmPassword}
             />
           </div>
         </div>

@@ -28,14 +28,30 @@ export default function Header({ showNavItems = true }: HeaderProps) {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await getUserInfo();
-      setUserInfo(response.data);
+      try {
+        const response = await getUserInfo();
+        setUserInfo(response.data);
+      } catch (error) {
+        console.error('사용자 정보 가져오기 실패:', error);
+      }
     };
+
     const token =
       typeof window !== 'undefined'
         ? localStorage.getItem('accessToken')
         : null;
     if (token) fetchUserInfo();
+
+    // 사용자 정보 업데이트 이벤트 리스너
+    const handleUserInfoUpdate = () => {
+      if (token) fetchUserInfo();
+    };
+
+    window.addEventListener('userInfoUpdated', handleUserInfoUpdate);
+
+    return () => {
+      window.removeEventListener('userInfoUpdated', handleUserInfoUpdate);
+    };
   }, []);
 
   return (

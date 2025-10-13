@@ -4,47 +4,64 @@ import React, { useState, useEffect } from 'react';
 import Header from '@/components/common/Header';
 import SectionHeader from '@/components/support/SectionHeader';
 import EditForm from '@/components/account/EditForm';
-import ProfileImage from '@/components/account/ProfileImage';
 import ConfirmDeleteAccountModal from '@/components/account/ConfirmDeleteAccountModal';
-import { getUserInfo } from '@/api/accountApi';
-import { UserInfoType, EditUserData } from '@/types/account';
+import CustomModal from '@/components/common/modal/CustomModal';
+import { SingleConfirmButton } from '@/components/common/modal/ModalButtonGroup';
+import { getUserInfo, patchUserProfileInfo } from '@/api/accountApi';
+import { UserInfoType, EditFormPropsType } from '@/types/account';
 
 export default function AccountEditPage() {
-  const [userData, setUserData] = useState<EditUserData>({
+  const [userData, setUserData] = useState<EditFormPropsType['userData']>({
     name: '',
     phone: '',
     email: '',
-    password: '',
-    profileImageUrl: '',
+    currentPassword: '',
+    profileImage: null,
   });
+  const [currentProfileImageUrl, setCurrentProfileImageUrl] =
+    useState<string>('');
+  const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(true);
 
   const onEditChange =
-    (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (key: 'name' | 'phone' | 'email' | 'currentPassword') =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       setUserData({ ...userData, [key]: e.target.value });
     };
 
-  const onEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(userData);
+  const onProfileImageChange = (file: File) => {
+    setUserData({ ...userData, profileImage: file });
   };
 
-  const handleChangePhoto = () => {
-    // 파일 선택 dialog 열기
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        console.log('Selected file:', file.name);
-        // 파일로 이미지 변경 구현
-        setUserData({
-          ...userData,
-          profileImageUrl: URL.createObjectURL(file),
-        });
-      }
-    };
-    input.click();
+  const onEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await patchUserProfileInfo({
+        name: userData.name,
+        phone: userData.phone,
+        email: userData.email,
+        currentPassword: userData.currentPassword,
+        profileImage: userData.profileImage || undefined,
+      });
+      setModalMessage('프로필 정보가 성공적으로 수정되었습니다.');
+      setIsSuccess(true);
+      setIsProfileEditModalOpen(true);
+      // 비밀번호 필드만 초기화
+      setUserData((prev) => ({ ...prev, currentPassword: '' }));
+
+      // 헤더의 사용자 정보 업데이트를 위한 이벤트 발생
+      window.dispatchEvent(new CustomEvent('userInfoUpdated'));
+    } catch (error) {
+      // accountApi.ts에서 처리된 에러 메시지 사용
+      const errorMessage =
+        typeof error === 'string'
+          ? { error: error + '\n다시 시도해주세요.' }
+          : { error: '프로필 수정에 실패했습니다.\n다시 시도해주세요.' };
+      setModalMessage(errorMessage.error);
+      setIsSuccess(false);
+      setIsProfileEditModalOpen(true);
+    }
   };
   const [isConfirmDeleteAccountModalOpen, setIsConfirmDeleteAccountModalOpen] =
     useState(false);
@@ -61,9 +78,10 @@ export default function AccountEditPage() {
         name: data.name,
         phone: data.phoneNum,
         email: data.email,
-        password: '',
-        profileImageUrl: data.profileImageUrl,
+        currentPassword: '',
+        profileImage: null,
       });
+      setCurrentProfileImageUrl(data.profileImageUrl);
     };
     fetchUserInfo();
   }, []);
@@ -73,16 +91,11 @@ export default function AccountEditPage() {
       <Header />
       <SectionHeader title="내 정보 수정" />
       <div className="py-6">
-        <ProfileImage
-          profileImageUrl={
-            userData.profileImageUrl ||
-            'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
-          }
-          onChangePhoto={handleChangePhoto}
-        />
         <EditForm
           userData={userData}
+          currentProfileImageUrl={currentProfileImageUrl}
           onEditChange={onEditChange}
+          onProfileImageChange={onProfileImageChange}
           onEditSubmit={onEditSubmit}
         />
         <div className="max-w-[420px] mx-auto mt-6">
@@ -99,6 +112,32 @@ export default function AccountEditPage() {
           open={isConfirmDeleteAccountModalOpen}
           onOpenChange={setIsConfirmDeleteAccountModalOpen}
         />
+      )}
+      {isProfileEditModalOpen && (
+        <CustomModal
+          open={isProfileEditModalOpen}
+          onOpenChange={setIsProfileEditModalOpen}
+          mode="center"
+          isAlert={isSuccess}
+          isWarning={!isSuccess}
+        >
+          <div className="text-center p-8 bg-bgLightBlue rounded-b-3xl">
+            <div className="pb-8">
+              <p
+                className={`text-lg font-semibold whitespace-pre-line ${
+                  isSuccess ? 'text-textBlack' : 'text-textRed'
+                }`}
+              >
+                {modalMessage}
+              </p>
+            </div>
+            <SingleConfirmButton
+              onConfirm={() => setIsProfileEditModalOpen(false)}
+              confirmText="확인"
+              variant={isSuccess ? 'confirm' : 'warning'}
+            />
+          </div>
+        </CustomModal>
       )}
     </div>
   );
