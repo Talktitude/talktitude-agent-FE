@@ -147,9 +147,9 @@ export const usePasswordForm = () => {
       } catch (error) {
         const errorMessage =
           typeof error === 'string'
-            ? { error: error + '\n다시 시도해주세요.' }
-            : { error: '비밀번호 변경에 실패했습니다.\n다시 시도해주세요.' };
-        setModalMessage(errorMessage.error);
+            ? error
+            : '비밀번호 변경에 실패했습니다.\n다시 시도해주세요.';
+        setModalMessage(errorMessage);
         setIsSuccess(false);
         setIsPasswordChangeModalOpen(true);
         return false;
