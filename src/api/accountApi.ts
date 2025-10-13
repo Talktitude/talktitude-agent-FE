@@ -165,9 +165,9 @@ export const patchUserPassword = async (
       switch (status) {
         case 400:
           if (code === 'MEMBER_003') {
-            throw message;
+            throw message + '\n다시 시도해주세요.';
           } else if (code === 'MEMBER_006') {
-            throw message;
+            throw message + '\n다시 시도해주세요.';
           }
         default:
           throw '비밀번호 변경 중 오류가 발생했습니다.\n다시 시도해주세요.';
