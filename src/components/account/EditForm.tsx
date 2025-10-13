@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import InputField from '../auth/InputField';
 import ProfileImage from './ProfileImage';
 import { EditFormPropsType } from '@/types/account';
@@ -12,26 +12,29 @@ const EditForm = ({
   onEditSubmit,
 }: EditFormPropsType) => {
   const router = useRouter();
+  const [previewUrl, setPreviewUrl] = useState<string>('');
 
   const isPasswordEmpty =
     !userData.currentPassword || userData.currentPassword.trim() === '';
 
   // 프로필 이미지 URL 생성
-  const getProfileImageUrl = () => {
+  useEffect(() => {
     if (userData.profileImage) {
-      return URL.createObjectURL(userData.profileImage);
+      const url = URL.createObjectURL(userData.profileImage);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
     }
-    return (
+    return setPreviewUrl(
       currentProfileImageUrl ||
-      'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg'
+        'https://i.pinimg.com/736x/d5/cc/bb/d5ccbb3c0796509fdaa7696da65cc8e2.jpg',
     );
-  };
+  }, [userData.profileImage, currentProfileImageUrl]);
 
   return (
     <div className="w-full max-w-[420px] mx-auto py-4">
       <form className="flex flex-col gap-4 h-full" onSubmit={onEditSubmit}>
         <ProfileImage
-          profileImageUrl={getProfileImageUrl()}
+          profileImageUrl={previewUrl}
           onChangePhoto={onProfileImageChange}
         />
         <InputField
