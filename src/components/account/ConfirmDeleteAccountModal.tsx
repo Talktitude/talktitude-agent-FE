@@ -3,6 +3,7 @@ import CustomModal from '@/components/common/modal/CustomModal';
 import { ConfirmCancelButtons } from '@/components/common/modal/ModalButtonGroup';
 import { ConfirmDeleteAccountModalPropsType } from '@/types/account';
 import { useRouter } from 'next/navigation';
+import { deleteUser } from '@/api/accountApi';
 
 const ConfirmDeleteAccountModal = ({
   open,
@@ -10,10 +11,15 @@ const ConfirmDeleteAccountModal = ({
 }: ConfirmDeleteAccountModalPropsType) => {
   const router = useRouter();
 
-  const handleDeleteAccount = () => {
-    localStorage.clear();
-    router.push('/login');
-    onOpenChange(false);
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteUser();
+      localStorage.clear();
+      router.push('/login');
+      onOpenChange(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
