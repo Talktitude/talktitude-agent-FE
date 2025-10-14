@@ -176,3 +176,27 @@ export const patchUserPassword = async (
     throw '비밀번호 변경 중 오류가 발생했습니다.\n다시 시도해주세요.';
   }
 };
+
+export const deleteUser = async () => {
+  try {
+    const accessToken =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('accessToken')
+        : null;
+    const response = await axios.delete(`${API_URL}/members/me`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    // console.log(response.data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+      switch (status) {
+        case 400:
+          throw message;
+      }
+    }
+    throw error;
+  }
+};
