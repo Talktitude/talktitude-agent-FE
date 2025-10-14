@@ -15,8 +15,11 @@ const ConfirmDeleteAccountModal = ({
   const router = useRouter();
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDeleteAccount = async () => {
+    if (isDeleting) return;
+    setIsDeleting(true);
     try {
       await deleteUser();
       localStorage.clear();
@@ -28,6 +31,8 @@ const ConfirmDeleteAccountModal = ({
         '네트워크 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.',
       );
       setIsFailModalOpen(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
