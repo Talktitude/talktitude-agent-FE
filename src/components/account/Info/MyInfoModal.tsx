@@ -5,11 +5,15 @@ import CustomModal from '@/components/common/modal/CustomModal';
 import Image from 'next/image';
 // import { Switch } from '@/components/ui/switch';
 import { useRouter } from 'next/navigation';
-import { MyInfoModalPropsType } from '@/types/account';
 import { getUserInfo, postLogout } from '@/api/accountApi';
 import { UserInfoType } from '@/types/account';
 
-const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
+interface MyInfoModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+const MyInfoModal = ({ open, onOpenChange }: MyInfoModalProps) => {
   const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
   const router = useRouter();
 
@@ -17,14 +21,6 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
     router.push('/account/edit');
     onOpenChange(false);
   };
-
-  // const handleChangeFiltering = (checked: boolean) => {
-  //   setUserInfo({
-  //     ...userInfo,
-  //     isFiltering: checked,
-  //   });
-  //   console.log(checked);
-  // };
 
   const handleLogout = () => {
     try {
@@ -85,20 +81,6 @@ const MyInfoModal = ({ open, onOpenChange }: MyInfoModalPropsType) => {
             내 정보 수정
           </button>
         </div>
-        {/* <div className="flex flex-row items-center justify-between border-y border-lineGray py-4 px-6   ">
-          <div className="flex flex-col">
-            <div className="text-base font-semibold">필터링 설정</div>
-            <div className="text-sm text-textLightGray">
-              공손하지 않은 표현을 자동으로 완화해 보여줘요.
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Switch
-              checked={userInfo.isFiltering}
-              onCheckedChange={handleChangeFiltering}
-            />
-          </div>
-        </div> */}
       </CustomModal>
     </div>
   );

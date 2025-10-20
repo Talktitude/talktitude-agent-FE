@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { LoginFormPropsType } from '@/types/auth';
-import { ChangePasswordFormPropsType } from '@/types/account';
+import { ChangePasswordFormProps } from '@/components/account/password/ChangePasswordForm';
+import { EditFormProps } from '@/components/account/EditForm';
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -98,13 +99,7 @@ export const postLogout = async () => {
   }
 };
 
-export const patchUserProfileInfo = async (data: {
-  name: string;
-  phone: string;
-  email: string;
-  currentPassword: string;
-  profileImage?: File;
-}) => {
+export const patchUserProfileInfo = async (data: EditFormProps['userData']) => {
   try {
     const accessToken =
       typeof window !== 'undefined'
@@ -145,7 +140,7 @@ export const patchUserProfileInfo = async (data: {
 };
 
 export const patchUserPassword = async (
-  data: ChangePasswordFormPropsType['passwordData'],
+  data: ChangePasswordFormProps['passwordData'],
 ) => {
   try {
     const accessToken =
