@@ -3,8 +3,17 @@
 import React from 'react';
 import ChatItem from './ChatItem';
 import { PiChats } from 'react-icons/pi';
-import type { ChatListProp } from '@/types/support';
+import type { ChatListItemType, FilterOption } from '@/types/support';
 import { CHAT_LIST_PLACEHOLDERS } from '@/lib/constants/placeholders';
+
+interface ChatListProp {
+  chatListItems: ChatListItemType[];
+  selectedChat: number;
+  filterOption: FilterOption;
+  onFilterChange: (filter: FilterOption) => void;
+  onChatSelect: (chatId: number) => void;
+  isSearchMode?: boolean;
+}
 
 export default function ChatList({
   chatListItems,

@@ -1,22 +1,5 @@
 export type FilterOption = 'ALL' | 'IN_PROGRESS' | 'FINISHED';
 
-// Filter.tsx
-export interface FilterProps {
-  filterOption: FilterOption;
-  onFilterChange: (filter: FilterOption) => void;
-}
-
-// ChatList.tsx - props
-export interface ChatListProp {
-  chatListItems: ChatListItemType[];
-  selectedChat: number;
-  filterOption: FilterOption;
-  onFilterChange: (filter: FilterOption) => void;
-  onChatSelect: (chatId: number) => void;
-  isSearchMode?: boolean;
-}
-
-// ChatItem.tsx - props 아님, 타입 정의
 export interface ChatListItemType {
   sessionId: number;
   clientLoginId: string;
@@ -26,14 +9,7 @@ export interface ChatListItemType {
   status: 'ALL' | 'IN_PROGRESS' | 'FINISHED';
 }
 
-// ChatItem.tsx - props
-export interface ChatItemProps {
-  chatListItem: ChatListItemType;
-  isSelected: boolean;
-  onClick: () => void;
-}
-
-// ChatHeader.tsx - props 아님, 타입 정의
+// ChatRoomPanel.tsx
 export interface ChatHeaderInfoType {
   sessionId: number;
   clientLoginId: string;
@@ -43,13 +19,6 @@ export interface ChatHeaderInfoType {
   orderRelated?: boolean;
   storeName?: string;
   orderNumber?: string;
-}
-
-// ChatHeader.tsx - props
-export interface ChatHeaderProps {
-  chatInfo: ChatHeaderInfoType;
-  onSupportEnd: (sessionId: number) => void;
-  forcedRefresh?: boolean;
 }
 
 // ChatRoom.tsx - props 아님, 타입 정의
