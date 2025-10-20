@@ -1,5 +1,18 @@
 import React from 'react';
-import { InputFieldPropsType } from '@/types/auth';
+
+// 로그인, 회원가입, 내 정보 수정 공통 인터페이스 (input 필드, 버튼)
+interface InputFieldProps {
+  placeholder?: string; // 입력 필드 플레이스홀더
+  type: string; // 입력 필드 타입
+  value: string; // 입력 필드 값
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 입력 필드 값 변경 함수
+  onBlur?: () => void; // 입력 필드 포커스 아웃 함수
+  isSignup?: boolean; // 회원가입 페이지 여부
+  inputLabel?: string; // 입력 필드 라벨
+  errorMessage?: string; // 입력 필드 에러 메시지
+  successMessage?: string; // 입력 필드 성공 메시지
+  handleCheckId?: (loginId: string) => void; // 아이디 중복 확인 함수
+}
 
 function InputField({
   placeholder,
@@ -12,7 +25,7 @@ function InputField({
   errorMessage,
   successMessage,
   handleCheckId,
-}: InputFieldPropsType) {
+}: InputFieldProps) {
   return (
     <div className="flex-1 flex flex-col gap-1.5">
       {isSignup && (

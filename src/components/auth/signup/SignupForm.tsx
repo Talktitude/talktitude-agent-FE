@@ -1,8 +1,28 @@
 import React from 'react';
 import InputField from '../InputField';
 import { SIGNUP_PLACEHOLDERS } from '@/lib/constants/placeholders';
-import { SignupFormPropsType } from '@/types/auth';
 import BottomButton from '../BottomButton';
+
+// 회원가입 폼 타입
+export interface SignupFormProps {
+  signupFormData: {
+    loginId: string;
+    password: string;
+    passwordConfirm: string;
+    name: string;
+    phone: string;
+    email: string;
+  };
+  errors?: Record<string, string>;
+  successMessages?: Record<string, string>;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSignupChange: (
+    key: string,
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleBlur: (key: string) => () => void;
+  handleCheckId: (loginId: string) => void;
+  disabled: boolean;
+}
 
 const SignupForm = ({
   signupFormData,
@@ -13,7 +33,7 @@ const SignupForm = ({
   handleBlur,
   handleCheckId,
   disabled,
-}: SignupFormPropsType) => {
+}: SignupFormProps) => {
   return (
     <div className="w-full max-w-[420px]">
       <form onSubmit={onSubmit} className="flex flex-col gap-3">
