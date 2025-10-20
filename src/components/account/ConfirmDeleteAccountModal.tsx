@@ -4,14 +4,18 @@ import {
   ConfirmCancelButtons,
   SingleConfirmButton,
 } from '@/components/common/modal/ModalButtonGroup';
-import { ConfirmDeleteAccountModalPropsType } from '@/types/account';
 import { useRouter } from 'next/navigation';
 import { deleteUser } from '@/api/accountApi';
+
+interface ConfirmDeleteAccountModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
 
 const ConfirmDeleteAccountModal = ({
   open,
   onOpenChange,
-}: ConfirmDeleteAccountModalPropsType) => {
+}: ConfirmDeleteAccountModalProps) => {
   const router = useRouter();
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');

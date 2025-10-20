@@ -1,18 +1,12 @@
 import axios from 'axios';
-import { LoginFormPropsType } from '@/types/auth';
-import { ChangePasswordFormPropsType } from '@/types/account';
+import { LoginFormProps } from '@/components/auth/login/LoginForm';
+import { SignupFormProps } from '@/components/auth/signup/SignupForm';
+import { ChangePasswordFormProps } from '@/components/account/password/ChangePasswordForm';
+import { EditFormProps } from '@/components/account/EditForm';
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-interface SignupData {
-  loginId: string;
-  password: string;
-  name: string;
-  phone: string;
-  email: string;
-}
-
-export const postSignup = async (data: SignupData) => {
+export const postSignup = async (data: SignupFormProps['signupFormData']) => {
   try {
     const response = await axios.post(`${API_URL}/members/signup`, data);
     console.log(response.data);
@@ -36,7 +30,7 @@ export const getCheckId = async (loginId: string) => {
   }
 };
 
-export const postLogin = async (data: LoginFormPropsType['loginFormData']) => {
+export const postLogin = async (data: LoginFormProps['loginFormData']) => {
   try {
     const response = await axios.post(`${API_URL}/members/login`, data);
     console.log(response.data);
@@ -98,13 +92,7 @@ export const postLogout = async () => {
   }
 };
 
-export const patchUserProfileInfo = async (data: {
-  name: string;
-  phone: string;
-  email: string;
-  currentPassword: string;
-  profileImage?: File;
-}) => {
+export const patchUserProfileInfo = async (data: EditFormProps['userData']) => {
   try {
     const accessToken =
       typeof window !== 'undefined'
@@ -145,7 +133,7 @@ export const patchUserProfileInfo = async (data: {
 };
 
 export const patchUserPassword = async (
-  data: ChangePasswordFormPropsType['passwordData'],
+  data: ChangePasswordFormProps['passwordData'],
 ) => {
   try {
     const accessToken =

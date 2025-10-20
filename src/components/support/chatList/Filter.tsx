@@ -1,5 +1,10 @@
 import React from 'react';
-import type { FilterProps } from '@/types/support';
+import type { FilterOption } from '@/types/support';
+
+interface FilterProps {
+  filterOption: FilterOption;
+  onFilterChange: (filter: FilterOption) => void;
+}
 
 const Filter = ({ filterOption, onFilterChange }: FilterProps) => {
   const filterButtons = [

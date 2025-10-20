@@ -8,10 +8,11 @@ import ConfirmDeleteAccountModal from '@/components/account/ConfirmDeleteAccount
 import CustomModal from '@/components/common/modal/CustomModal';
 import { SingleConfirmButton } from '@/components/common/modal/ModalButtonGroup';
 import { getUserInfo, patchUserProfileInfo } from '@/api/accountApi';
-import { UserInfoType, EditFormPropsType } from '@/types/account';
+import { UserInfoType } from '@/types/account';
+import { EditFormProps } from '@/components/account/EditForm';
 
 export default function AccountEditPage() {
-  const [userData, setUserData] = useState<EditFormPropsType['userData']>({
+  const [userData, setUserData] = useState<EditFormProps['userData']>({
     name: '',
     phone: '',
     email: '',

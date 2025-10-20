@@ -1,6 +1,23 @@
 import InputField from '@/components/auth/InputField';
-import { ChangePasswordFormPropsType } from '@/types/account';
 import BottomButton from '@/components/auth/BottomButton';
+
+export interface ChangePasswordFormProps {
+  passwordData: {
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+  };
+  errors: {
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+  };
+  onPasswordChange: (
+    key: 'currentPassword' | 'newPassword' | 'confirmPassword',
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePasswordSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  disabled: boolean;
+}
 
 const ChangePasswordForm = ({
   passwordData,
@@ -8,7 +25,7 @@ const ChangePasswordForm = ({
   onPasswordChange,
   onChangePasswordSubmit,
   disabled,
-}: ChangePasswordFormPropsType) => {
+}: ChangePasswordFormProps) => {
   return (
     <div className="w-full max-w-[420px] mx-auto py-6 h-[calc(100vh-120px)]">
       <form

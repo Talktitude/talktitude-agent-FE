@@ -1,9 +1,16 @@
 import React from 'react';
-import type { ChatItemProps } from '../../../types/support';
+import type { ChatListItemType } from '@/types/support';
 import Image from 'next/image';
 import { useTimeFormat } from '../../../hooks/useTimeFormat';
 import Badge from '@/components/common/Badge';
 import { useChatStatusStore } from '@/store/chatStatusStore';
+
+// ChatItem.tsx - props
+export interface ChatItemProps {
+  chatListItem: ChatListItemType;
+  isSelected: boolean;
+  onClick: () => void;
+}
 
 export default function ChatItem({
   chatListItem,

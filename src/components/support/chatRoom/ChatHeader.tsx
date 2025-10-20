@@ -1,7 +1,12 @@
-import type { ChatHeaderProps } from '@/types/support';
+import type { ChatHeaderInfoType } from '@/types/support';
 import { BsTelephoneXFill } from 'react-icons/bs';
 import { useChatStatusStore } from '@/store/chatStatusStore';
 import Badge from '@/components/common/Badge';
+
+interface ChatHeaderProps {
+  chatInfo: ChatHeaderInfoType;
+  onSupportEnd: (sessionId: number) => void;
+}
 
 export default function ChatHeader({
   chatInfo,

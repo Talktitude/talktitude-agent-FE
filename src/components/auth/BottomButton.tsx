@@ -1,4 +1,10 @@
-import { BottomButtonPropsType } from '@/types/auth';
+interface BottomButtonProps {
+  type?: 'submit' | 'button'; // 버튼 타입
+  disabled?: boolean; // 버튼 비활성화 상태
+  className?: string; // 버튼 클래스 이름
+  onClick?: () => void; // 버튼 클릭 함수
+  children: React.ReactNode; // 버튼 자식 요소
+}
 
 export default function BottomButton({
   disabled,
@@ -6,7 +12,7 @@ export default function BottomButton({
   className,
   onClick,
   children,
-}: BottomButtonPropsType) {
+}: BottomButtonProps) {
   const loginStyle = disabled
     ? 'bg-lineGray text-white'
     : 'bg-mainColor text-white hover:bg-[#4A66C9]';

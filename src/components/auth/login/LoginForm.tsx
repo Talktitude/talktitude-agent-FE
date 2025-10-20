@@ -1,10 +1,25 @@
 import React from 'react';
-import { LoginFormPropsType } from '@/types/auth';
 import InputField from '../InputField';
 import BottomButton from '../BottomButton';
 import RememberBox from './RememberBox';
 import { LOGIN_PLACEHOLDERS } from '@/lib/constants/placeholders';
 import LoadingSpinner from '@/components/common/loading/LoadingSpinner';
+
+export interface LoginFormProps {
+  loginFormData: {
+    loginId: string;
+    password: string;
+  };
+  onLoginChange: (
+    key: string,
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void; // 로그인 아이디 또는 비밀번호 변경 함수 연결
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void; // 로그인 폼 제출 함수 연결
+  keepLoggedIn: boolean; // 로그인 유지 체크박스 상태
+  handleKeepLoggedInClick: () => void; // 로그인 유지 토큰 설정 로직 함수 연결
+  disabled: boolean; // 로그인 버튼 비활성화 상태
+  loginErrorMessage: string; // 로그인 에러 메시지
+  isLoading?: boolean; // 로딩 상태
+}
 
 const LoginForm = ({
   loginFormData,
@@ -15,7 +30,7 @@ const LoginForm = ({
   disabled,
   loginErrorMessage,
   isLoading = false,
-}: LoginFormPropsType) => {
+}: LoginFormProps) => {
   return (
     <div className="w-full">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">

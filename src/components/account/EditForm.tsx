@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import InputField from '../auth/InputField';
 import ProfileImage from './ProfileImage';
-import { EditFormPropsType } from '@/types/account';
 import { useRouter } from 'next/navigation';
+
+export interface EditFormProps {
+  userData: {
+    name: string;
+    phone: string;
+    email: string;
+    currentPassword: string;
+    profileImage?: File | null;
+  };
+  currentProfileImageUrl?: string;
+  onEditChange: (
+    key: 'name' | 'phone' | 'email' | 'currentPassword',
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onProfileImageChange: (file: File) => void;
+  onEditSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
 
 const EditForm = ({
   userData,
@@ -10,7 +25,7 @@ const EditForm = ({
   onEditChange,
   onProfileImageChange,
   onEditSubmit,
-}: EditFormPropsType) => {
+}: EditFormProps) => {
   const router = useRouter();
   const [previewUrl, setPreviewUrl] = useState<string>('');
 

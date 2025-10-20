@@ -1,11 +1,15 @@
 import React, { useRef } from 'react';
-import { ProfileImagePropsType } from '@/types/account';
 import Image from 'next/image';
+
+interface ProfileImageProps {
+  profileImageUrl: string;
+  onChangePhoto: (file: File) => void;
+}
 
 const ProfileImage = ({
   profileImageUrl,
   onChangePhoto,
-}: ProfileImagePropsType) => {
+}: ProfileImageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {

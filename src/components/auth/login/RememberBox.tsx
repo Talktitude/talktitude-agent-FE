@@ -1,12 +1,17 @@
 import React from 'react';
-import { RememberBoxPropsType } from '@/types/auth';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import { IoCheckmarkCircle } from 'react-icons/io5';
+
+// 로그인 유지 체크박스 타입
+interface RememberBoxProps {
+  keepLoggedIn: boolean; // 로그인 유지 체크박스 상태
+  handleKeepLoggedInClick: () => void; // 로그인 유지 토큰 설정 로직 함수 연결
+}
 
 const RememberBox = ({
   keepLoggedIn,
   handleKeepLoggedInClick,
-}: RememberBoxPropsType) => {
+}: RememberBoxProps) => {
   return (
     <div className="flex items-center gap-1 group">
       <button
