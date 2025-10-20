@@ -6,7 +6,6 @@ import Badge from '@/components/common/Badge';
 interface ChatHeaderProps {
   chatInfo: ChatHeaderInfoType;
   onSupportEnd: (sessionId: number) => void;
-  forcedRefresh?: boolean;
 }
 
 export default function ChatHeader({
