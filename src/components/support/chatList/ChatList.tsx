@@ -10,7 +10,6 @@ interface ChatListProp {
   chatListItems: ChatListItemType[];
   selectedChat: number;
   filterOption: FilterOption;
-  onFilterChange: (filter: FilterOption) => void;
   onChatSelect: (chatId: number) => void;
   isSearchMode?: boolean;
 }

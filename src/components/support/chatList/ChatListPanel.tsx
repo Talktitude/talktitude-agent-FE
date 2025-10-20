@@ -56,7 +56,6 @@ const ChatListPanel = ({
               chatListItems={isSearchMode ? searchResultItems : chatListItems}
               selectedChat={selectedChat ?? -1}
               filterOption={filterOption}
-              onFilterChange={handleFilterChange}
               onChatSelect={handleChatSelect}
               isSearchMode={isSearchMode}
             />
