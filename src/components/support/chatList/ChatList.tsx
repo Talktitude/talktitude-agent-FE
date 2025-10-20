@@ -6,7 +6,7 @@ import { PiChats } from 'react-icons/pi';
 import type { ChatListItemType, FilterOption } from '@/types/support';
 import { CHAT_LIST_PLACEHOLDERS } from '@/lib/constants/placeholders';
 
-interface ChatListProp {
+interface ChatListProps {
   chatListItems: ChatListItemType[];
   selectedChat: number;
   filterOption: FilterOption;
@@ -20,7 +20,7 @@ export default function ChatList({
   filterOption,
   onChatSelect,
   isSearchMode = false,
-}: ChatListProp) {
+}: ChatListProps) {
   const filterText = filterOption === 'IN_PROGRESS' ? '진행 중인' : '종료된';
   return (
     <div className="bg-white h-full flex flex-col">
